@@ -1,0 +1,25 @@
+# Ignorar la carpeta node_modules y archivos relacionados con npm/yarn
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+
+# Ignorar archivos específicos de entorno de desarrollo
+.DS_Store
+.vscode/
+.idea/
+
+# Ignorar archivos de construcción y resultados compilados
+build/
+dist/
+coverage/
+
+# Ignorar archivos de configuración de entorno
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Ignorar archivos de registros y resultados temporales
+logs/
+tmp/
