@@ -2,7 +2,7 @@
 const fs = require("fs");
 
 // Nombre del archivo JSON que deseas leer
-const eventos = "../config/database.json";
+const eventos = "config/database.json";
 
 // Utiliza fs.readFile para leer el archivo JSON
 
