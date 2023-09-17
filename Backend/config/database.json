@@ -1,0 +1,461 @@
+{
+  "eventos": [
+    {
+      "evento": {
+        "id": "1",
+        "nombre": "XXI SIMMAC",
+        "fechas": ["2023-09-20", "2023-09-21", "2023-09-22"],
+        "oyentes": [
+          {
+            "nombre": "Oyente 1",
+            "correo": "oyente1@example.com",
+            "telefono": "+01 123 456 7890"
+          },
+          {
+            "nombre": "Oyente 2",
+            "correo": "oyente2@example.com",
+            "telefono": "+02 123 456 7890"
+          },
+          {
+            "nombre": "Oyente 3",
+            "correo": "oyente3@example.com",
+            "telefono": "+03 123 456 7890"
+          },
+          {
+            "nombre": "Oyente 4",
+            "correo": "oyente4@example.com",
+            "telefono": "+04 123 456 7890"
+          },
+          {
+            "nombre": "Oyente 5",
+            "correo": "oyente5@example.com",
+            "telefono": "+05 123 456 7890"
+          },
+          {
+            "nombre": "Oyente 6",
+            "correo": "oyente6@example.com",
+            "telefono": "+06 123 456 7890"
+          },
+          {
+            "nombre": "Oyente 7",
+            "correo": "oyente7@example.com",
+            "telefono": "+07 123 456 7890"
+          },
+          {
+            "nombre": "Oyente 8",
+            "correo": "oyente8@example.com",
+            "telefono": "+08 123 456 7890"
+          },
+          {
+            "nombre": "Oyente 9",
+            "correo": "oyente9@example.com",
+            "telefono": "+09 123 456 7890"
+          },
+          {
+            "nombre": "Oyente 10",
+            "correo": "oyente10@example.com",
+            "telefono": "+10 123 456 7890"
+          }
+        ],
+        "descripcion": "El XXI SIMMAC es un simposio internacional que reúne a expertos en estadísticas y matemáticas aplicadas para compartir conocimientos y avances en diversos campos.",
+        "actividades": [
+          {
+            "ponente": {
+              "apellidos": "Aguilar",
+              "nombre": "María José",
+              "pais": "Argentina",
+              "universidad": "Universidad Nacional de Buenos Aires",
+              "correo": "maria.jose@example.com",
+              "telefono": "+54 9 11 1234 5678"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Análisis de datos genómicos en la era post-genómica",
+            "lugar": "Sala A",
+            "horaInicio": "09:00",
+            "horaFinal": "09:20",
+            "fecha": "2023-09-20"
+          },
+          {
+            "ponente": {
+              "apellidos": "Alarcón",
+              "nombre": "Javier",
+              "pais": "Chile",
+              "universidad": "Universidad de Santiago",
+              "correo": "javier.alarcon@example.com",
+              "telefono": "+56 2 9876 5432"
+            },
+            "modalidad": "Carteles",
+            "título": "Modelos para la evaluación de la calidad del aire",
+            "lugar": "Salón B",
+            "horaInicio": "10:30",
+            "horaFinal": "10:45",
+            "fecha": "2023-09-20"
+          },
+          {
+            "ponente": {
+              "apellidos": "Alvarado",
+              "nombre": "Luis",
+              "pais": "México",
+              "universidad": "Universidad Nacional Autónoma de México",
+              "correo": "luis.alvarado@example.com",
+              "telefono": "+52 55 8765 4321"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Estimación de la función de intensidad de un proceso puntual con datos de eventos",
+            "lugar": "Sala C",
+            "horaInicio": "11:15",
+            "horaFinal": "11:35",
+            "fecha": "2023-09-20"
+          },
+          {
+            "ponente": {
+              "apellidos": "Araya",
+              "nombre": "Ana María",
+              "pais": "Colombia",
+              "universidad": "Universidad de Bogotá",
+              "correo": "ana.maría@example.com",
+              "telefono": "+57 1 234 5678"
+            },
+            "modalidad": "Carteles",
+            "título": "Predicción de la mortalidad hospitalaria en pacientes con sepsis",
+            "lugar": "Salón D",
+            "horaInicio": "14:00",
+            "horaFinal": "14:15",
+            "fecha": "2023-09-20"
+          },
+          {
+            "ponente": {
+              "apellidos": "Baeza",
+              "nombre": "Joaquín",
+              "pais": "España",
+              "universidad": "Universidad de Madrid",
+              "correo": "joaquin.baeza@example.com",
+              "telefono": "+34 91 987 6543"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Spatial Analysis of Vegetation Data",
+            "lugar": "Sala E",
+            "horaInicio": "15:45",
+            "horaFinal": "16:05",
+            "fecha": "2023-09-20"
+          },
+          {
+            "ponente": {
+              "apellidos": "Barrientos",
+              "nombre": "Alejandro",
+              "pais": "Perú",
+              "universidad": "Universidad Nacional de Lima",
+              "correo": "alejandro.barrientos@example.com",
+              "telefono": "+51 1 876 5432"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Measuring the Impact of Education Policies on Student Performance",
+            "lugar": "Sala F",
+            "horaInicio": "16:30",
+            "horaFinal": "16:50",
+            "fecha": "2023-09-20"
+          },
+          {
+            "ponente": {
+              "apellidos": "Bolaños",
+              "nombre": "Rebeca",
+              "pais": "México",
+              "universidad": "Universidad Nacional Autónoma de México",
+              "correo": "rebeca.bolanos@example.com",
+              "telefono": "+52 55 9876 5432"
+            },
+            "modalidad": "Carteles",
+            "título": "Análisis estadístico de datos de encuestas de salud",
+            "lugar": "Salón G",
+            "horaInicio": "09:30",
+            "horaFinal": "09:45",
+            "fecha": "2023-09-21"
+          },
+          {
+            "ponente": {
+              "apellidos": "Cabrera",
+              "nombre": "Diego",
+              "pais": "Argentina",
+              "universidad": "Universidad Nacional de Buenos Aires",
+              "correo": "diego.cabrera@example.com",
+              "telefono": "+54 9 11 2345 6789"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Statistical Methods for the Analysis of Social Networks",
+            "lugar": "Sala H",
+            "horaInicio": "10:15",
+            "horaFinal": "10:35",
+            "fecha": "2023-09-21"
+          },
+          {
+            "ponente": {
+              "apellidos": "Campos",
+              "nombre": "Silvia",
+              "pais": "Chile",
+              "universidad": "Universidad de Santiago",
+              "correo": "silvia.campos@example.com",
+              "telefono": "+56 2 8765 4321"
+            },
+            "modalidad": "Carteles",
+            "título": "Análisis de datos de expresión génica en cáncer de mama",
+            "lugar": "Salón I",
+            "horaInicio": "11:00",
+            "horaFinal": "11:15",
+            "fecha": "2023-09-21"
+          },
+          {
+            "ponente": {
+              "apellidos": "Castro",
+              "nombre": "José",
+              "pais": "Perú",
+              "universidad": "Universidad Nacional de Lima",
+              "correo": "jose.castro@example.com",
+              "telefono": "+51 1 2345 6789"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Bayesian Inference for Time Series Models",
+            "lugar": "Sala J",
+            "horaInicio": "14:30",
+            "horaFinal": "14:50",
+            "fecha": "2023-09-21"
+          },
+          {
+            "ponente": {
+              "apellidos": "Contreras",
+              "nombre": "Carlos",
+              "pais": "Chile",
+              "universidad": "Universidad de Santiago",
+              "correo": "carlos.contreras@example.com",
+              "telefono": "+56 2 9876 5432"
+            },
+            "modalidad": "Carteles",
+            "título": "Modelos estadísticos para el análisis de datos climáticos",
+            "lugar": "Salón K",
+            "horaInicio": "15:15",
+            "horaFinal": "15:30",
+            "fecha": "2023-09-21"
+          },
+          {
+            "ponente": {
+              "apellidos": "Cruz",
+              "nombre": "María",
+              "pais": "México",
+              "universidad": "Universidad Nacional Autónoma de México",
+              "correo": "maria.cruz@example.com",
+              "telefono": "+52 55 8765 4321"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Statistical Methods for Environmental Data Analysis",
+            "lugar": "Sala L",
+            "horaInicio": "16:00",
+            "horaFinal": "16:20",
+            "fecha": "2023-09-21"
+          },
+          {
+            "ponente": {
+              "apellidos": "Díaz",
+              "nombre": "Miguel",
+              "pais": "Chile",
+              "universidad": "Universidad de Santiago",
+              "correo": "miguel.diaz@example.com",
+              "telefono": "+56 2 9876 5432"
+            },
+            "modalidad": "Carteles",
+            "título": "Análisis de datos de opinión pública",
+            "lugar": "Salón M",
+            "horaInicio": "09:00",
+            "horaFinal": "09:15",
+            "fecha": "2023-09-22"
+          },
+          {
+            "ponente": {
+              "apellidos": "Espinoza",
+              "nombre": "Cristina",
+              "pais": "México",
+              "universidad": "Universidad Nacional Autónoma de México",
+              "correo": "cristina.espinoza@example.com",
+              "telefono": "+52 55 9876 5432"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Statistical Approaches to Financial Risk Management",
+            "lugar": "Sala N",
+            "horaInicio": "09:30",
+            "horaFinal": "09:50",
+            "fecha": "2023-09-22"
+          },
+          {
+            "ponente": {
+              "apellidos": "Fernández",
+              "nombre": "Carlos",
+              "pais": "Chile",
+              "universidad": "Universidad de Santiago",
+              "correo": "carlos.fernandez@example.com",
+              "telefono": "+56 2 9876 5432"
+            },
+            "modalidad": "Carteles",
+            "título": "Estudio de la variabilidad genética en poblaciones humanas",
+            "lugar": "Salón O",
+            "horaInicio": "10:00",
+            "horaFinal": "10:15",
+            "fecha": "2023-09-22"
+          },
+          {
+            "ponente": {
+              "apellidos": "García",
+              "nombre": "Luisa",
+              "pais": "Perú",
+              "universidad": "Universidad Nacional de Lima",
+              "correo": "luisa.garcia@example.com",
+              "telefono": "+51 1 2345 6789"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Statistical Analysis of Clinical Trials",
+            "lugar": "Sala P",
+            "horaInicio": "11:30",
+            "horaFinal": "11:50",
+            "fecha": "2023-09-22"
+          },
+          {
+            "ponente": {
+              "apellidos": "González",
+              "nombre": "Jorge",
+              "pais": "Chile",
+              "universidad": "Universidad de Santiago",
+              "correo": "jorge.gonzalez@example.com",
+              "telefono": "+56 2 9876 5432"
+            },
+            "modalidad": "Carteles",
+            "título": "Modelos estadísticos para la predicción de ventas",
+            "lugar": "Salón Q",
+            "horaInicio": "12:00",
+            "horaFinal": "12:15",
+            "fecha": "2023-09-22"
+          },
+          {
+            "ponente": {
+              "apellidos": "Guerrero",
+              "nombre": "Sofía",
+              "pais": "México",
+              "universidad": "Universidad Nacional Autónoma de México",
+              "correo": "sofia.guerrero@example.com",
+              "telefono": "+52 55 9876 5432"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Bayesian Methods for Machine Learning",
+            "lugar": "Sala R",
+            "horaInicio": "14:45",
+            "horaFinal": "15:05",
+            "fecha": "2023-09-22"
+          },
+          {
+            "ponente": {
+              "apellidos": "Hernández",
+              "nombre": "Eduardo",
+              "pais": "Chile",
+              "universidad": "Universidad de Santiago",
+              "correo": "eduardo.hernandez@example.com",
+              "telefono": "+56 2 9876 5432"
+            },
+            "modalidad": "Carteles",
+            "título": "Análisis estadístico de datos de investigación clínica",
+            "lugar": "Salón S",
+            "horaInicio": "15:30",
+            "horaFinal": "15:45",
+            "fecha": "2023-09-22"
+          },
+          {
+            "ponente": {
+              "apellidos": "Jiménez",
+              "nombre": "Luis",
+              "pais": "Chile",
+              "universidad": "Universidad de Santiago",
+              "correo": "luis.jimenez@example.com",
+              "telefono": "+56 2 9876 5432"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Survival Analysis: Methods and Applications",
+            "lugar": "Sala T",
+            "horaInicio": "16:15",
+            "horaFinal": "16:35",
+            "fecha": "2023-09-22"
+          }
+        ]
+      }
+    },
+    {
+      "evento": {
+        "id": "2",
+        "nombre": "CIMPA Simposio 2",
+        "fechas": ["2023-11-15", "2023-11-16", "2023-11-17"],
+        "oyentes": [
+          {
+            "nombre": "Oyente 1",
+            "correo": "oyente1@example.com",
+            "telefono": "+01 123 456 7890"
+          },
+          {
+            "nombre": "Oyente 2",
+            "correo": "oyente2@example.com",
+            "telefono": "+01 223 456 7890"
+          },
+          {
+            "nombre": "Oyente 10",
+            "correo": "oyente10@example.com",
+            "telefono": "+01 1023 456 7890"
+          }
+        ],
+        "descripcion": "El CIMPA Simposio 2 se enfoca en geometría algebraica y sus aplicaciones.",
+        "actividades": [
+          {
+            "ponente": {
+              "apellidos": "Gómez",
+              "nombre": "Ana",
+              "pais": "España",
+              "universidad": "Universidad de Barcelona",
+              "correo": "ana.gomez@example.com",
+              "telefono": "+34 93 123 4567"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Teoría de haces en geometría algebraica",
+            "lugar": "Sala A",
+            "horaInicio": "09:30",
+            "horaFinal": "09:50",
+            "fecha": "2023-11-15"
+          },
+          {
+            "ponente": {
+              "apellidos": "Perez",
+              "nombre": "Juan",
+              "pais": "México",
+              "universidad": "Universidad Nacional",
+              "correo": "juan.perez@example.com",
+              "telefono": "+52 55 123 4567"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Aplicaciones de la geometría en ciencias",
+            "lugar": "Sala B",
+            "horaInicio": "10:00",
+            "horaFinal": "10:20",
+            "fecha": "2023-11-16"
+          },
+          {
+            "ponente": {
+              "apellidos": "Lopez",
+              "nombre": "Maria",
+              "pais": "Argentina",
+              "universidad": "Universidad de Buenos Aires",
+              "correo": "maria.lopez@example.com",
+              "telefono": "+54 11 123 4567"
+            },
+            "modalidad": "Ponencias (20 minut.)",
+            "título": "Nuevos avances en geometría algebraica",
+            "lugar": "Sala C",
+            "horaInicio": "11:00",
+            "horaFinal": "11:20",
+            "fecha": "2023-11-17"
+          }
+        ]
+      }
+    }
+  ]
+}
