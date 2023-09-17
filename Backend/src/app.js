@@ -13,6 +13,9 @@ app.use('/api', routes);
 const clienteRoutes = require('./routes/clienteRouter.js');
 app.use('/clientes', clienteRoutes);
 
+const eventoRoutes = require('./routes/eventoRouter.js');
+app.use('/eventos', eventoRoutes);
+
 //configurar puerto
 const PORT = process.env.PORT || 3000;
 
