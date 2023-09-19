@@ -1,12 +1,14 @@
 "use Client";
 import React from "react";
+import Image from "next/image";
+
 const Header = () => {
 //parte para js
 
 //return 
 
 return(
-    <div className="bg-dark">
+    <div className="header">
         <h1 className="wrapper-center">Header</h1>
     </div>
 );
