@@ -27,5 +27,5 @@ logs/
 tmp/
 
 # Ignorar archivos lock de npm y Yarn
-package-lock.json
+Frontend/package-lock.json
 yarn.lock
