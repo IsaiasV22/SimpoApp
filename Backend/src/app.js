@@ -17,7 +17,7 @@ const eventoRoutes = require('./routes/eventoRouter.js');
 app.use('/eventos', eventoRoutes);
 
 //configurar puerto
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 //ponerlo a escuchar
 app.listen(PORT, () => {
