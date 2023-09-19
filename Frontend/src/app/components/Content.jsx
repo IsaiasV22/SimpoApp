@@ -1,16 +1,17 @@
+"use Client";
 import React from "react";
+import Login from "./login/Login.jsx";
 
-const Content = (props) => {
+const Content = () => {
 //parte para js
 
-const { count } = props;
+
 
 //return 
 
 return(
     <div>
-        <h1>Content</h1>
-        <div>Count: {count}</div>
+        <Login/>
     </div>
 );
 

@@ -3,6 +3,8 @@ const router = express.Router();
 const path = require("path");
 const eventoController = require("../controllers/eventoController.js");
 
+router.use(express.json());
+
 router.get("/evento", (req, res) => {
   console.log("¡Hola, mundo!");
   res.send("¡Hola, mundo!");
@@ -24,7 +26,7 @@ router.get("/all", (req, res) => {
 
 //Brete jose
 router.post("/evento", (req, res) => {
-  const eventId = req.body;
+  const eventId = req.body.id;
   console.log("entró al API " + eventId);
 
   eventoController.obtenerEventoPorId(eventId, (err, evento) => {
