@@ -25,3 +25,7 @@ coverage/
 # Ignorar archivos de registros y resultados temporales
 logs/
 tmp/
+
+# Ignorar archivos lock de npm y Yarn
+package-lock.json
+yarn.lock
