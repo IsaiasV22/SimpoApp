@@ -3,17 +3,13 @@ import React from "react";
 import Image from "next/image";
 
 const Header = () => {
-//parte para js
+  return (
+    <header className="header">
+        <div className="wrapper-center">
+          <h1>Header</h1>
+        </div>
+      </header>
+  );
+};
 
-//return 
-
-return(
-    <div className="header">
-        <h1 className="wrapper-center">Header</h1>
-    </div>
-);
-
-
-}
-//export default Header;
 export default Header;
