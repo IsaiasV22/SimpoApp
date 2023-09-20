@@ -1,6 +1,7 @@
 "use Client";
 import React from "react";
 import Login from "./login/Login.jsx";
+import Link from "next/link";
 
 const Content = () => {
 //parte para js
@@ -13,7 +14,7 @@ return(
     <div>
         <Login/>
     </div>
-);
+  );
 
 
 }
