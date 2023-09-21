@@ -1,25 +1,28 @@
 //importa las dependencias necesarias
-const express = require ('express');
-const app = express ();
-require('dotenv').config();
+const express = require("express");
+const app = express();
+require("dotenv").config();
 
 //archivos estaticos
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 //Definir rutas
-const routes = require('./routes/routes.js');
-app.use('/api', routes);
+const routes = require("./routes/routes.js");
+app.use("/api", routes);
 
-const clienteRoutes = require('./routes/clienteRouter.js');
-app.use('/clientes', clienteRoutes);
+const clienteRoutes = require("./routes/clienteRouter.js");
+app.use("/clientes", clienteRoutes);
 
-const eventoRoutes = require('./routes/eventoRouter.js');
-app.use('/eventos', eventoRoutes);
+const eventoRoutes = require("./routes/eventoRouter.js");
+app.use("/eventos", eventoRoutes);
+
+const usuarioRoutes = require("./routes/usuarioRouter.js");
+app.use("/usuarios", usuarioRoutes);
 
 //configurar puerto
 const PORT = process.env.PORT || 3001;
 
 //ponerlo a escuchar
 app.listen(PORT, () => {
-    console.log(`Server on port ${PORT}`);
+  console.log(`Server on port ${PORT}`);
 });
