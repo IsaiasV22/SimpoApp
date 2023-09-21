@@ -2,7 +2,7 @@
 const fs = require("fs");
 
 // Nombre del archivo JSON que deseas leer
-const usuarios = "config/databaseUsuarios.json";
+const usuarios = "../config/databaseUsuarios.json";
 
 // Utiliza fs.readFile para leer el archivo JSON
 

@@ -10,4 +10,13 @@ router.get("/", (req, res) => {
   res.send("¡Hola, usuario!");
 });
 
+router.get("/all", (req, res) => {
+  usuarioController.jsonFull((err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Error al obtener los usuarios" });
+    }
+    res.json(results);
+  });
+});
+
 module.exports = router;
