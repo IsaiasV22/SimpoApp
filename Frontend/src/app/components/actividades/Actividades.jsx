@@ -5,6 +5,10 @@ import Link from "next/link";
 
 export default function Actividades({ count }) {
     return (
-        <div className="actividades-container">actividades</div>
+    <div><Link href="../login">
+    <button>ATRAS</button>
+  </Link>
+  <div className="actividades-container">actividades</div>
+  </div>
     );
 }

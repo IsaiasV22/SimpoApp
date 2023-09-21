@@ -5,6 +5,10 @@ import Link from "next/link";
 
 export default function Simposios({ count }) {
     return (
-        <div className="simposios-container">simposios</div>
+<div><Link href="../login">
+        <button>ATRAS</button>
+      </Link>
+      <div className="simposios-container">simposios</div>
+      </div>
     );
 }

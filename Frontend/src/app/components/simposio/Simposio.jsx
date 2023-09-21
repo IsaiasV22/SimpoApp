@@ -5,6 +5,10 @@ import Link from "next/link";
 
 export default function Simposio({ count }) {
     return (
-        <div className="simposio-container">simposio</div>
+<div><Link href="../login">
+        <button>ATRAS</button>
+      </Link>
+      <div className="simposio-container">simposio</div>
+      </div>
     );
 }

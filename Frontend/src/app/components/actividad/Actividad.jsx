@@ -5,6 +5,11 @@ import Link from "next/link";
 
 export default function Actividad({ count }) {
     return (
-        <div className="actividad-container">actividad</div>
+        <div><Link href="../login">
+        <button>ATRAS</button>
+      </Link>
+      <div className="actividad-container">actividad</div>
+      </div>
+        
     );
 }

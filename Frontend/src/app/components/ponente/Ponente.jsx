@@ -5,6 +5,10 @@ import Link from "next/link";
 
 export default function Ponente({ count }) {
     return (
-        <div className="ponente-container">ponente</div>
+<div><Link href="../login">
+        <button>ATRAS</button>
+      </Link>
+      <div className="ponente-container">ponente</div>
+      </div>
     );
 }
