@@ -14,16 +14,16 @@ export default function Login({ count }) {
       <Link href="../../simposios">
         <button>SIMPOSIOS</button>
       </Link>
-      <Link href="/">
+      <Link href="../../simposio">
         <button>SIMPOSIO</button>
       </Link>
-      <Link href="/">
+      <Link href="../../actividades">
         <button>ACTIVIDADES</button>
       </Link>
-      <Link href="/">
+      <Link href="../../actividad">
         <button>ACTIVIDAD</button>
       </Link>
-      <Link href="/">
+      <Link href="../../ponente">
         <button>PONENTE</button>
       </Link>
       <div className="wrapper fadeInDown">
