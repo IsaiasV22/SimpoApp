@@ -15,6 +15,19 @@ router.get("/", (req, res) => {
   res.send("¡Hola, evento!");
 });
 
+//Brete jose
+router.post("/evento", (req, res) => {
+  const eventId = req.body.id;
+  console.log("entró al API " + eventId);
+
+  eventoController.obtenerEventoPorId(eventId, (err, evento) => {
+    if (err) {
+      return res.status(404).json({ error: "Evento no encontrado" });
+    }
+    res.json(evento);
+  });
+});
+
 router.get("/all", (req, res) => {
   eventoController.jsonFull((err, results) => {
     if (err) {
@@ -24,10 +37,8 @@ router.get("/all", (req, res) => {
   });
 });
 
-//Brete jose
-router.post("/evento", (req, res) => {
-  const eventId = req.body.id;
-  console.log("entró al API " + eventId);
+router.get("/:id", (req, res) => {
+  const eventId = req.params.id;
 
   eventoController.obtenerEventoPorId(eventId, (err, evento) => {
     if (err) {
