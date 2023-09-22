@@ -3,9 +3,29 @@ import "./Login.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
 //import Link
 import Link from "next/link";
 
+
+
 export default function Login({ count }) {
   return (
     <div>
+      <Link href="/">
+        <button>ATRAS</button>
+      </Link>
+      <Link href="../../simposios">
+        <button>SIMPOSIOS</button>
+      </Link>
+      <Link href="../../simposio">
+        <button>SIMPOSIO</button>
+      </Link>
+      <Link href="../../actividades">
+        <button>ACTIVIDADES</button>
+      </Link>
+      <Link href="../../actividad">
+        <button>ACTIVIDAD</button>
+      </Link>
+      <Link href="../../ponente">
+        <button>PONENTE</button>
+      </Link>
       <div className="wrapper fadeInDown">
         <div id="formContent">
           {/* Tabs Titles */}
