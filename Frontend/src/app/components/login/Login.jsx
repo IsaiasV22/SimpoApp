@@ -1,12 +1,23 @@
 "use client";
-import React from "react";
+import React, {useState} from "react";
 import "./Login.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
 //import Link
 import Link from "next/link";
 
 
 
-export default function Login({ count }) {
+export default function Login() {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+
+  function handleSubmit(e) {
+    e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+  
+    // Lógica de envío del formulario
+    console.log(id);
+    console.log(password);
+  }
+
   return (
     <div>
       <Link href="/">
@@ -41,13 +52,14 @@ export default function Login({ count }) {
           </div>
 
           {/* Login Form */}
-          <form>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
               id="login"
               className="fadeIn second"
               name="login"
               placeholder="login"
+              onChange={(e) => setId(e.target.value)}
             />
             <input
               type="text"
@@ -55,6 +67,7 @@ export default function Login({ count }) {
               className="fadeIn third"
               name="login"
               placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <input type="submit" className="fadeIn fourth" value="Log In" />
           </form>
