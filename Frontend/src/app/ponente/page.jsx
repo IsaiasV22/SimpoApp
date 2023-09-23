@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Ponente from "../components/ponente/Ponente";
 const page = () =>{

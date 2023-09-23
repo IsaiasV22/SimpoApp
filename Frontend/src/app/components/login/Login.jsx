@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import "./Login.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
 //import Link
