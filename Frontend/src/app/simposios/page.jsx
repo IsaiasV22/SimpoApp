@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Simposios from "../components/simposios/Simposios";
 const page = () =>{
