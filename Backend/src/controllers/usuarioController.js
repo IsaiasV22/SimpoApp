@@ -2,7 +2,7 @@
 const fs = require("fs");
 
 // Nombre del archivo JSON que deseas leer
-const usuarios = "../config/databaseUsuarios.json";
+const usuarios = "config/databaseUsuarios.json";
 
 // Utiliza fs.readFile para leer el archivo JSON
 
@@ -28,6 +28,7 @@ const jsonFull = (callback) => {
 };
 
 const obtenerUsuarioPorId = (id, callback) => {
+  console.log("entró al controller " + id);
   jsonFull((err, usuarios) => {
     if (err) {
       callback(err, null);
@@ -35,7 +36,7 @@ const obtenerUsuarioPorId = (id, callback) => {
     }
 
     const usuarioEncontrado = usuarios.oyentes.find(
-      (usuario) => usuario.usuario.id === id
+      (oyente) => oyente.id === id
     );
 
     if (!usuarioEncontrado) {

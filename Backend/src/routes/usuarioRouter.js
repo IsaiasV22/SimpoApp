@@ -19,4 +19,33 @@ router.get("/all", (req, res) => {
   });
 });
 
+router.post("/usuario", (req, res) => {
+  const userId = req.body.id;
+  console.log("entró al API " + userId);
+
+  usuarioController.obtenerUsuarioPorId(userId, (err, user) => {
+    if (err) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+    res.json(user);
+  });
+});
+
+router.post("/login", (req, res) => {
+  const userId = req.body.id;
+  const userPassword = req.body.password;
+  console.log("entró al API /login");
+
+  usuarioController.obtenerUsuarioPorId(userId, (err, user) => {
+    if (err) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+    if (user.password != userPassword) {
+      return res.status(404).json({ error: "Contraseña incorrecta" });
+    } else {
+      res.json(user);
+    }
+  });
+});
+
 module.exports = router;
