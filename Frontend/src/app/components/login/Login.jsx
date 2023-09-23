@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import "./Login.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
 //import Link
 import Link from "next/link";
+import { urlServer } from "@/app/Utiles"; 
 
 
 
@@ -10,12 +11,23 @@ export default function Login() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
   
     // Lógica de envío del formulario
-    console.log(id);
-    console.log(password);
+    const dataForm={id,password};
+    console.log(JSON.stringify(dataForm))
+    try {
+      const response = await fetch(`${urlServer}usuarios/login`
+      ,{method: 'POST', headers: { 'Content-Type': 'application/json'},body:JSON.stringify(dataForm)})
+        if(!response.ok){
+          throw new Error("Usuario o contraseña invalida!");
+        } 
+        const data=await response.json();
+        console.log(data);
+    } catch (error) {
+      
+    }
   }
 
   return (

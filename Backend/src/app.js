@@ -1,23 +1,28 @@
-//importa las dependencias necesarias
-const express = require("express");
+const express = require('express');
+const cors = require('cors');
 const app = express();
-require("dotenv").config();
+require('dotenv').config();
 
-//archivos estaticos
-app.use(express.static("public"));
+// Configura CORS para permitir todas las solicitudes
+app.use(cors());
 
-//Definir rutas
-const routes = require("./routes/routes.js");
-app.use("/api", routes);
+// Resto de tu configuración de servidor aquí...
 
-const clienteRoutes = require("./routes/clienteRouter.js");
-app.use("/clientes", clienteRoutes);
+//archivos estáticos
+app.use(express.static('public'));
 
-const eventoRoutes = require("./routes/eventoRouter.js");
-app.use("/eventos", eventoRoutes);
+// Definir rutas
+const routes = require('./routes/routes.js');
+app.use('/api', routes);
 
-const usuarioRoutes = require("./routes/usuarioRouter.js");
-app.use("/usuarios", usuarioRoutes);
+const clienteRoutes = require('./routes/clienteRouter.js');
+app.use('/clientes', clienteRoutes);
+
+const eventoRoutes = require('./routes/eventoRouter.js');
+app.use('/eventos', eventoRoutes);
+
+const usuarioRoutes = require('./routes/usuarioRouter.js');
+app.use('/usuarios', usuarioRoutes);
 
 //configurar puerto
 const PORT = process.env.PORT || 3001;
