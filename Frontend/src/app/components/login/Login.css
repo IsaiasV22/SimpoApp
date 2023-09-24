@@ -9,6 +9,21 @@ html {
     font-family: "Poppins", sans-serif;
     height: 100vh;
   }
+
+  /* toastify-custom.css */
+/* Personaliza el estilo de las notificaciones Toastify aquí */
+
+/* Estilo para notificación de éxito */
+.toastify-custom-success {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+/* Estilo para notificación de error */
+.toastify-custom-error {
+  background-color: #f44336;
+  color: #fff;
+}
   
   a {
     color: #92badd;

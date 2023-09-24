@@ -2,7 +2,10 @@
 import React, { useState } from "react";
 import "./Login.css";
 import Link from "next/link";
-import { urlServer } from "@/app/Utiles"; 
+import { urlServer } from "@/app/Utiles";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 export default function Login() {
   const [id, setId] = useState("");
@@ -15,8 +18,8 @@ export default function Login() {
     const dataForm = { id, password };
     try {
       const response = await fetch(`${urlServer}usuarios/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataForm),
       });
 
@@ -31,7 +34,10 @@ export default function Login() {
         window.location.href = "../../simposios";
       }
     } catch (error) {
-      alert(error.message);
+      // Personaliza las notificaciones Toastify según el tipo de error
+      toast.error(error.message, {
+        className: "toastify-custom-error", // Usa la clase de estilo personalizada
+      });
     }
   }
 
@@ -109,6 +115,8 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <ToastContainer /> {/* Agrega este componente al final */}
     </div>
   );
 }
+

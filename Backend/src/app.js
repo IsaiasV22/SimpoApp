@@ -23,6 +23,8 @@ app.use("/eventos", eventoRoutes);
 
 const usuarioRoutes = require("./routes/usuarioRouter.js");
 app.use("/usuarios", usuarioRoutes);
+console.log(process.env.PORT);
+
 
 //configurar puerto
 const PORT = process.env.PORT || 3000;
