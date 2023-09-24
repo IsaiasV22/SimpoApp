@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Login from "./login/Login.jsx";
 import Link from "next/link";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/app/App.css";

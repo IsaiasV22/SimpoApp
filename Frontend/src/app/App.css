@@ -1,3 +1,7 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "@/app/components/login/Login.css";
+
 .main-content {
   min-height: 100vh;
 }
