@@ -1,37 +1,40 @@
 "use client";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./Login.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
 //import Link
 import Link from "next/link";
-import { urlServer } from "@/app/Utiles"; 
-
-
+import { urlServer } from "@/app/Utiles";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@/app/App.css";
 
 export default function Login() {
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
-  
+
     // Lógica de envío del formulario
-    const dataForm={id,password};
-    console.log(JSON.stringify(dataForm))
+    const dataForm = { id, password };
+    console.log(JSON.stringify(dataForm));
     try {
-      const response = await fetch(`${urlServer}usuarios/login`
-      ,{method: 'POST', headers: { 'Content-Type': 'application/json'},body:JSON.stringify(dataForm)})
-        if(!response.ok){
-          throw new Error("Usuario o contraseña invalida!");
-        } 
-        const data=await response.json();
-        console.log(data);
+      const response = await fetch(`${urlServer}usuarios/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataForm),
+      });
+      if (!response.ok) {
+        throw new Error("Usuario o contraseña invalida!");
+      }
+      const data = await response.json();
+      console.log(data);
     } catch (error) {
-      
+      alert(error.message);
     }
   }
 
   return (
-    <div>
+    <div className="main-content">
       <Link href="/">
         <button>ATRAS</button>
       </Link>
