@@ -1,32 +1,40 @@
 "use client";
-import React, {useState} from "react";
-import "./Login.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
-//import Link
+import React, { useState } from "react";
+import "./Login.css";
 import Link from "next/link";
-import { urlServer } from "@/app/Utiles"; 
-
-
+import { urlServer } from "@/app/Utiles";
 
 export default function Login() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
   async function handleSubmit(e) {
-    e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
-  
-    // Lógica de envío del formulario
-    const dataForm={id,password};
-    console.log(JSON.stringify(dataForm))
+    e.preventDefault();
+
+    const dataForm = { id, password };
+    console.log(JSON.stringify(dataForm));
+    
     try {
-      const response = await fetch(`${urlServer}usuarios/login`
-      ,{method: 'POST', headers: { 'Content-Type': 'application/json'},body:JSON.stringify(dataForm)})
-        if(!response.ok){
-          throw new Error("Usuario o contraseña invalida!");
-        } 
-        const data=await response.json();
-        console.log(data);
+      const response = await fetch(`${urlServer}usuarios/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataForm),
+      });
+
+      if (!response.ok) {
+        throw new Error("Usuario o contraseña inválida");
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      // Verificar si los datos son diferentes de vacío
+      if (data !== "") {
+        // Redirigir al usuario a la página "SIMPOSIOS"
+        window.location.href = "../../simposios"; // Cambiar esto por la URL correcta
+      }
     } catch (error) {
-      
+      alert(error.message);
     }
   }
 
@@ -52,9 +60,6 @@ export default function Login() {
       </Link>
       <div className="wrapper fadeInDown">
         <div id="formContent">
-          {/* Tabs Titles */}
-
-          {/* Icon */}
           <div className="fadeIn first">
             <img
               src="http://danielzawadzki.com/codepen/01/icon.svg"
@@ -63,7 +68,6 @@ export default function Login() {
             />
           </div>
 
-          {/* Login Form */}
           <form onSubmit={handleSubmit}>
             <input
               type="text"
@@ -84,7 +88,6 @@ export default function Login() {
             <input type="submit" className="fadeIn fourth" value="Log In" />
           </form>
 
-          {/* Remind Password */}
           <div id="formFooter">
             <a className="underlineHover" href="#">
               Forgot Password?
