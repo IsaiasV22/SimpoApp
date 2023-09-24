@@ -2,9 +2,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import Link from "next/link";
-import { urlServer } from "@/app/Utiles";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css"; 
+import { urlServer } from "@/app/Utiles"; 
 
 export default function Login() {
   const [id, setId] = useState("");
