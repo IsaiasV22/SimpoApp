@@ -14,9 +14,9 @@ router.get("/", (req, res) => {
 });
 
 router.get("/all", (req, res) => {
-  clienteController.obtenerClientes((err, results) => {
+  clienteController.obtenerEstatus((err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Error al obtener los clientes" });
+      return res.status(500).json({ error: "Error al obtener los estatus" });
     }
     res.json(results);
   });

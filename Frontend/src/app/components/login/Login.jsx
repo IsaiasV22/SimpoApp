@@ -1,37 +1,46 @@
-"use client";
-import React, {useState} from "react";
-import "./Login.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
-//import Link
+"use client"
+import React, { useState } from "react";
+import "./Login.css";
 import Link from "next/link";
 import { urlServer } from "@/app/Utiles"; 
 
-
-
 export default function Login() {
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(e) {
-    e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
-  
-    // Lógica de envío del formulario
-    const dataForm={id,password};
-    console.log(JSON.stringify(dataForm))
+    e.preventDefault();
+
+    const dataForm = { id, password };
     try {
-      const response = await fetch(`${urlServer}usuarios/login`
-      ,{method: 'POST', headers: { 'Content-Type': 'application/json'},body:JSON.stringify(dataForm)})
-        if(!response.ok){
-          throw new Error("Usuario o contraseña invalida!");
-        } 
-        const data=await response.json();
-        console.log(data);
+      const response = await fetch(`${urlServer}usuarios/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataForm),
+      });
+
+      if (!response.ok) {
+        throw new Error("Usuario o contraseña inválida");
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      if (data !== "") {
+        window.location.href = "../../simposios";
+      }
     } catch (error) {
-      
+      alert(error.message);
     }
   }
 
+  function togglePasswordVisibility() {
+    setShowPassword(!showPassword);
+  }
+
   return (
-    <div>
+    <div className="main-content">
       <Link href="/">
         <button>ATRAS</button>
       </Link>
@@ -52,9 +61,6 @@ export default function Login() {
       </Link>
       <div className="wrapper fadeInDown">
         <div id="formContent">
-          {/* Tabs Titles */}
-
-          {/* Icon */}
           <div className="fadeIn first">
             <img
               src="http://danielzawadzki.com/codepen/01/icon.svg"
@@ -63,7 +69,6 @@ export default function Login() {
             />
           </div>
 
-          {/* Login Form */}
           <form onSubmit={handleSubmit}>
             <input
               type="text"
@@ -73,18 +78,30 @@ export default function Login() {
               placeholder="login"
               onChange={(e) => setId(e.target.value)}
             />
-            <input
-              type="text"
-              id="password"
-              className="fadeIn third"
-              name="login"
-              placeholder="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="password-input">
+              <input
+                type={showPassword ? "text" : "password"} // Cambia el tipo de input según el estado de showPassword
+                id="password"
+                className="fadeIn third"
+                name="login"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span
+                onClick={togglePasswordVisibility}
+                className="password-toggle-icon"
+              >
+                {showPassword ? (
+                  <i className="bi bi-eye-slash"></i>
+                ) : (
+                  <i className="bi bi-eye"></i>
+                )}
+              </span>
+            </div>
             <input type="submit" className="fadeIn fourth" value="Log In" />
           </form>
 
-          {/* Remind Password */}
           <div id="formFooter">
             <a className="underlineHover" href="#">
               Forgot Password?

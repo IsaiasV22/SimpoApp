@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
-import Login from "./login/Login.jsx";
 import Link from "next/link";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@/app/App.css";
 
 const Content = () => {
   //parte para js
@@ -10,7 +11,7 @@ const Content = () => {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center"
+      className="d-flex justify-content-center align-items-center main-content"
       style={{ height: "40vh" }}
     >
       <Link href="/login">
