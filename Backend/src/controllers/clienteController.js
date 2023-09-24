@@ -1,7 +1,7 @@
-/*const db = require('../../config/database.js');
+const db = require('../../config/database.js');
 
-const obtenerClientes = (callback)=>{
-    db.query('SELECT * FROM cliente', (err, results) => {
+const obtenerEstatus = (callback)=>{
+    db.query('SELECT * FROM estatus', (err, results) => {
         if (err) {
           console.error('Error al realizar la consulta:', err);
           callback(err, null);
@@ -12,5 +12,5 @@ const obtenerClientes = (callback)=>{
       });
 };
 module.exports = {
-    obtenerClientes
-};*/
+    obtenerEstatus
+};
