@@ -4,6 +4,7 @@ import "./Simposios.css";
 import Link from "next/link";
 import { urlServer } from "@/app/Utiles.jsx";
 
+// FIXME: No se muestra la lista de eventos
 export default function Simposios() {
   const [eventos, setEventos] = useState([]);
 
