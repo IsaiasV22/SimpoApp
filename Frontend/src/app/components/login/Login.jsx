@@ -79,7 +79,7 @@ export default function Login() {
               onChange={(e) => setId(e.target.value)}
             />
             <input
-              type="text"
+              type="password"
               id="password"
               className="fadeIn third"
               name="login"
