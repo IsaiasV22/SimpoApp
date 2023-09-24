@@ -1,19 +1,19 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import "./Login.css";
 import Link from "next/link";
 import { urlServer } from "@/app/Utiles";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "@/app/App.css";
+import "bootstrap-icons/font/bootstrap-icons.css"; 
 
 export default function Login() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(e) {
-    e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+    e.preventDefault();
 
-    // Lógica de envío del formulario
     const dataForm = { id, password };
     try {
       const response = await fetch(`${urlServer}usuarios/login`, {
@@ -29,14 +29,16 @@ export default function Login() {
       const data = await response.json();
       console.log(data);
 
-      // Verificar si los datos son diferentes de vacío
       if (data !== "") {
-        // Redirigir al usuario a la página "SIMPOSIOS"
-        window.location.href = "../../simposios"; // Cambiar esto por la URL correcta
+        window.location.href = "../../simposios";
       }
     } catch (error) {
       alert(error.message);
     }
+  }
+
+  function togglePasswordVisibility() {
+    setShowPassword(!showPassword);
   }
 
   return (
@@ -78,14 +80,27 @@ export default function Login() {
               placeholder="login"
               onChange={(e) => setId(e.target.value)}
             />
-            <input
-              type="password"
-              id="password"
-              className="fadeIn third"
-              name="login"
-              placeholder="password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <div className="password-input">
+              <input
+                type={showPassword ? "text" : "password"} // Cambia el tipo de input según el estado de showPassword
+                id="password"
+                className="fadeIn third"
+                name="login"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <span
+                onClick={togglePasswordVisibility}
+                className="password-toggle-icon"
+              >
+                {showPassword ? (
+                  <i className="bi bi-eye-slash"></i>
+                ) : (
+                  <i className="bi bi-eye"></i>
+                )}
+              </span>
+            </div>
             <input type="submit" className="fadeIn fourth" value="Log In" />
           </form>
 
