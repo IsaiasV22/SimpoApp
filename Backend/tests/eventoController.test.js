@@ -21,7 +21,6 @@ test("obtenerUsuarioPorCodigo debe llamar al callback sin errores y devolver un 
 });
 
 test("obtenerEventoPorCodigo debe llamar al callback con un mensaje de error para codigo no válido", (done) => {
-  jest.setTimeout(10000);
   const codigo = "420"; // Reemplaza con un Codigo que no exista en la bd
   eventoController.obtenerEventoPorCodigo(codigo, (err, evento_contenedor) => {
     expect(err).toBeDefined();

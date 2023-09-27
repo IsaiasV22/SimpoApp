@@ -20,7 +20,7 @@ router.post("/evento", (req, res) => {
   const eventId = req.body.id;
   console.log("entró al API " + eventId);
 
-  eventoController.obtenerEventoPorId(eventId, (err, evento) => {
+  eventoController.obtenerEventoPorCodigo(eventId, (err, evento) => {
     if (err) {
       return res.status(404).json({ error: "Evento no encontrado" });
     }
@@ -29,7 +29,7 @@ router.post("/evento", (req, res) => {
 });
 
 router.get("/all", (req, res) => {
-  eventoController.jsonFull((err, results) => {
+  eventoController.eventosAll((err, results) => {
     if (err) {
       return res.status(500).json({ error: "Error al obtener los eventos" });
     }

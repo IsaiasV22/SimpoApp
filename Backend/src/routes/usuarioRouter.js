@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/all", (req, res) => {
-  usuarioController.jsonFull((err, results) => {
+  usuarioController.usuariosAll((err, results) => {
     if (err) {
       return res.status(500).json({ error: "Error al obtener los usuarios" });
     }
