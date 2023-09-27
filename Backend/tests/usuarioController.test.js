@@ -20,7 +20,7 @@ test('obtenerUsuarioPorCedula debe llamar al callback sin errores y devolver un 
 });
 
 test('obtenerUsuarioPorCedula debe llamar al callback con un mensaje de error para Cedula no válida', (done) => {
-  const cedula = 'no_valido'; // Reemplaza con una Cedula que no exista en la bd
+  const cedula = '1'; // Reemplaza con una Cedula que no exista en la bd
   usuarioController.obtenerUsuarioPorCedula(cedula, (err, usuario) => {
     expect(err).toBeDefined();
     expect(usuario).toBeNull(); // Comprueba que no se encontró ningún usuario

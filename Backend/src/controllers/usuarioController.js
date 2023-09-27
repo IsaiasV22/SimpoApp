@@ -19,6 +19,13 @@ const obtenerUsuarioPorCedula = (cedula, callback) => {
       callback(err, null);
       return;
     }
+    //Revisar si el results esta vacio
+    if (results.length == 0) {
+      console.warn("No se encontro el usuario");
+      callback(new Error("No se encontro el usuario"), null);
+      return;
+    }
+    console.log(results);
     // Devuelve los resultados de la consulta
     callback(null, results);
   });
