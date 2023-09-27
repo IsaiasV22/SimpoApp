@@ -16,7 +16,8 @@
   },
   "scripts": {
     "start": "node src/app.js",
-    "nodemon": "nodemon src/app.js"
+    "nodemon": "nodemon src/app.js",
+    "test": "jest"
   },
   "devDependencies": {
     "jest": "^29.7.0"
