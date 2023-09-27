@@ -1,27 +1,27 @@
 const usuarioController = require('../src/controllers/usuarioController');
 
-// Prueba jsonFull
-test('jsonFull debe llamar al callback sin errores y devolver una lista de usuarios válida', (done) => {
-  usuarioController.jsonFull((err, usuarios) => {
+// Prueba usuariosAll
+test('usuariosAll debe llamar al callback sin errores y devolver una lista de usuarios válida', (done) => {
+  usuarioController.usuariosAll((err, usuarios) => {
     expect(err).toBeNull();
-    expect(Array.isArray(usuarios.oyentes)).toBe(true);
+    expect(Array.isArray(usuarios)).toBe(true);
     done();
   });
 });
 
-// Prueba obtenerUsuarioPorId
-test('obtenerUsuarioPorId debe llamar al callback sin errores y devolver un usuario válido', (done) => {
-  const id = 'oyente1'; // Reemplaza con un ID válido existente en tu archivo JSON
-  usuarioController.obtenerUsuarioPorId(id, (err, usuario) => {
+// Prueba obtenerUsuarioPorCedula
+test('obtenerUsuarioPorCedula debe llamar al callback sin errores y devolver un usuario válido', (done) => {
+  const cedula = '12345'; // Reemplaza con una Cedula válido existente en la bd
+  usuarioController.obtenerUsuarioPorCedula(cedula, (err, usuario) => {
     expect(err).toBeNull();
     expect(usuario).toBeDefined(); // Comprueba si se encontró un usuario
     done();
   });
 });
 
-test('obtenerUsuarioPorId debe llamar al callback con un mensaje de error para ID no válido', (done) => {
-  const id = 'no_valido'; // Reemplaza con un ID que no exista en tu archivo JSON
-  usuarioController.obtenerUsuarioPorId(id, (err, usuario) => {
+test('obtenerUsuarioPorCedula debe llamar al callback con un mensaje de error para Cedula no válida', (done) => {
+  const cedula = 'no_valido'; // Reemplaza con una Cedula que no exista en la bd
+  usuarioController.obtenerUsuarioPorCedula(cedula, (err, usuario) => {
     expect(err).toBeDefined();
     expect(usuario).toBeNull(); // Comprueba que no se encontró ningún usuario
     done();
