@@ -7,7 +7,6 @@ import { urlServer } from "@/app/Utiles.jsx";
 
 const urlSimposio = "../simposio";
 
-// FIXME: No se muestra la lista de eventos
 export default function Simposios() {
   const [eventos, setEventos] = useState([]);
 
@@ -23,7 +22,8 @@ export default function Simposios() {
       }
 
       const data = await response.json();
-      setEventos(data.eventos);
+      console.log(data);
+      setEventos(data);
     } catch (error) {
       alert(error.message);
     }
@@ -41,15 +41,15 @@ export default function Simposios() {
         <div className="row">
           {eventos.length > 0 ? (
             eventos.map((element) => (
-              <div key={element.evento.id} className="col-12 mb-4">
+              <div key={element.id} className="col-12 mb-4">
                 <div className="card">
                   <div className="card-body">
-                    <h5 className="card-title">{element.evento.nombre}</h5>
-                    <p className="card-text">{element.evento.descripcion}</p>
-                    <p className="card-text">{element.evento.fecha}</p>
-                    <p className="card-text">{element.evento.hora}</p>
-                    <p className="card-text">{element.evento.lugar}</p>
-                    <p className="card-text">{element.evento.costo}</p>
+                    <h5 className="card-title">{element.nombre}</h5>
+                    <p className="card-text">{element.descripcion}</p>
+                    <p className="card-text">{element.fecha}</p>
+                    <p className="card-text">{element.hora}</p>
+                    <p className="card-text">{element.lugar}</p>
+                    <p className="card-text">{element.costo}</p>
                     <Link href={`${urlSimposio}`}>
                       <button className="btn btn-primary">Ver más</button>
                     </Link>

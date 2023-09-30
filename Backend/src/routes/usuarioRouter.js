@@ -33,10 +33,10 @@ router.post("/usuario", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  const userCedula = req.body.cedula;
+  const userCedula = req.body.id;
   const userPassword = req.body.password;
   console.log("entró al API /login");
-  //console.log("Cedula: " + userCedula+ " Password: " + userPassword);
+  console.log("Cedula: " + userCedula+ " Password: " + userPassword);
 
   usuarioController.obtenerUsuarioPorCedula(userCedula, (err, user) => {
     if (err) {
