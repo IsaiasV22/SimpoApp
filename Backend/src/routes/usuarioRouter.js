@@ -35,16 +35,11 @@ router.post("/usuario", (req, res) => {
 router.post("/login", (req, res) => {
   const userCedula = req.body.id;
   const userPassword = req.body.password;
-  console.log("entró al API /login");
-  console.log("Cedula: " + userCedula+ " Password: " + userPassword);
 
-  usuarioController.obtenerUsuarioPorCedula(userCedula, (err, user) => {
+  usuarioController.login(userCedula, userPassword, (err, user) => {
     if (err) {
       return res.status(404).json({ error: "Usuario no encontrado" });
-    }
-    if (user.at(0).password != userPassword) {
-      return res.status(404).json({ error: "Contraseña incorrecta" });
-    } else {
+    }else {
       res.json(user);
     }
   });
