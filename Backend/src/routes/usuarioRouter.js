@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const usuarioController = require("../controllers/usuarioController.js");
+const { log } = require("console");
 
 router.use(express.json());
 
@@ -20,10 +21,10 @@ router.get("/all", (req, res) => {
 });
 
 router.post("/usuario", (req, res) => {
-  const userId = req.body.id;
-  console.log("entró al API " + userId);
+  const userCedula = req.body.cedula;
+  console.log("entró al API " + userCedula);
 
-  usuarioController.obtenerUsuarioPorId(userId, (err, user) => {
+  usuarioController.obtenerUsuarioPorCedula(userCedula, (err, user) => {
     if (err) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
@@ -32,15 +33,16 @@ router.post("/usuario", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  const userId = req.body.id;
+  const userCedula = req.body.cedula;
   const userPassword = req.body.password;
   console.log("entró al API /login");
+  //console.log("Cedula: " + userCedula+ " Password: " + userPassword);
 
-  usuarioController.obtenerUsuarioPorId(userId, (err, user) => {
+  usuarioController.obtenerUsuarioPorCedula(userCedula, (err, user) => {
     if (err) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
-    if (user.password != userPassword) {
+    if (user.at(0).password != userPassword) {
       return res.status(404).json({ error: "Contraseña incorrecta" });
     } else {
       res.json(user);

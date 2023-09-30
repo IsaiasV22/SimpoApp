@@ -1,3 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   usuarioController.test.js                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: Andres Mendez <andresmesol09@gmail.com>                              */
+/*       Andres Fallas <andresfallas48@gmail.com>   +#+  +:+       +#+        */
+/*       Jose Chacon   <>                         +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/30 15:02:26 by all            #+#    #+#                */
+/*   Updated: 2023/09/30 15:02:26 by all           ###   ########.fr          */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+
 const usuarioController = require('../src/controllers/usuarioController');
 
 // Prueba usuariosAll

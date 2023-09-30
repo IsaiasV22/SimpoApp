@@ -25,7 +25,7 @@ const obtenerUsuarioPorCedula = (cedula, callback) => {
       callback(new Error("No se encontro el usuario"), null);
       return;
     }
-    console.log(results);
+    //console.log(results);
     // Devuelve los resultados de la consulta
     callback(null, results);
   });
