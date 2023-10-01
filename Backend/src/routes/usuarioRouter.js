@@ -33,12 +33,13 @@ router.post("/usuario", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  const userCedula = req.body.id;
+  const userCedula = req.body.cedula;
   const userPassword = req.body.password;
 
   usuarioController.login(userCedula, userPassword, (err, user) => {
     if (err) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
+      //console.log(err);
+      return res.status(404).json(err.message);
     }else {
       res.json(user);
     }

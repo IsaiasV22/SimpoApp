@@ -51,7 +51,6 @@ function login(userCedula, userPassword, callback) {
       if (err) {
         return callback(err, null);
       }
-      
       //Verifica que las contraseñas coincidan
       verifyPassword(userPassword, user[0].password)
         .then((passwordMatch) => {

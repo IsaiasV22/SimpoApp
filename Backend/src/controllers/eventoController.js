@@ -12,8 +12,8 @@ const eventosAll = (callback) => {
   });
 };
 
-const obtenerEventoPorCodigo = (codigo, callback) => {
-  db.query(`SELECT * FROM evento_contenedor WHERE codigo=${codigo}`, (err, results) => {
+const obtenerEventoPorCodigo = (PK_evento_contenedor, callback) => {
+  db.query(`SELECT * FROM evento_contenedor WHERE PK_evento_contenedor=${PK_evento_contenedor}`, (err, results) => {
     //Recuperar cualquier error del query
     if (err) {
       console.error("Error al realizar la consulta:", err);

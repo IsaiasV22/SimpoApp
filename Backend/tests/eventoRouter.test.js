@@ -32,15 +32,19 @@ describe("Pruebas para el enrutador de eventos", () => {
       .send({ id: eventId });
 
     expect(response.status).toBe(200);
-    expect(response.body).toEqual([{
-      codigo: 1,
-      descripcion:
-        "El XXI SIMMAC es un simposio internacional que reúne a expertos en estadísticas y matemáticas aplicadas para compartir conocimientos y avances en diversos campos.",
-      diaInicio: "2023-09-20T06:00:00.000Z",
-      diaFinal: "2023-09-22T06:00:00.000Z",
-      activo: 1,
-      codigo_tipoEvento: 1,
-    }]);
+    expect(response.body).toEqual([
+      {
+        PK_evento_contenedor: 1,
+        nombre: "SIMMAC XXI",
+        descripcion:
+          "El XXI SIMMAC es un simposio internacional que reúne a expertos en estadísticas y matemáticas aplicadas para compartir conocimientos y avances en diversos campos.",
+        lugar: "UCR Ciudad de la Investigación",
+        dia_inicio: "2018-02-27T06:00:00.000Z",
+        dia_final: "2018-03-02T06:00:00.000Z",
+        activo: 1,
+        FK_tipo_evento: 1,
+      },
+    ]);
   });
 
   it("debe responder con todos los eventos en una solicitud GET /eventos/all", async () => {
@@ -49,13 +53,15 @@ describe("Pruebas para el enrutador de eventos", () => {
     expect(response.status).toBe(200);
     expect(response.body).toEqual([
       {
-        codigo: 1,
+        PK_evento_contenedor: 1,
+        nombre: "SIMMAC XXI",
         descripcion:
           "El XXI SIMMAC es un simposio internacional que reúne a expertos en estadísticas y matemáticas aplicadas para compartir conocimientos y avances en diversos campos.",
-        diaInicio: "2023-09-20T06:00:00.000Z",
-        diaFinal: "2023-09-22T06:00:00.000Z",
+        lugar: "UCR Ciudad de la Investigación",
+        dia_inicio: "2018-02-27T06:00:00.000Z",
+        dia_final: "2018-03-02T06:00:00.000Z",
         activo: 1,
-        codigo_tipoEvento: 1,
+        FK_tipo_evento: 1,
       },
     ]);
   });
