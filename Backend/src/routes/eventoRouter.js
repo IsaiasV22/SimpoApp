@@ -15,7 +15,6 @@ router.get("/", (req, res) => {
   res.send("¡Hola, evento!");
 });
 
-//Brete jose
 router.post("/evento", (req, res) => {
   const eventId = req.body.id;
   console.log("entró al API " + eventId);

@@ -13,7 +13,6 @@ const usuariosAll = (callback) => {
   });
 };
 
-
 const obtenerUsuarioPorCedula = (cedula, callback) => {
   db.query(`SELECT * FROM usuario WHERE cedula=${cedula}`, (err, results) => {
     if (err) {
@@ -33,6 +32,24 @@ const obtenerUsuarioPorCedula = (cedula, callback) => {
   });
 };
 
+const obtenerUsuarioPorUsername = (username, callback) => {
+  db.query(`SELECT * FROM usuario WHERE PK_nombre_usuario="${username}"`, (err, results) => {
+    if (err) {
+      console.error("Error al realizar la consulta:", err);
+      callback(err, null);
+      return;
+    }
+    //Revisar si el results esta vacio
+    if (results.length == 0) {
+      console.warn("No se encontro el usuario");
+      callback(new Error("No se encontro el usuario"), null);
+      return;
+    }
+    // Devuelve los resultados de la consulta
+    callback(null, results);
+  });
+};
+
 // Función para verificar el login correctamente
 async function verifyPassword(password, hashedPassword) {
   try {
@@ -45,9 +62,9 @@ async function verifyPassword(password, hashedPassword) {
   }
 }
 
-function login(userCedula, userPassword, callback) {
+function login(userName, userPassword, callback) {
   try {
-    obtenerUsuarioPorCedula(userCedula, (err, user) => {
+    obtenerUsuarioPorUsername(userName, (err, user) => {
       if (err) {
         return callback(err, null);
       }
@@ -74,5 +91,6 @@ function login(userCedula, userPassword, callback) {
 module.exports = {
   usuariosAll,
   obtenerUsuarioPorCedula,
+  obtenerUsuarioPorUsername,
   login
 };

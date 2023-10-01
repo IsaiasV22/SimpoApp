@@ -8,14 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 export default function Login() {
-  const [id, setId] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const dataForm = { id, password };
+    const dataForm = { username, password };
     try {
       const response = await fetch(`${urlServer}usuarios/login`, {
         method: "POST",
@@ -82,7 +82,7 @@ export default function Login() {
               className="fadeIn second"
               name="login"
               placeholder="login"
-              onChange={(e) => setId(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <div className="password-input">
               <input

@@ -33,12 +33,12 @@ router.post("/usuario", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  const userCedula = req.body.cedula;
+  const userName = req.body.username;
   const userPassword = req.body.password;
+  console.log("entró al API " + userName + " " + userPassword);
 
-  usuarioController.login(userCedula, userPassword, (err, user) => {
+  usuarioController.login(userName, userPassword, (err, user) => {
     if (err) {
-      //console.log(err);
       return res.status(404).json(err.message);
     }else {
       res.json(user);
