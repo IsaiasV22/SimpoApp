@@ -1,7 +1,20 @@
 const express = require("express");
+const session = require('express-session');
 const cors = require("cors");
 const app = express();
 require("dotenv").config();
+
+//sesion
+app.use(session({
+  secret: process.env.SECRET_KEY, 
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    //secure: true, // Habilita las cookies solo a través de HTTPS
+    httpOnly: true, // Impide que JavaScript acceda a la cookie en el cliente
+    maxAge: 3600000 // Tiempo de vida de la sesión en milisegundos (1 hora en este caso)
+  }
+}));
 
 // Configura CORS para permitir todas las solicitudes
 app.use(cors());

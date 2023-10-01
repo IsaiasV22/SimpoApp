@@ -33,6 +33,7 @@ router.post("/usuario", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
+  //console.log(req.session.user);
   const userName = req.body.username;
   const userPassword = req.body.password;
   console.log("entró al API " + userName + " " + userPassword);
@@ -40,8 +41,17 @@ router.post("/login", (req, res) => {
   usuarioController.login(userName, userPassword, (err, user) => {
     if (err) {
       return res.status(404).json(err.message);
-    }else {
-      res.json(user);
+    } else {
+
+      if (user) {
+        // Almacena el usuario en la sesión
+        req.session.user = user;
+        console.log(req.session.user);
+        res.json(user);
+      } else {
+        res.send("Credenciales incorrectas");
+      }
+      
     }
   });
 });
