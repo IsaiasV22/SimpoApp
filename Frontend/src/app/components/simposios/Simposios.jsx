@@ -51,7 +51,7 @@ export default function Simposios() {
                     <p className="card-text">{element.hora}</p>
                     <p className="card-text">{element.lugar}</p>
                     <p className="card-text">{element.costo}</p>
-                    <Link href={`${urlSimposio}?element=${element}`}>
+                    <Link href={`${urlSimposio}?element=${JSON.stringify(element)}`}>
                       <button className="btn btn-primary">Ver más</button>
                     </Link>
                   </div>

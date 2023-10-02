@@ -6,12 +6,13 @@ import Link from "next/link";
 import Actividades from "../actividades/Actividades";
 
 export default function Simposio({ element }) {
+  console.log("Simposio de la actividad: ", element.nombre);
   return (
     <div>
       <Link href="../login">
         <button>ATRAS</button>
       </Link>
-      <div className="simposio-container">Simposio</div>
+      <div className="simposio-container">{element.nombre}</div>
       <Actividades />
     </div>
   );
