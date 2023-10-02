@@ -1,5 +1,7 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
+import LogoutButton from "./logout/Logout";
 
 const Header = () => {
   const [isMenuCollapsed, setMenuCollapsed] = useState(true);
@@ -8,13 +10,17 @@ const Header = () => {
     setMenuCollapsed(!isMenuCollapsed);
   };
 
+  const handleLogout = async () => {
+    // Logica
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
         <div className="d-flex align-items-center">
           <a className="navbar-brand" href="#">
             <img
-              className="logo-img img-fluid w-75 w-md-100" // Aumenta el tamaño del logo
+              className="logo-img img-fluid w-75 w-md-100"
               src="https://www.cimpa.ucr.ac.cr/images/Cimpa/images/Logos/Logo_incio_ODI.png"
               alt="Cimpa"
               style={{ maxWidth: "500px" }}
@@ -30,7 +36,7 @@ const Header = () => {
             aria-label="Toggle navigation"
             onClick={toggleMenu}
           >
-            <span className="navbar-toggler-icon" style={{ fontSize: "0.8rem" }}> {/* Reduzco el tamaño del icono de hamburguesa */}
+            <span className="navbar-toggler-icon" style={{ fontSize: "0.8rem" }}>
             </span>
           </button>
         </div>
@@ -46,6 +52,7 @@ const Header = () => {
                 Home
               </a>
             </li>
+            <LogoutButton handleLogout={handleLogout} />
           </ul>
         </div>
       </div>
