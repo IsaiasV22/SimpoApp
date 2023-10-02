@@ -5,7 +5,8 @@ import Link from "next/link";
 import { urlServer } from "@/app/Utiles.jsx";
 //import "@/app/App.css"
 
-const urlSimposio = "../simposio";
+const urlSimposio = "../../simposio";
+const urlActividades = "../../actividades";
 
 export default function Simposios() {
   const [eventos, setEventos] = useState([]);
@@ -50,7 +51,7 @@ export default function Simposios() {
                     <p className="card-text">{element.hora}</p>
                     <p className="card-text">{element.lugar}</p>
                     <p className="card-text">{element.costo}</p>
-                    <Link href={`${urlSimposio}`}>
+                    <Link href={`${urlSimposio}?element=${element}`}>
                       <button className="btn btn-primary">Ver más</button>
                     </Link>
                   </div>
