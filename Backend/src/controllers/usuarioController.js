@@ -50,6 +50,22 @@ const obtenerUsuarioPorUsername = (username, callback) => {
   });
 };
 
+const estaSuscritoA = (evento, username, callback) => {
+  db.query(`SELECT * FROM participacion_usuario WHERE FK_evento_contenedor=${evento} AND FK_usuario="${username}"`, (err, results) => {
+    if (err) {
+      console.error("Error al realizar la consulta:", err);
+      callback(err, null);
+      return;
+    }
+
+    // Revisar si hay resultados
+    const estaSuscrito = results.length > 0;
+
+    // Devuelve true si está suscrito, false si no está suscrito
+    callback(null, estaSuscrito);
+  });
+};
+
 // Función para verificar el login correctamente
 async function verifyPassword(password, hashedPassword) {
   try {
@@ -92,5 +108,6 @@ module.exports = {
   usuariosAll,
   obtenerUsuarioPorCedula,
   obtenerUsuarioPorUsername,
+  estaSuscritoA,
   login
 };
