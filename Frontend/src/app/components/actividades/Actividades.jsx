@@ -8,24 +8,28 @@ import Link from "next/link";
 const urlSimposio = "../simposio";
 const urlActividad = "../../actividad";
 
-export default function Actividades() {
+export default function Actividades({ elementId }) {
   const [actividades, setActividades] = useState([]);
 
   useEffect(() => {
     handleActividades();
   }, []);
 
+//obtener la lista de actividades por el simposi seleccionado
+//console.log("Simposio seleccionado para hacer peticion : ", elementId);
+
   async function handleActividades() {
     try {
-      const response = await fetch(`${urlServer}actividades/all`);
-      if (!response.ok) {
-        throw new Error(
-          "No se pudo obtener la lista de actividades" + response.text()
-        );
-      }
+      const response = await fetch(`${urlServer}actividades/porEvento`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ evento: elementId}),
+        credentials: "include",
+      });
+
 
       const data = await response.json();
-      console.log(data);
+      console.log("actividades del evento "+elementId+" -> "+JSON.stringify(data));
       setActividades(data);
     } catch (error) {
       alert(error.message);

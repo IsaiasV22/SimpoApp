@@ -13,7 +13,7 @@ export default function Simposio({ element }) {
         <button>ATRAS</button>
       </Link>
       <div className="simposio-container">{element.nombre}</div>
-      <Actividades />
+      <Actividades elementId={element.PK_evento_contenedor}/>
     </div>
   );
 }
