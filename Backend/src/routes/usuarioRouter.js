@@ -56,4 +56,22 @@ router.post("/login", (req, res) => {
   });
 });
 
+router.post("/evento", (req, res) => {
+  const username = "Andres21sb";//req.session.user.PK_nombre_usuario;
+  const evento = req.body.evento;
+  console.log("entró al API " + username + " " + evento);
+
+  usuarioController.estaSuscritoA(evento, username, (err, estaSuscrito) => {
+    if (err) {
+      return res.status(404).json({ error: err.message });
+    } else {
+      if(estaSuscrito){
+        res.send("Está suscrito al evento");
+      }else{
+        res.send("No está suscrito al evento");
+      }
+    }
+  });
+});
+
 module.exports = router;

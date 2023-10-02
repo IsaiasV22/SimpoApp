@@ -16,26 +16,14 @@ router.get("/all", (req, res) => {
 });
 
 router.post("/porEvento", (req, res) => {
-  console.log("session user:  "+JSON.stringify(req.session));
-  const username = req.session.user.PK_nombre_usuario;
   const evento = req.body.evento;
-  console.log("entró al API " + username + " " + evento);
+  console.log("entró al API " + evento);
 
-  usuarioController.estaSuscritoA(evento, username, (err, estaSuscrito) => {
+  actividadController.obtenerActividadesPorEvento(evento, (err, results) => {
     if (err) {
-      return res.status(404).json({ error: err.message });
-    } else {
-      if (estaSuscrito) {
-        actividadController.obtenerActividadesPorEvento(evento, (err, results) => {
-          if (err) {
-            return res.status(404).json({ error: "Error al obtener las actividades" });
-          }
-          res.json(results);
-        });
-      } else {
-        res.send("No está suscrito al evento");
-      }
+      return res.status(404).json({ error: "Error al obtener las actividades" });
     }
+    res.json(results);
   });
 });
 
