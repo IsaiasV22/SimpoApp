@@ -41,12 +41,13 @@ router.post("/login", (req, res) => {
   usuarioController.login(userName, userPassword, (err, user) => {
     if (err) {
       return res.status(404).json(err.message);
-    } else {
+    } 
+    else {
       if (user) {
         // Almacena el usuario en la sesión
         req.session.user = user[0];
-        //console.log("session -> " + req.session.user.PK_nombre_usuario);
-        res.json(user);
+        //console.log(req.session.user);
+        res.status(200).json(user);
       } else {
         res.send("Credenciales incorrectas");
       }

@@ -45,6 +45,10 @@ const obtenerUsuarioPorUsername = (username, callback) => {
       callback(new Error("No se encontro el usuario"), null);
       return;
     }
+
+    // Verifica que el campo PK_nombre_usuario sea igual al username
+    //assert.strictEqual(results[0].PK_nombre_usuario, username, 'El nombre de usuario no coincide');
+
     // Devuelve los resultados de la consulta
     callback(null, results);
   });
