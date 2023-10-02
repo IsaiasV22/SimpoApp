@@ -65,7 +65,12 @@ export default function Simposios() {
       }
 
       const data = await response.json();
-      console.log(data);
+      console.log("Suscrito: "+data);
+
+      if(!data){
+        console.log("No esta suscrito");
+        return false;
+      }
 
       /*       if (data !== "") {
         window.location.href = "../../simposio";
