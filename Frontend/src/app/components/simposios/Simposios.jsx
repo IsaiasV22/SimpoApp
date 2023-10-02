@@ -18,7 +18,7 @@ export default function Simposios() {
     handleEventos();
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     eventos.forEach(async (element) => {
       try {
         const suscrito = await VerificaSuscripcion(element);
@@ -65,9 +65,9 @@ export default function Simposios() {
       }
 
       const data = await response.json();
-      console.log("Suscrito: "+data);
+      //console.log("Suscrito: "+data);
 
-      if(!data){
+      if (!data) {
         console.log("No esta suscrito");
         return false;
       }

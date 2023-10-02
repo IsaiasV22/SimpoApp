@@ -96,7 +96,7 @@ export default function Actividades({ elementId }) {
                       {"Ubicación: " + element.ubicacion}
                     </p>
                     <p className="card-text">{"Estatus: " + element.estatus}</p>
-                    <Link href={`${urlActividad}`}>
+                    <Link href={`${urlActividad}?actividadId=${JSON.stringify(element.PK_actividad)}`}>
                       <button className="btn btn-primary">Ver más</button>
                     </Link>
                   </div>

@@ -27,4 +27,17 @@ router.post("/porEvento", (req, res) => {
   });
 });
 
+//porId
+router.post("/porId", (req, res) => {
+  const id = req.body.id;
+  console.log("entró al API " + id);
+
+  actividadController.obtenerActividadPorId(id, (err, results) => {
+    if (err) {
+      return res.status(404).json({ error: "Error al obtener la actividad" });
+    }
+    res.json(results);
+  });
+});
+
 module.exports = router;
