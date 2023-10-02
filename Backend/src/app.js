@@ -4,11 +4,13 @@ const cors = require("cors");
 const app = express();
 require("dotenv").config();
 
+app.use(express.json());
+
 //sesion
 app.use(session({
   secret: process.env.SECRET_KEY, 
-  resave: false,
-  saveUninitialized: true,
+  resave: true,
+  saveUninitialized: false,
   cookie: {
     //secure: true, // Habilita las cookies solo a través de HTTPS
     httpOnly: true, // Impide que JavaScript acceda a la cookie en el cliente
@@ -16,8 +18,13 @@ app.use(session({
   }
 }));
 
+const corsOptions = {
+  credentials: true,
+  origin: 'http://localhost:3000' // Reemplaza esto con la URL de tu frontend
+};
+
 // Configura CORS para permitir todas las solicitudes
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Resto de tu configuración de servidor aquí...
 

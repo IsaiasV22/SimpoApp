@@ -42,36 +42,41 @@ router.post("/login", (req, res) => {
     if (err) {
       return res.status(404).json(err.message);
     } else {
-
       if (user) {
         // Almacena el usuario en la sesión
-        req.session.user = user;
-        console.log(req.session.user);
+        req.session.user = user[0];
+        //console.log("session -> " + req.session.user.PK_nombre_usuario);
         res.json(user);
       } else {
         res.send("Credenciales incorrectas");
       }
-      
     }
   });
 });
 
 router.post("/evento", (req, res) => {
-  const username = "Andres21sb";//req.session.user.PK_nombre_usuario;
-  const evento = req.body.evento;
-  console.log("entró al API " + username + " " + evento);
+  //console.log("Inside /evento");
+  //console.log("req headers -> "+JSON.stringify(req.headers));
+  // Verifica si req.session.user está definido antes de acceder a sus propiedades
+  if (req.session.user && req.session.user.PK_nombre_usuario) {
+    const username = req.session.user.PK_nombre_usuario;
+    const evento = req.body.evento;
+    //console.log("User in session -> " + username + " " + evento);
 
-  usuarioController.estaSuscritoA(evento, username, (err, estaSuscrito) => {
-    if (err) {
-      return res.status(404).json({ error: err.message });
-    } else {
-      if(estaSuscrito){
-        res.send("Está suscrito al evento");
-      }else{
-        res.send("No está suscrito al evento");
+    usuarioController.estaSuscritoA(evento, username, (err, estaSuscrito) => {
+      if (err) {
+        return res.status(404).json({ error: err.message });
+      } else {
+        if (estaSuscrito) {
+          res.send("true");
+        } else {
+          res.send("false");
+        }
       }
-    }
-  });
+    });
+  } else {
+    res.status(404).send("No se encontró el usuario en la sesión");
+  }
 });
 
 module.exports = router;

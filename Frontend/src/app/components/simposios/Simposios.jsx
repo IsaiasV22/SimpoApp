@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import "./Simposios.css";
 import Link from "next/link";
 import { urlServer } from "@/app/Utiles.jsx";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //import "@/app/App.css"
 
 const urlSimposio = "../../simposio";
@@ -10,10 +12,25 @@ const urlActividades = "../../actividades";
 
 export default function Simposios() {
   const [eventos, setEventos] = useState([]);
+  const [suscripcion, setSuscripcion] = useState(null);
 
   useEffect(() => {
     handleEventos();
   }, []);
+
+   useEffect(() => {
+    eventos.forEach(async (element) => {
+      try {
+        const suscrito = await VerificaSuscripcion(element);
+        setSuscripcion((prev) => ({
+          ...prev,
+          [element.PK_evento_contenedor]: suscrito,
+        }));
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  }, [eventos]);
 
   async function handleEventos() {
     try {
@@ -27,6 +44,37 @@ export default function Simposios() {
       setEventos(data);
     } catch (error) {
       alert(error.message);
+    }
+  }
+
+  //verificar si el usuario de la session esta suscrito al evento
+  async function VerificaSuscripcion(element) {
+    console.log("verificando para Elemento: ", element.PK_evento_contenedor);
+    try {
+      const response = await fetch(`${urlServer}usuarios/evento`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ evento: element.PK_evento_contenedor }),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        console.log("response: ", response);
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      /*       if (data !== "") {
+        window.location.href = "../../simposio";
+      } */
+      return true;
+    } catch (error) {
+      console.log("error: ", error);
+      // Toastify
+      toast.error(error.message);
+      return false;
     }
   }
 
@@ -50,19 +98,40 @@ export default function Simposios() {
                     <p className="card-text">{element.dia_inicio}</p>
                     <p className="card-text">{element.dia_final}</p>
                     <p className="card-text">{element.lugar}</p>
+
+                    {suscripcion !== null && (
+                      <p className="card-text">
+                        {"Estado de suscripción -> " +
+                          (suscripcion[element.PK_evento_contenedor]
+                            ? "Suscrito"
+                            : "No suscrito")}
+                      </p>
+                    )}
                     <Link
-                      href={`${urlSimposio}?element=${JSON.stringify(element)}`}
+                      href={
+                        suscripcion && suscripcion[element.PK_evento_contenedor]
+                          ? `${urlSimposio}?element=${JSON.stringify(element)}`
+                          : "#"
+                      }
                     >
-                      <button className="btn btn-primary">Ver más</button>
+                      <button
+                        className="btn btn-primary"
+                        disabled={
+                          !suscripcion ||
+                          !suscripcion[element.PK_evento_contenedor]
+                        }
+                      >
+                        Ver más
+                      </button>
                     </Link>
+
+                    {/* <button className="btn btn-primary" onClick={() => VerificaSuscripcion(element)}>Ver más</button>*/}
                   </div>
                 </div>
               </div>
             ))
           ) : (
-            <div className="col-12">
-              No hay eventos próximos.
-            </div>
+            <div className="col-12">No hay eventos próximos.</div>
           )}
         </div>
       </div>
