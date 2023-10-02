@@ -1,11 +1,10 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import "./Login.css";
 import Link from "next/link";
 import { urlServer } from "@/app/Utiles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -67,12 +66,7 @@ export default function Login() {
       </Link>
       <div className="wrapper fadeInDown">
         <div id="formContent">
-          <div className="fadeIn first">
-            <img
-              src="http://danielzawadzki.com/codepen/01/icon.svg"
-              id="icon"
-              alt="User Icon"
-            />
+          <div className="fadeIn first" style={{ marginBottom: "2rem" }}>
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -119,4 +113,3 @@ export default function Login() {
     </div>
   );
 }
-

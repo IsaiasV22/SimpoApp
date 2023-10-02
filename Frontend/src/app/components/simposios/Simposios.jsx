@@ -42,16 +42,17 @@ export default function Simposios() {
         <div className="row">
           {eventos.length > 0 ? (
             eventos.map((element) => (
-              <div key={element.id} className="col-12 mb-4">
+              <div key={element.PK_evento_contenedor} className="col-12 mb-4">
                 <div className="card">
                   <div className="card-body">
                     <h5 className="card-title">{element.nombre}</h5>
                     <p className="card-text">{element.descripcion}</p>
-                    <p className="card-text">{element.fecha}</p>
-                    <p className="card-text">{element.hora}</p>
+                    <p className="card-text">{element.dia_inicio}</p>
+                    <p className="card-text">{element.dia_final}</p>
                     <p className="card-text">{element.lugar}</p>
-                    <p className="card-text">{element.costo}</p>
-                    <Link href={`${urlSimposio}?element=${JSON.stringify(element)}`}>
+                    <Link
+                      href={`${urlSimposio}?element=${JSON.stringify(element)}`}
+                    >
                       <button className="btn btn-primary">Ver más</button>
                     </Link>
                   </div>
@@ -59,7 +60,9 @@ export default function Simposios() {
               </div>
             ))
           ) : (
-            <div className="col-12">No hay eventos próximos.</div>
+            <div className="col-12">
+              No hay eventos próximos.
+            </div>
           )}
         </div>
       </div>
