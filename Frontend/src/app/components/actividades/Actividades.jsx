@@ -4,6 +4,8 @@ import "./Actividades.css"; // Asegúrate de que la ruta al archivo CSS sea corr
 import { urlServer } from "@/app/Utiles.jsx";
 // Importa Link desde Next.js
 import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const urlSimposio = "../simposio";
 const urlActividad = "../../actividad";
@@ -29,10 +31,11 @@ export default function Actividades({ elementId }) {
 
 
       const data = await response.json();
-      console.log("actividades del evento "+elementId+" -> "+JSON.stringify(data));
+      //console.log("actividades del evento "+elementId+" -> "+JSON.stringify(data));
       setActividades(data);
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
+      //alert(error.message);
     }
   }
 
@@ -65,6 +68,7 @@ export default function Actividades({ elementId }) {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -43,7 +43,8 @@ export default function Simposios() {
       console.log(data);
       setEventos(data);
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message);
+      //alert(error.message);
     }
   }
 
@@ -135,6 +136,7 @@ export default function Simposios() {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
