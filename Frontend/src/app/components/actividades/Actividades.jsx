@@ -39,6 +39,28 @@ export default function Actividades({ elementId }) {
     }
   }
 
+  function estaEnCurso(horaInicio, horaFinal, dia_evento) {
+    const ahora = new Date().toLocaleTimeString('en-US', {hour12: false, hour: '2-digit', minute:'2-digit', second:'2-digit'});
+    const fechaActual = new Date().toISOString().split('T')[0]; // Obtiene la fecha actual en formato 'YYYY-MM-DD'
+    
+    /* console.log("Dia evento:", dia_evento);
+    console.log("Hora inicio:", horaInicio);
+    console.log("Hora final:", horaFinal);
+    console.log("Hora actual:", ahora);
+    console.log("Fecha actual:", fechaActual); */
+    
+    // Compara las fechas y las horas de inicio y finalización con la fecha y hora actual
+    const output = dia_evento === fechaActual && horaInicio <= ahora && horaFinal >= ahora;
+   /*  console.log("Esta en curso:", output); */
+    
+    return output;
+  }
+  
+  
+  
+  
+  
+
   return (
     <div className="main-content">
       <div className="container my-5">
@@ -46,9 +68,9 @@ export default function Actividades({ elementId }) {
         <div className="row">
           {actividades.length > 0 ? (
             actividades.map((element) => (
-              <div key={element.PK_actividad} className="col-12 mb-4">
+               <div key={element.PK_actividad} className={`col-12 mb-4`}>
                 {/* Utiliza el campo PK_actividad como clave única */}
-                <div className="card">
+                <div className={`card ${estaEnCurso(element.hora_inicio, element.hora_final, element.dia_evento) ? 'border-danger' : ''}`}>
                   <div className="card-body">
                     <h5 className="card-title">{element.descripcion}</h5>
                     <p className="card-text">{"Fecha: " + element.dia_evento.slice(0, 10)}</p>
