@@ -55,12 +55,19 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.get("/logout", (req, res) => {
+router.post("/logout", (req, res) => {
   req.session.destroy(err => {
       if (err) {
           return res.status(500).send("Error al cerrar sesión");
       }
-      res.send("Sesión cerrada con éxito");
+      
+      //imprimir las cookies
+      console.log("Estas son las header cookies: ", req.headers);
+
+      // Elimina la cookie de sesión y envía una respuesta de éxito al cliente
+      res.clearCookie('connect.sid'); // Borra la cookie de sesión 
+
+      res.status(200).json({ message: 'Sesión cerrada exitosamente' });
   });
 });
 

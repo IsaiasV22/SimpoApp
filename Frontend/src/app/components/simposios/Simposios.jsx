@@ -5,6 +5,7 @@ import Link from "next/link";
 import { urlServer } from "@/app/Utiles.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useGlobalState from "@/app/components/globalState/GlobalState";
 //import "@/app/App.css"
 
 const urlSimposio = "../../simposio";
@@ -13,6 +14,8 @@ const urlActividades = "../../actividades";
 export default function Simposios() {
   const [eventos, setEventos] = useState([]);
   const [suscripcion, setSuscripcion] = useState(null);
+  const user = useGlobalState((state) => state.user);
+
 
   useEffect(() => {
     handleEventos();
@@ -94,7 +97,7 @@ export default function Simposios() {
         <h1 className="mb-4">Simposios</h1>
 
         <div className="row">
-          {eventos.length > 0 ? (
+          {eventos.length > 0 && user ? (
             eventos.map((element) => (
               <div key={element.PK_evento_contenedor} className="col-12 mb-4">
                 <div className="card">

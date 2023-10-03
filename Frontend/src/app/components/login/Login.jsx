@@ -1,17 +1,18 @@
 "use client";
 import React, { useState } from "react";
 import "./Login.css";
-import Link from "next/link";
 import { urlServer } from "@/app/Utiles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "../globalState/GlobalState"; // Asegúrate de que la ruta sea correcta
+import {useRouter} from "next/navigation";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const setUserState = useGlobalState((state) => state.setUser);
+  const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -33,7 +34,9 @@ export default function Login() {
 
       if (data !== "") {
         setUserState(true); // Cambia el estado del usuario a true
-        window.location.href = "../../simposios";
+        router.push('/simposios');
+        //Redireccion a page simposios
+        //window.location.href = "../../simposios";
       }
     } catch (error) {
       // Personaliza las notificaciones Toastify según el tipo de error
