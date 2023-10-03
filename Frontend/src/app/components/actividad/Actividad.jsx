@@ -7,12 +7,18 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { urlServer } from "@/app/Utiles.jsx";
 
+
+
+const urlPonente = "../../ponente";
 export default function Actividad({ actividadId }) {
   //hook actividad
   const [actividad, setActividad] = useState(null);
+  //state exponente
+  const [ponente, setPonente] = useState(null);
   //useEffect
   useEffect(() => {
     handleActividad();
+    handlePonente();
   }, []);
   //handleActividad
   async function handleActividad() {
@@ -24,8 +30,25 @@ export default function Actividad({ actividadId }) {
         credentials: "include",
       });
       const data = await response.json();
-      console.log("actividad por id: ", data[0]);
+      //console.log("actividad por id: ", data[0]);
       setActividad(data[0]);
+    } catch (error) {
+      toast.error(error.message);
+      //alert(error.message);
+    }
+  }
+  //handleExponente
+  async function handlePonente() {
+    try {
+      const response = await fetch(`${urlServer}ponentes/porActividadId`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: actividadId }),
+        credentials: "include",
+      });
+      const data = await response.json();
+      //console.log("exponente por id: ", data[0]);
+      setPonente(data[0]);
     } catch (error) {
       toast.error(error.message);
       //alert(error.message);
@@ -93,6 +116,23 @@ export default function Actividad({ actividadId }) {
                     <p className="card-text">
                       {"Estatus: " + actividad.estatus}
                     </p>
+                    <h5 className="card-title">Ponente</h5>
+                    {ponente ? (
+                      <>
+                        <p className="card-text">
+                          {ponente.nombre + " " + ponente.apellidos}
+                        </p>
+                        <Link
+                          href={`${urlPonente}?ponente=${JSON.stringify(
+                            ponente
+                          )}`}
+                        >
+                          <button className="btn btn-primary">Ver Información del ponente</button>
+                        </Link>
+                      </>
+                    ) : (
+                      <p className="card-text">Cargando ponente...</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -105,5 +145,4 @@ export default function Actividad({ actividadId }) {
       <ToastContainer />
     </div>
   );
-  
 }
