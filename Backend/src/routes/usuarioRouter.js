@@ -55,6 +55,15 @@ router.post("/login", (req, res) => {
   });
 });
 
+router.get("/logout", (req, res) => {
+  req.session.destroy(err => {
+      if (err) {
+          return res.status(500).send("Error al cerrar sesión");
+      }
+      res.send("Sesión cerrada con éxito");
+  });
+});
+
 router.post("/evento", (req, res) => {
   //console.log("Inside /evento");
   //console.log("req headers -> "+JSON.stringify(req.headers));

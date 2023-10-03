@@ -2,16 +2,13 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import LogoutButton from "./logout/Logout";
+import { toast } from "react-toastify";
 
-const Header = () => {
+const Header = ({ onLogged, isLogged }) => {
   const [isMenuCollapsed, setMenuCollapsed] = useState(true);
 
   const toggleMenu = () => {
     setMenuCollapsed(!isMenuCollapsed);
-  };
-
-  const handleLogout = async () => {
-    // Logica
   };
 
   return (
@@ -63,7 +60,11 @@ const Header = () => {
                 Home
               </a>
             </li>
-            <LogoutButton handleLogout={handleLogout} />
+            {isLogged && (
+              <li className="nav-item">
+                <LogoutButton onLogged={onLogged}/>
+              </li>
+            )}
           </ul>
         </div>
       </div>

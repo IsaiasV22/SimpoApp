@@ -4,9 +4,8 @@ import Link from "next/link";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@/app/App.css";
 
-const Content = () => {
+const Content = ({onLogged}) => {
   //parte para js
-
   //return
 
   return (

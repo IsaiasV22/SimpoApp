@@ -6,7 +6,7 @@ import { urlServer } from "@/app/Utiles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Login() {
+export default function Login({onLogged}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -28,9 +28,9 @@ export default function Login() {
       }
 
       const data = await response.json();
-      console.log(data);
 
       if (data !== "") {
+        onLogged();
         window.location.href = "../../simposios";
       }
     } catch (error) {
