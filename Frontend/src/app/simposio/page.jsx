@@ -9,7 +9,7 @@ const Page = () => {
   const searchParams = useSearchParams();
   const elementValues = searchParams.get("element");
   const element = elementValues ? JSON.parse(elementValues) : null;
-  console.log("Elemento: ",element);
+  //console.log("Elemento: ",element);
 
   return (
     <>

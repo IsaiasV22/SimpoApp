@@ -10,7 +10,7 @@ const page = () =>{
     const searchParams = useSearchParams();
     const actividadIdValues = searchParams.get("actividadId");
     const actividadId = actividadIdValues ? JSON.parse(actividadIdValues) : null;
-    console.log("Actividad Id: ",actividadId);
+    //console.log("Actividad Id: ",actividadId);
 
     return(
         <>

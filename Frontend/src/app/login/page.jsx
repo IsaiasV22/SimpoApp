@@ -7,7 +7,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "../App.css";
 
 const page = () => {
-  console.log("about page");
+  //console.log("about page");
   return (
     <>
       <Header />

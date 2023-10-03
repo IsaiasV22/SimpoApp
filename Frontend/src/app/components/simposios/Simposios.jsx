@@ -40,7 +40,7 @@ export default function Simposios() {
       }
 
       const data = await response.json();
-      console.log(data);
+      //console.log(data);
       setEventos(data);
     } catch (error) {
       toast.error(error.message);
@@ -50,7 +50,7 @@ export default function Simposios() {
 
   //verificar si el usuario de la session esta suscrito al evento
   async function VerificaSuscripcion(element) {
-    console.log("verificando para Elemento: ", element.PK_evento_contenedor);
+    //console.log("verificando para Elemento: ", element.PK_evento_contenedor);
     try {
       const response = await fetch(`${urlServer}usuarios/evento`, {
         method: "POST",
