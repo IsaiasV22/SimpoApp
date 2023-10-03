@@ -13,11 +13,9 @@ const Page = () => {
 
   return (
     <>
-      <Header />
       <div className="main-content">
         <Simposio element={element} />
       </div>
-      <Footer />
     </>
   );
 };

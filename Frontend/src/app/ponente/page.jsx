@@ -11,11 +11,9 @@ const page = () =>{
     //console.log("Ponente : ",ponente);
     return(
         <>
-        <Header />
         <div className="main-content">
         <Ponente ponente={ponente}/>
         </div>
-        <Footer />
       </>
     );
 };

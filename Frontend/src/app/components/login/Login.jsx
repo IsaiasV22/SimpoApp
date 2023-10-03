@@ -5,11 +5,13 @@ import Link from "next/link";
 import { urlServer } from "@/app/Utiles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useGlobalState from "../globalState/GlobalState"; // Asegúrate de que la ruta sea correcta
 
-export default function Login({onLogged}) {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const setUserState = useGlobalState((state) => state.setUser);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,7 +32,7 @@ export default function Login({onLogged}) {
       const data = await response.json();
 
       if (data !== "") {
-        onLogged();
+        setUserState(true); // Cambia el estado del usuario a true
         window.location.href = "../../simposios";
       }
     } catch (error) {

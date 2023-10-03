@@ -7,9 +7,7 @@ const page = () =>{
     console.log("about page");
     return(
         <>
-        <Header/>
         <Actividades/>
-        <Footer/>
         </>
     );
 };

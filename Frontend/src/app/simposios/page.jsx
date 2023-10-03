@@ -8,9 +8,7 @@ const page = () => {
   //console.log("about page");
   return (
     <>
-      <Header />
       <Simposios />
-      <Footer />
     </>
   );
 };

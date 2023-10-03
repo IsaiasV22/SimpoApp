@@ -14,11 +14,9 @@ const page = () =>{
 
     return(
         <>
-        <Header />
         <div className="main-content">
         <Actividad actividadId={actividadId}/>
         </div>
-        <Footer />
       </>
 
     );

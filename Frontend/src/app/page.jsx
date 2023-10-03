@@ -9,11 +9,9 @@ import "./App.css";
 export default function Home() {
   return (
     <div>
-      <Header />
       <div className="content">
         <Content/>
       </div>
-      <Footer />
     </div>
   );
 }
