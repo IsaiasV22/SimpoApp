@@ -1,15 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import LogoutButton from "./logout/Logout";
 import { toast } from "react-toastify";
 
 const Header = ({ onLogged, isLogged }) => {
   const [isMenuCollapsed, setMenuCollapsed] = useState(true);
+  const [showLogoutButton, setShowLogoutButton] = useState(false);
 
   const toggleMenu = () => {
     setMenuCollapsed(!isMenuCollapsed);
   };
+
+  useEffect(() => {
+    setShowLogoutButton(isLogged);
+  }, [isLogged]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -60,9 +65,9 @@ const Header = ({ onLogged, isLogged }) => {
                 Home
               </a>
             </li>
-            {isLogged && (
+            {showLogoutButton && (
               <li className="nav-item">
-                <LogoutButton onLogged={onLogged}/>
+                <LogoutButton onLogged={onLogged} />
               </li>
             )}
           </ul>

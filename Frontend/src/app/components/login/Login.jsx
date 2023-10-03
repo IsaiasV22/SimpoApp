@@ -47,24 +47,6 @@ export default function Login({onLogged}) {
 
   return (
     <div className="main-content">
-      <Link href="/">
-        <button>ATRAS</button>
-      </Link>
-      <Link href="../../simposios">
-        <button>SIMPOSIOS</button>
-      </Link>
-      <Link href="../../simposio">
-        <button>SIMPOSIO</button>
-      </Link>
-      <Link href="../../actividades">
-        <button>ACTIVIDADES</button>
-      </Link>
-      <Link href="../../actividad">
-        <button>ACTIVIDAD</button>
-      </Link>
-      <Link href="../../ponente">
-        <button>PONENTE</button>
-      </Link>
       <div className="wrapper fadeInDown">
         <div id="formContent">
           <div className="fadeIn first" style={{ marginBottom: "2rem" }}>
