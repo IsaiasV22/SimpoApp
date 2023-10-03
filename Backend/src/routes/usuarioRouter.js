@@ -62,7 +62,7 @@ router.post("/logout", (req, res) => {
       }
       
       //imprimir las cookies
-      console.log("Estas son las header cookies: ", req.headers);
+      //console.log("Estas son las header cookies: ", req.headers);
 
       // Elimina la cookie de sesión y envía una respuesta de éxito al cliente
       res.clearCookie('connect.sid'); // Borra la cookie de sesión 
