@@ -7,7 +7,7 @@ const actividadesAll = (callback) => {
       callback(err, null);
       return;
     }
-    // Devuelve los resultados de la consulta
+    // Devuelve los resultados de la consulta 
     callback(null, results);
   });
 };

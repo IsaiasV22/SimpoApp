@@ -91,8 +91,8 @@ export default function Login() {
           </form>
 
           <div id="formFooter">
-            <a className="underlineHover" href="#">
-              Forgot Password?
+            <a className="underlineHover register" href="#">
+              Register
             </a>
           </div>
         </div>

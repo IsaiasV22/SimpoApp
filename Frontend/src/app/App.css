@@ -5,3 +5,19 @@
 .main-content {
   min-height: 100vh;
 }
+
+/* Estilo base para los enlaces */
+a {
+  color: white;
+  text-decoration: none; /* Esto quita el subrayado */
+}
+
+/* Estilo el enlace con clase register */
+a.register {
+  color: #39ace7;
+}
+
+/* Estilo para el hover (cuando el mouse está encima) */
+a:hover {
+  color: #39ace7;
+}
