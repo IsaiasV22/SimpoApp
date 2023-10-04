@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import Actividad from "../components/actividad/Actividad";
+import Actividad from "../../../../components/actividad/Actividad";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { useSearchParams } from "next/navigation";

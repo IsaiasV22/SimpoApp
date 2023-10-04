@@ -6,11 +6,12 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { urlServer } from "@/app/Utiles.jsx";
+import { usePathname } from 'next/navigation'
 
-
-
-const urlPonente = "../../ponente";
 export default function Actividad({ actividadId }) {
+  const pathname = usePathname()
+
+const urlPonente = `${pathname}/ponente`;
   //hook actividad
   const [actividad, setActividad] = useState(null);
   //state exponente

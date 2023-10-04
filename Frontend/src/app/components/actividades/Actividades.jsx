@@ -6,12 +6,14 @@ import { urlServer } from "@/app/Utiles.jsx";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { usePathname } from 'next/navigation'
 
-const urlSimposio = "../simposio";
-const urlActividad = "../../actividad";
+
 
 export default function Actividades({ elementId }) {
   const [actividades, setActividades] = useState([]);
+  const pathname = usePathname();
+  const urlActividad = `${pathname}/actividades/actividad`;
 
   useEffect(() => {
     handleActividades();

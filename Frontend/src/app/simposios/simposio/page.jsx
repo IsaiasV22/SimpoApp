@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Simposio from "../components/simposio/Simposio";
+import Simposio from "../../components/simposio/Simposio";
 import { useSearchParams } from "next/navigation";
 
 const Page = () => {

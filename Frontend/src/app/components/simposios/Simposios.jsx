@@ -8,14 +8,16 @@ import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "@/app/components/globalState/GlobalState";
 import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta sea correcta
 //import "@/app/App.css"
+import { usePathname } from 'next/navigation'
 
-const urlSimposio = "../../simposio";
-const urlActividades = "../../actividades";
+
 
 export default function Simposios() {
   const [eventos, setEventos] = useState([]);
   const [suscripcion, setSuscripcion] = useState(null);
   const user = useGlobalState((state) => state.user);
+  const pathname = usePathname()
+  const urlSimposio = `${pathname}/simposio`;
 
   useEffect(() => {
     handleEventos();

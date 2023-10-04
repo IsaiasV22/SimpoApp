@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Ponente from "../components/ponente/Ponente";
+import Ponente from "../../../../../components/ponente/Ponente";
 import { useSearchParams } from "next/navigation";
 const page = () =>{
     const searchParams = useSearchParams();
