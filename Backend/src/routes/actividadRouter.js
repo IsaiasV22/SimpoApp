@@ -33,7 +33,7 @@ router.post("/porId", (req, res) => {
   console.log("entró al API " + id);
 
   actividadController.obtenerActividadPorId(id, (err, results) => {
-    if (err) {
+    if (err || results.length === 0) {
       return res.status(404).json({ error: "Error al obtener la actividad" });
     }
     res.json(results);
