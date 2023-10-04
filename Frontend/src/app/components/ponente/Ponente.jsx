@@ -13,7 +13,7 @@ export default function Ponente({ ponente }) {
     <div className="container my-5">
       {ponente ? (
         <>
-          <h1 className="mb-4">{ponente.nombre + " " + ponente.apellidos}</h1>
+          <h1 className="mb-4">Ponente</h1>
           <div className="row">
             <div className="col-12 mb-4">
               <div className="card">
