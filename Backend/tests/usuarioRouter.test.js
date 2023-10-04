@@ -231,5 +231,28 @@ describe("Pruebas para el enrutador de usuarios", () => {
     );
   });
 
+  //logout
+  it("debe cerrar sesión correctamente en una solicitud POST /usuarios/logout", async () => {
+    // Primero inicia sesión para tener una sesión activa
+    const loginResponse = await supertest(app)
+      .post("/usuarios/login")
+      .send({ username: "Andres21sb", password: "password1" });
+
+    // Asegúrate de que el inicio de sesión sea exitoso
+    expect(loginResponse.status).toBe(200);
+
+    // Obtiene la cookie de sesión del encabezado de la respuesta del inicio de sesión
+    const sessionCookie = loginResponse.header["set-cookie"];
+
+    // Realiza la solicitud de logout con la cookie de sesión
+    const logoutResponse = await supertest(app)
+      .post("/usuarios/logout")
+      .set("Cookie", sessionCookie); // Establece la cookie de sesión en el encabezado
+
+    // Verifica que la sesión se haya cerrado correctamente
+    expect(logoutResponse.status).toBe(200);
+    expect(logoutResponse.body.message).toEqual("Sesión cerrada exitosamente");
+  });
+
   // Agrega más pruebas para otras rutas y casos si es necesario...
 });
