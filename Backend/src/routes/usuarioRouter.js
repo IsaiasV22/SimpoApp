@@ -40,34 +40,28 @@ router.post("/login", (req, res) => {
 
   usuarioController.login(userName, userPassword, (err, user) => {
     if (err) {
-      return res.status(404).json(err.message);
-    } 
-    else {
-      if (user) {
-        // Almacena el usuario en la sesión
-        req.session.user = user[0];
-        //console.log(req.session.user);
-        res.status(200).json(user);
-      } else {
-        res.send("Credenciales incorrectas");
-      }
+      // Manejar el error y enviarlo como respuesta en formato JSON
+      return res.status(400).json({ error: err.message });
+    } else {
+      // Si la autenticación es exitosa, enviar el usuario en formato JSON
+      res.status(200).json({ user });
     }
   });
 });
 
 router.post("/logout", (req, res) => {
-  req.session.destroy(err => {
-      if (err) {
-          return res.status(500).send("Error al cerrar sesión");
-      }
-      
-      //imprimir las cookies
-      //console.log("Estas son las header cookies: ", req.headers);
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send("Error al cerrar sesión");
+    }
 
-      // Elimina la cookie de sesión y envía una respuesta de éxito al cliente
-      res.clearCookie('connect.sid'); // Borra la cookie de sesión 
+    //imprimir las cookies
+    //console.log("Estas son las header cookies: ", req.headers);
 
-      res.status(200).json({ message: 'Sesión cerrada exitosamente' });
+    // Elimina la cookie de sesión y envía una respuesta de éxito al cliente
+    res.clearCookie("connect.sid"); // Borra la cookie de sesión
+
+    res.status(200).json({ message: "Sesión cerrada exitosamente" });
   });
 });
 
