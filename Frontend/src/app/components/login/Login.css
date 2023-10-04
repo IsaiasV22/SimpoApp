@@ -33,12 +33,10 @@
     font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
-    display:inline-block;
-    margin: 40px 8px 10px 8px; 
-    color: #cccccc;
-  }
-  
-  
+    display: inline-block;
+    margin: 40px 8px 10px 8px;
+    color: #0c0a0a;
+}
   
   /* STRUCTURE */
   
