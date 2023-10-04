@@ -71,7 +71,7 @@ export default function Login() {
                 id="login"
                 className="fadeIn second"
                 name="login"
-                placeholder="login"
+                placeholder="Username"
                 onChange={(e) => setUsername(e.target.value)}
               />
               <div className="password-input">

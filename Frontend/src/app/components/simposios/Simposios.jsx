@@ -6,6 +6,7 @@ import { urlServer } from "@/app/Utiles.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "@/app/components/globalState/GlobalState";
+import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta sea correcta
 //import "@/app/App.css"
 
 const urlSimposio = "../../simposio";
@@ -15,7 +16,6 @@ export default function Simposios() {
   const [eventos, setEventos] = useState([]);
   const [suscripcion, setSuscripcion] = useState(null);
   const user = useGlobalState((state) => state.user);
-
 
   useEffect(() => {
     handleEventos();
@@ -90,9 +90,7 @@ export default function Simposios() {
   return (
     <div className="main-content">
       <div className="container my-5">
-        <Link href="../login">
-          <button className="btn btn-primary mb-3">ATRAS</button>
-        </Link>
+        <BackButton />
 
         <h1 className="mb-4">Simposios</h1>
 

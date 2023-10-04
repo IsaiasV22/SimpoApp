@@ -21,12 +21,12 @@ a {
 
 /* Estilo el enlace con clase register */
 a.register {
-  color: #39ace7;
+  color: #00c0f3;
 }
 
 /* Estilo para el hover (cuando el mouse está encima) */
 a:hover {
-  color: #39ace7;
+  color: #00c0f3;
 }
 
 /* En tu archivo Login.css */
@@ -57,4 +57,8 @@ h2 {
   display: inline-block;
   margin: 40px 8px 10px 8px;
   color: #0c0a0a;
+}
+
+.navbar-custom {
+  background-color: #00c0f3;
 }

@@ -22,7 +22,7 @@
 }
   
   a {
-    color: #92badd;
+    color: #FFFF;
     display:inline-block;
     text-decoration: none;
     font-weight: 400;
@@ -83,7 +83,7 @@
   
   h2.active {
     color: #0d0d0d;
-    border-bottom: 2px solid #5fbae9;
+    border-bottom: 2px solid #00c0f3;
   }
   
   
@@ -91,7 +91,7 @@
   /* FORM TYPOGRAPHY*/
   
   input[type=button], input[type=submit], input[type=reset]  {
-    background-color: #56baed;
+    background-color: #00c0f3;
     border: none;
     color: white;
     padding: 15px 80px;
@@ -147,7 +147,7 @@
   
   input[type=text]:focus {
     background-color: #fff;
-    border-bottom: 2px solid #5fbae9;
+    border-bottom: 2px solid #00c0f3;
   }
   
   input[type=text]:placeholder {
@@ -177,7 +177,7 @@
   
   input[type=password]:focus {
     background-color: #fff;
-    border-bottom: 2px solid #5fbae9;
+    border-bottom: 2px solid #00c0f3;
   }
   
   input[type=password]:placeholder {
@@ -273,7 +273,7 @@
     bottom: -10px;
     width: 0;
     height: 2px;
-    background-color: #56baed;
+    background-color: #00c0f3;
     content: "";
     transition: width 0.2s;
   }

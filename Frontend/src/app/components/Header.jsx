@@ -14,16 +14,22 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light navbar-custom">
       <div className="container-fluid">
         <div className="d-flex justify-content-between align-items-center w-100">
           {/* Logo */}
           <a className="navbar-brand" href="#">
+          <img
+              className="logo-img img-fluid w-75 w-md-100"
+              src="/images/LogoUCR.png"
+              alt="Cimpa"
+              style={{ maxWidth: "170px" }}
+            ></img>
             <img
               className="logo-img img-fluid w-75 w-md-100"
-              src="https://www.cimpa.ucr.ac.cr/images/Cimpa/images/Logos/Logo_incio_ODI.png"
+              src="/images/LogoCimpaHorizontal.png"
               alt="Cimpa"
-              style={{ maxWidth: "500px" }}
+              style={{ maxWidth: "400px" }}
             ></img>
           </a>
 
@@ -55,9 +61,10 @@ const Header = () => {
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               <a
-                className="nav-link active text-info"
+                className="nav-link"
                 aria-current="page"
                 href="#"
+                style={{ color: "#ffffff" }}
               >
                 Home
               </a>
