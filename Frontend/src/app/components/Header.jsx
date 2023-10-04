@@ -60,14 +60,14 @@ const Header = () => {
         >
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a
-                className="nav-link"
-                aria-current="page"
-                href="#"
-                style={{ color: "#ffffff" }}
-              >
-                Home
-              </a>
+              <Link href={user ? "/simposios" : "/"}
+                
+                  className="nav-link"
+                  aria-current="page"
+                  style={{ color: "#ffffff" }}>
+                
+                  Home
+              </Link>
             </li>
             {user && (
               <li className="nav-item">
