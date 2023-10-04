@@ -6,12 +6,12 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { urlServer } from "@/app/Utiles.jsx";
-import { usePathname } from 'next/navigation'
+import { usePathname } from "next/navigation";
 
 export default function Actividad({ actividadId }) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
-const urlPonente = `${pathname}/ponente`;
+  const urlPonente = `${pathname}/ponente`;
   //hook actividad
   const [actividad, setActividad] = useState(null);
   //state exponente
@@ -123,12 +123,10 @@ const urlPonente = `${pathname}/ponente`;
                         <p className="card-text">
                           {ponente.nombre + " " + ponente.apellidos}
                         </p>
-                        <Link
-                          href={`${urlPonente}?ponente=${JSON.stringify(
-                            ponente
-                          )}`}
-                        >
-                          <button className="btn btn-primary">Ver Información del ponente</button>
+                        <Link href={`${urlPonente}/${actividadId}`}>
+                          <button className="btn btn-primary">
+                            Ver Información del ponente
+                          </button>
                         </Link>
                       </>
                     ) : (

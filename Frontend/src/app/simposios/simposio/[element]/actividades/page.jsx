@@ -7,7 +7,8 @@ const page = () =>{
     console.log("about page");
     return(
         <>
-        <Actividades/>
+        {/* <Actividades/>*/}
+        <div>Actividades</div>
         </>
     );
 };

@@ -15,6 +15,8 @@ export default function Actividades({ elementId }) {
   const pathname = usePathname();
   const urlActividad = `${pathname}/actividades/actividad`;
 
+  console.log("Actividades del simposio: ", elementId);
+
   useEffect(() => {
     handleActividades();
   }, []);
@@ -98,7 +100,7 @@ export default function Actividades({ elementId }) {
                       {"Ubicación: " + element.ubicacion}
                     </p>
                     <p className="card-text">{"Estatus: " + element.estatus}</p>
-                    <Link href={`${urlActividad}?actividadId=${JSON.stringify(element.PK_actividad)}`}>
+                    <Link href={`${urlActividad}/${JSON.stringify(element.PK_actividad)}`}>
                       <button className="btn btn-primary">Ver más</button>
                     </Link>
                   </div>

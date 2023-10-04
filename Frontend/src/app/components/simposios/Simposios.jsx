@@ -8,15 +8,13 @@ import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "@/app/components/globalState/GlobalState";
 import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta sea correcta
 //import "@/app/App.css"
-import { usePathname } from 'next/navigation'
-
-
+import { usePathname } from "next/navigation";
 
 export default function Simposios() {
   const [eventos, setEventos] = useState([]);
   const [suscripcion, setSuscripcion] = useState(null);
   const user = useGlobalState((state) => state.user);
-  const pathname = usePathname()
+  const pathname = usePathname();
   const urlSimposio = `${pathname}/simposio`;
 
   useEffect(() => {
@@ -116,10 +114,28 @@ export default function Simposios() {
                             : "No suscrito")}
                       </p>
                     )}
-                    <Link
+                    {/*  <Link
                       href={
                         suscripcion && suscripcion[element.PK_evento_contenedor]
                           ? `${urlSimposio}?element=${JSON.stringify(element)}`
+                          : "#"
+                      }
+                    >
+                      <button
+                        className="btn btn-primary"
+                        disabled={
+                          !suscripcion ||
+                          !suscripcion[element.PK_evento_contenedor]
+                        }
+                      >
+                        Ver más
+                      </button>
+                    </Link>
+                    */}
+                    <Link
+                      href={
+                        suscripcion && suscripcion[element.PK_evento_contenedor]
+                          ? `${urlSimposio}/${JSON.stringify(element.PK_evento_contenedor)}`
                           : "#"
                       }
                     >

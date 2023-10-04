@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import "./Ponente.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
 //import Link
 import Link from "next/link";
@@ -7,7 +7,32 @@ import { urlServer } from "@/app/Utiles.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Ponente({ ponente }) {
+export default function Ponente({ actividadIdP }) {
+  //hook ponente
+  const [ponente, setPonente] = useState(null);
+  useEffect(() => {
+    handlePonente();
+  }, []);
+  //handlePonente
+  //handleExponente
+  async function handlePonente() {
+    try {
+      const response = await fetch(`${urlServer}ponentes/porActividadId`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: actividadIdP }),
+        credentials: "include",
+      });
+      const data = await response.json();
+      //console.log("exponente por id: ", data[0]);
+      setPonente(data[0]);
+    } catch (error) {
+      toast.error(error.message);
+      //alert(error.message);
+    }
+  }
+
+
   return (
     <div className="main-content">
     <div className="container my-5">
