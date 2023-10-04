@@ -30,7 +30,7 @@ const Footer = () => {
             <section className="mb-4">
               <h5>Servicios del CIMPA</h5>
               <p>
-                <a
+                <a className="link-footer"
                   href="http://cimpa.ucr.ac.cr/index.php/acerca-de/servicios"
                   target="_blank"
                   rel="noopener noreferrer"

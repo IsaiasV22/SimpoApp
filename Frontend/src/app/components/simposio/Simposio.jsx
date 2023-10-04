@@ -9,9 +9,6 @@ export default function Simposio({ element }) {
   //console.log("Simposio de la actividad: ", element.nombre);
   return (
     <div>
-      <Link href="../login">
-        <button>ATRAS</button>
-      </Link>
       <div className="simposio-container">{element.nombre}</div>
       <Actividades elementId={element.PK_evento_contenedor}/>
     </div>

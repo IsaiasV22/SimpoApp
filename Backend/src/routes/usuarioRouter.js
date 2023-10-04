@@ -41,8 +41,9 @@ router.post("/login", (req, res) => {
   usuarioController.login(userName, userPassword, (err, user) => {
     if (err) {
       // Manejar el error y enviarlo como respuesta en formato JSON
-      return res.status(400).json({ error: err.message });
+      return res.status(404).json({ error: err.message });
     } else {
+      req.session.user = user[0];
       // Si la autenticación es exitosa, enviar el usuario en formato JSON
       res.status(200).json({ user });
     }

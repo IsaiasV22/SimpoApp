@@ -1,6 +1,7 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "@/app/components/login/Login.css";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 
 .main-content {
@@ -15,7 +16,7 @@
 }
 
 /* Estilo base para los enlaces */
-a {
+a.link-footer{
   color: white;
   text-decoration: none; /* Esto quita el subrayado */
 }

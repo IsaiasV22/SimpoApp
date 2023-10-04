@@ -63,8 +63,8 @@ export default function Login() {
         {loading && <div className="spinner"></div>}
         <div className="wrapper fadeInDown">
           <div id="formContent">
-            <div className="fadeIn first" style={{ marginBottom: "2rem" }}>
-              <h2>Inicio de Sesion</h2>
+            <div className="fadeIn first" style={{ marginBottom: "2rem", marginTop: "2rem" }}>
+              <h2 style={{fontSize: "16px"}}>Inicio de Sesion</h2>
             </div>
 
             <form onSubmit={handleSubmit}>
