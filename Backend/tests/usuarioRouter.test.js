@@ -2,19 +2,21 @@ const express = require("express");
 const cors = require("cors");
 const supertest = require("supertest");
 const usuarioRouter = require("../src/routes/usuarioRouter"); // Ajusta la ruta al archivo de tu enrutador
-const session = require('express-session');
+const session = require("express-session");
 const app = express();
 
-app.use(session({
-  secret: process.env.SECRET_KEY, 
-  resave: true,
-  saveUninitialized: false,
-  cookie: {
-    //secure: true, // Habilita las cookies solo a través de HTTPS
-    httpOnly: true, // Impide que JavaScript acceda a la cookie en el cliente
-    maxAge: 3600000 // Tiempo de vida de la sesión en milisegundos (1 hora en este caso)
-  }
-}));
+app.use(
+  session({
+    secret: process.env.SECRET_KEY,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      //secure: true, // Habilita las cookies solo a través de HTTPS
+      httpOnly: true, // Impide que JavaScript acceda a la cookie en el cliente
+      maxAge: 3600000, // Tiempo de vida de la sesión en milisegundos (1 hora en este caso)
+    },
+  })
+);
 
 // Configura CORS para permitir todas las solicitudes
 app.use(cors());
@@ -188,26 +190,29 @@ describe("Pruebas para el enrutador de usuarios", () => {
       .post("/usuarios/login")
       .send({ username: userName, password: userPassword });
 
-    //expect(response.status).toBe(200);
-    expect(response.body).toEqual([{
-      PK_nombre_usuario: "Andres21sb",
-      tipo_id: "cedula",
-      cedula: "111111111",
-      password: "$2a$12$6fH4sUh2p/gWLCHRQmHziOMrmZKO7yf7/UY02sERKUhpe21PcWmO.",
-      nombre: "Andres",
-      segundo_nombre: "Aaron",
-      apellidos: "Méndez Solano",
-      iniciales: "AMS",
-      genero: "H",
-      nombre_documentos: null,
-      afiliacion: null,
-      correo: "andresmesol09@gmail.com",
-      pais: "Costa Rica",
-      ciudad: "San José ",
-      telefono: "555555555",
-      FK_rol: 5,
-      FK_estatus: 4,
-    }]);
+    expect(response.status).toBe(200);
+    expect(response.body.user).toEqual([
+      {
+        PK_nombre_usuario: "Andres21sb",
+        tipo_id: "cedula",
+        cedula: "111111111",
+        password:
+          "$2a$12$6fH4sUh2p/gWLCHRQmHziOMrmZKO7yf7/UY02sERKUhpe21PcWmO.",
+        nombre: "Andres",
+        segundo_nombre: "Aaron",
+        apellidos: "Méndez Solano",
+        iniciales: "AMS",
+        genero: "H",
+        nombre_documentos: null,
+        afiliacion: null,
+        correo: "andresmesol09@gmail.com",
+        pais: "Costa Rica",
+        ciudad: "San José ",
+        telefono: "555555555",
+        FK_rol: 5,
+        FK_estatus: 4,
+      },
+    ]);
   });
 
   it("debe responder con un error en una solicitud POST /usuarios/login con contraseña incorrecta", async () => {
@@ -219,7 +224,11 @@ describe("Pruebas para el enrutador de usuarios", () => {
       .send({ username: username, password: userPassword });
 
     expect(response.status).toBe(404);
-    expect(response.body).toEqual("Contraseña incorrecta");
+    expect(response.body.error).toEqual(
+      "Contraseña incorrecta" +
+        "1-Por favor, verifique que la contraseña este bien escrita \n" +
+        "2-Si no recuerda su contraseña, por favor, contacte al administrador del sistema en la seccion de 'Soporte' \n"
+    );
   });
 
   // Agrega más pruebas para otras rutas y casos si es necesario...
