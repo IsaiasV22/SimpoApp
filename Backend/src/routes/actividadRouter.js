@@ -40,4 +40,25 @@ router.post("/porId", (req, res) => {
   });
 });
 
+router.post("/add", (req, res) => {
+  //console.log("entró al API add");
+  //Imprimir lo que hay en la sesión
+  //console.log("Esto hay en la sesión: ", req);
+  if (req.session.user && req.session.user.PK_nombre_usuario) {
+    //console.log("entró al if " + req.session.user.PK_nombre_usuario);
+    const username = req.session.user.PK_nombre_usuario;
+    const actividad = req.body.actividad;
+    //console.log("actividad " + actividad);
+
+    actividadController.actividadAdd(actividad, username, (err, results) => {
+      if (err) {
+        return res.status(404).json({ error: err.message });
+      }
+      res.status(200).send("Actividad añadida correctamente");
+    });
+  } else {
+    res.status(404).send("No se encontró el usuario en la sesión");
+  }
+});
+
 module.exports = router;

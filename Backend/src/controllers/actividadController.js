@@ -1,4 +1,5 @@
 const db = require("../../config/database.js");
+const { use } = require("../routes/usuarioRouter.js");
 
 const actividadesAll = (callback) => {
   db.query("SELECT * FROM actividad", (err, results) => {
@@ -37,8 +38,21 @@ const obtenerActividadPorId = (id, callback) => {
   });
 };
 
+const actividadAdd = (id,username,callback) => {
+  db.query(`INSERT INTO calendario_u (F_actividad, FK_usuario) VALUES (${id},"${username}")`, (err, results) => {
+    if (err) {
+      console.error("Error al añadir actividad:", err);
+      callback(err, null);
+      throw err;
+    }
+    // Devuelve los resultados de la consulta 
+    callback(null, results);
+  });
+};
+
 module.exports = {
   actividadesAll,
   obtenerActividadesPorEvento,
-  obtenerActividadPorId
+  obtenerActividadPorId,
+  actividadAdd
 };
