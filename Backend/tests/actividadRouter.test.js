@@ -44,5 +44,31 @@ describe("Pruebas para el enrutador de actividades", () => {
     expect(response.body).toEqual({ error: "Error al obtener la actividad" });
   });
 
+/*   //Prueba para añadir una actividad al calendario de un usuario
+  test.only("debe agregar una actividad correctamente a través de POST /actividades/add", async () => {
+    // Iniciar sesión y obtener el token de sesión
+    const loginResponse = await supertest(app)
+      .post("/usuarios/login")
+      .send(JSON.stringify({ username: "Elvio111", password: "password1" }));
+
+    // Obtener el token de sesión de la respuesta del inicio de sesión
+    console.log("Este es el body del res: ", loginResponse.body.token);
+    const token = loginResponse.body.token;
+
+    // Verificar que el inicio de sesión fue exitoso
+    expect(loginResponse.status).toBe(200);
+    expect(token).toBeDefined();
+
+    const actividad = {
+      actividad: 1,
+    };
+
+    const response = await supertest(app)
+      .post("/actividades/add")
+      .set("Cookie", [`connect.sid=${token}`])
+      .send(actividad);
+
+    expect(response.status).toBe(200);
+    expect(response.text).toBe("Actividad añadida correctamente");
+  }); */
 });
-// Puedes agregar más pruebas para las otras rutas aquí...
