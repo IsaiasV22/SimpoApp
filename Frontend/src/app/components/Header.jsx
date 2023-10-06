@@ -74,6 +74,11 @@ const Header = () => {
                 <LogoutButton />
               </li>
             )}
+            <li>
+              <Link href='/calendario'>
+              Calendario
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
