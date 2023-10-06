@@ -6,9 +6,10 @@ import { urlServer } from "@/app/Utiles.jsx";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { usePathname } from 'next/navigation'
-
-
+import { usePathname } from "next/navigation";
+import '@/app/css/Heart-wrapper.css';
+import Heart from "@/app/components/Heart like/Heart";
+import'@/app/css/Colors.css';
 
 export default function Actividades({ elementId }) {
   const [actividades, setActividades] = useState([]);
@@ -85,7 +86,7 @@ export default function Actividades({ elementId }) {
                       : ""
                   }`}
                 >
-                  <div className="card-body">
+                  <div className="card-body position-relative">
                     <h5 className="card-title">{element.descripcion}</h5>
                     <p className="card-text">
                       {"Fecha: " + element.dia_evento.slice(0, 10)}
@@ -100,9 +101,18 @@ export default function Actividades({ elementId }) {
                       {"Ubicación: " + element.ubicacion}
                     </p>
                     <p className="card-text">{"Estatus: " + element.estatus}</p>
-                    <Link href={`${urlActividad}/${JSON.stringify(element.PK_actividad)}`}>
-                      <button className="btn btn-primary">Ver más</button>
-                    </Link>
+                    <div className="d-flex w-100 justify-content-between ">
+                      <Link
+                        href={`${urlActividad}/${JSON.stringify(
+                          element.PK_actividad
+                        )}`}
+                      >
+                        <button className="btn btn-primary">Ver más</button>
+                      </Link>
+                      <div className="Heart-wrapper">
+                        <Heart />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
