@@ -38,6 +38,7 @@ export default function Login() {
       const data = await response.json();
 
       if (data !== "") {
+        localStorage.removeItem('user');
         setUserState(true); // Cambia el estado del usuario a true
         router.push("/simposios");
         //Redireccion a page simposios
