@@ -102,8 +102,8 @@ export default function Simposios() {
                   <div className="card-body">
                     <h5 className="card-title">{element.nombre}</h5>
                     <p className="card-text">{element.descripcion}</p>
-                    <p className="card-text">{element.dia_inicio}</p>
-                    <p className="card-text">{element.dia_final}</p>
+                    <p className="card-text">Dia de inicio: {element.dia_inicio}</p>
+                    <p className="card-text">Dia final: {element.dia_final}</p>
                     <p className="card-text">{element.lugar}</p>
 
                     {suscripcion !== null && (
