@@ -71,14 +71,19 @@ const Header = () => {
             </li>
             {user && (
               <li className="nav-item">
+                <Link href='/calendario' className="nav-link" style={{color: "#ffffff"}}>
+                  <div style={{display:"flex"}}>
+                    <i className="bi bi-calendar" style={{marginRight:"5px"}}></i>
+                    <p>Calendario</p>
+                  </div>
+                </Link>
+              </li>
+            )}
+            {user && (
+              <li className="nav-item">
                 <LogoutButton />
               </li>
             )}
-            <li>
-              <Link href='/calendario'>
-              Calendario
-              </Link>
-            </li>
           </ul>
         </div>
       </div>

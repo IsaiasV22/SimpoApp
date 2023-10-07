@@ -1,12 +1,10 @@
-import React from "react";
+import "react-toastify/dist/ReactToastify.css";
 import Simposios from "../components/simposios/Simposios";
 
-const page = () => {
-  //console.log("about page");
+export default async function page() {
   return (
     <>
       <Simposios />
     </>
   );
-};
-export default page;
+}
