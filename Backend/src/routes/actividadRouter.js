@@ -9,7 +9,9 @@ router.use(express.json());
 router.get("/all", (req, res) => {
   actividadController.actividadesAll((err, results) => {
     if (err) {
-      return res.status(500).json({ error: "Error al obtener las actividades" });
+      return res
+        .status(500)
+        .json({ error: "Error al obtener las actividades" });
     }
     res.json(results);
   });
@@ -21,7 +23,9 @@ router.post("/porEvento", (req, res) => {
 
   actividadController.obtenerActividadesPorEvento(evento, (err, results) => {
     if (err) {
-      return res.status(404).json({ error: "Error al obtener las actividades" });
+      return res
+        .status(404)
+        .json({ error: "Error al obtener las actividades" });
     }
     res.json(results);
   });
@@ -40,24 +44,59 @@ router.post("/porId", (req, res) => {
   });
 });
 
-router.post("/add", (req, res) => {
-  //console.log("entró al API add");
+router.post("/cambiaEstadoActividad", (req, res) => {
+  console.log("entró al API cambiaEstadoActividad");
   //Imprimir lo que hay en la sesión
   //console.log("Esto hay en la sesión: ", req);
   if (req.session.user && req.session.user.PK_nombre_usuario) {
-    //console.log("entró al if " + req.session.user.PK_nombre_usuario);
+    console.log("entró al if " + req.session.user.PK_nombre_usuario);
     const username = req.session.user.PK_nombre_usuario;
     const actividad = req.body.actividad;
     //console.log("actividad " + actividad);
 
-    actividadController.actividadAdd(actividad, username, (err, results) => {
+    //registroExiste?
+    actividadController.registroExiste(actividad, username, (err, results) => {
       if (err) {
+        console.error("Error al realizar la consulta:", err);
         return res.status(404).json({ error: err.message });
       }
-      res.status(200).send("Actividad añadida correctamente");
+
+      if (results === false) {
+        //console.log("No existe el registro");
+        //añadir
+        actividadController.actividadAdd(
+          actividad,
+          username,
+          (err, results) => {
+            if (err) {
+              console.error("Error al añadir actividad:", err);
+              return res.status(404).json({ error: err.message });
+            }
+            console.log("Actividad añadida correctamente");
+            res
+              .status(200)
+              .json({ success: "Actividad añadida a tu calendario" });
+          }
+        );
+      } else {
+        //console.log("Existe el registro");
+        //eliminar
+        actividadController.actividadDelete(
+          actividad,
+          username,
+          (err, results) => {
+            if (err) {
+              console.error("Error al eliminar actividad:", err);
+              return res.status(404).json({ error: err.message });
+            }
+            console.log("Actividad eliminada correctamente");
+            res
+              .status(200)
+              .json({ success: "Actividad eliminada de tu calendario" });
+          }
+        );
+      }
     });
-  } else {
-    res.status(404).send("No se encontró el usuario en la sesión");
   }
 });
 

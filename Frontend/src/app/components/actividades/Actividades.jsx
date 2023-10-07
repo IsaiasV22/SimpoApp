@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { usePathname } from "next/navigation";
 import '@/app/css/Heart-wrapper.css';
 import Heart from "@/app/components/Heart like/Heart";
-import'@/app/css/Colors.css';
+import'@/app/css/Colors.css'; 
 
 export default function Actividades({ elementId }) {
   const [actividades, setActividades] = useState([]);
@@ -66,6 +66,32 @@ export default function Actividades({ elementId }) {
     return output;
   }
 
+  //handleMeInteresa
+  async function handleMeInteresa(PK_actividad) {
+   //console.log("Actividad seleccionada para hacer peticion : ", PK_actividad);
+   //event.stopPropagation();
+    try {
+      const response = await fetch(`${urlServer}actividades/cambiaEstadoActividad`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ actividad: PK_actividad }),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        console.log("response: ", response);
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+      console.log("data -> ",data);
+      toast.success(data.success);
+    } catch (error) {
+      console.log("error -> ",error);
+      toast.error(error.message);
+    }
+  }
+
   return (
     <div className="main-content">
       <div className="container my-5">
@@ -109,8 +135,8 @@ export default function Actividades({ elementId }) {
                       >
                         <button className="btn btn-primary">Ver más</button>
                       </Link>
-                      <div className="Heart-wrapper">
-                        <Heart />
+                      <div onClick={()=>{handleMeInteresa(element.PK_actividad)}} className="Heart-wrapper">
+                         <Heart />
                       </div>
                     </div>
                   </div>

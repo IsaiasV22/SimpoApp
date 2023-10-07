@@ -3,11 +3,15 @@ import React from "react";
 import "@/app/css/Heart.css";
 
 export default function Heart() {
+  const handleCheckboxClick = (event) => {
+    event.stopPropagation(); // Evitar que el evento se propague hacia arriba
+    // Realizar las acciones del checkbox aquí si es necesario
+  };
   return (
     <div id="main-content">
       <div>
-        <input type="checkbox" id="checkbox" />
-        <label for="checkbox">
+        <input type="checkbox" id="checkbox" onClick={handleCheckboxClick}/>
+        <label htmlFor="checkbox">
           <svg
             id="heart-svg"
             viewBox="467 392 58 57"
