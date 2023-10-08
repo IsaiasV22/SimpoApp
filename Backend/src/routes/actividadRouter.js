@@ -100,4 +100,31 @@ router.post("/cambiaEstadoActividad", (req, res) => {
   }
 });
 
+router.post("/checkEstadoActividad", (req, res) => {
+  console.log("entró al API checkEstadoActividad");
+  //chech session
+  if (req.session.user && req.session.user.PK_nombre_usuario) {
+    console.log("entró al if " + req.session.user.PK_nombre_usuario);
+    const username = req.session.user.PK_nombre_usuario;
+    const actividad = req.body.actividad;
+    //console.log("actividad " + actividad);
+
+    //registroExiste?
+    actividadController.registroExiste(actividad, username, (err, results) => {
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        return res.status(404).json({ error: err.message });
+      }
+
+      if (results === false) {
+        //console.log("No existe el registro");
+        res.status(200).json({ estatus: false });
+      } else {
+        //console.log("Existe el registro");
+        res.status(200).json({ estatus: true });
+      }
+    });
+  }
+});
+
 module.exports = router;

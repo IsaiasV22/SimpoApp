@@ -84,7 +84,7 @@ export default function Actividades({ elementId }) {
       }
 
       const data = await response.json();
-      console.log("data -> ",data);
+      //console.log("data -> ",data);
       toast.success(data.success);
     } catch (error) {
       console.log("error -> ",error);
@@ -136,7 +136,7 @@ export default function Actividades({ elementId }) {
                         <button className="btn btn-primary">Ver más</button>
                       </Link>
                       <div onClick={()=>{handleMeInteresa(element.PK_actividad)}} className="Heart-wrapper">
-                         <Heart />
+                         <Heart actividad={element.PK_actividad}/>
                       </div>
                     </div>
                   </div>
