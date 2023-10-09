@@ -50,6 +50,9 @@ app.use("/actividades", actividadRoutes);
 const ponenteRoutes = require("./routes/ponenteRouter.js");
 app.use("/ponentes", ponenteRoutes);
 
+const estadisticasRoutes = require("./routes/estadisticasRouter.js");
+app.use("/estadisticas", estadisticasRoutes);
+
 
 //configurar puerto
 const PORT = process.env.PORT || 3000;
