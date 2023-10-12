@@ -47,4 +47,17 @@ router.get("/:id", (req, res) => {
   });
 });
 
+router.put("/updateEventById", (req, res) => {
+  const eventId = req.body.id;
+  const newEvent = req.body; // Los datos del evento editado
+  console.log("entró al API " + eventId);
+
+  eventoController.updateEvent(eventId, newEvent, (err) => {
+    if (err) {
+      return res.status(500).json({ error: "Error al editar el evento" });
+    }
+    res.status(204).send(); // Envía una respuesta sin contenido en caso de éxito
+  });
+});
+
 module.exports = router;
