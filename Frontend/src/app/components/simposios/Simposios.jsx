@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "@/app/components/globalState/GlobalState";
 import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta sea correcta
+import EditModal from "./editModal/EditModal";
 //import "@/app/App.css"
 import { usePathname } from "next/navigation";
 
@@ -138,6 +139,7 @@ export default function Simposios() {
                           ? `${urlSimposio}/${JSON.stringify(element.PK_evento_contenedor)}`
                           : "#"
                       }
+                      style={{marginRight:"5px"}}
                     >
                       <button
                         className="btn btn-primary"
@@ -149,6 +151,8 @@ export default function Simposios() {
                         Ver más
                       </button>
                     </Link>
+
+                    <EditModal nombre={element.nombre} descripcion={element.descripcion} lugar={element.lugar}/>
 
                     {/* <button className="btn btn-primary" onClick={() => VerificaSuscripcion(element)}>Ver más</button>*/}
                   </div>

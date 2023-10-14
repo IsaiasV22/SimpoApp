@@ -342,10 +342,10 @@ function Scheduler(props) {
     let data = []
     let dayStartHour = startOfDay(selectedDay)
     //Andres M change
-    dayStartHour.setHours(6, 0, 0);
+    dayStartHour.setHours(7, 0, 0);
     console.log('dayStartHour', dayStartHour)
     
-    for (let i = 8; i <= HOURS; i++) {
+    for (let i = 12; i <= HOURS; i++) {
       let id = `line_${i}`
       let label = format(dayStartHour, 'HH:mm aaa')
       //console.log('label', label)
