@@ -285,7 +285,7 @@ function Scheduler(props) {
     return data;
   };
 
-  const getWeekRows = () => {
+  /*const getWeekRows = () => {
     const HOURS = 12; //* 2
     let data = [];
     let dayStartHour = startOfDay(selectedDay);
@@ -329,7 +329,41 @@ function Scheduler(props) {
       //}
     }
     return data;
-  };
+  };*/
+
+  const getWeekRows = () => {
+    const HOURS = 13; // Total de horas entre 7 AM y 7 PM
+    let data = [];
+    let dayStartHour = startOfDay(selectedDay);
+    dayStartHour.setHours(7, 0, 0); // Establecer la hora inicial a las 7 AM
+
+    for (let i = 0; i < HOURS; i++) {
+        let id = `line_${i}`;
+        let label = format(dayStartHour, 'HH:mm');
+        let obj = { id: id, label: label, days: [] };
+        let columns = getWeekHeader();
+        // eslint-disable-next-line
+        columns.map((column, index) => {
+            let data = events.filter((event) => {
+                let eventDate = parse(event?.date, 'yyyy-MM-dd', new Date());
+                let eventStartHour = parse(event?.startHour, 'HH:mm', new Date()).getHours();
+                let currentHour = parse(label, 'HH:mm', new Date()).getHours();
+                return (
+                    isSameDay(column?.date, eventDate) &&
+                    currentHour === eventStartHour
+                );
+            });
+            obj.days.push({
+                id: `column-${index}_m-${column.month}_d-${column.day}_${id}`,
+                date: column?.date,
+                data: data,
+            });
+        });
+        data.push(obj);
+        dayStartHour = add(dayStartHour, {minutes: 60}); // Añadir 1 hora para la siguiente iteración
+    }
+    return data;
+};
 
   const getDayHeader = () => [
     {
