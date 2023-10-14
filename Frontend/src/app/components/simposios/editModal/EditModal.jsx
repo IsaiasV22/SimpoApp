@@ -9,7 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 
-function editSimposio(element) {
+function EditSimposio(element) {
   const [show, setShow] = useState(false);
 
   const [nombre, setNombre] = useState(element.nombre);
@@ -84,4 +84,4 @@ function editSimposio(element) {
   );
 }
 
-export default editSimposio;
+export default EditSimposio;
