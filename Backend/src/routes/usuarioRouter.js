@@ -91,4 +91,26 @@ router.post("/evento", (req, res) => {
   }
 });
 
+//API para las actividades del calendario del usuario logueado
+
+router.get("/calendarioUsuario", (req, res) => {
+  console.log("Inside /calendario");
+  //console.log("req headers -> "+JSON.stringify(req.headers));
+  // Verifica si req.session.user está definido antes de acceder a sus propiedades
+  if (req.session.user && req.session.user.PK_nombre_usuario) {
+    const username = req.session.user.PK_nombre_usuario;
+    console.log("User in session -> " + username);
+
+    usuarioController.obtenerActividadesCalendario(username, (err, results) => {
+      if (err) {
+        return res.status(404).json({ error: err.message });
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  } else {
+    res.status(404).send("No se encontró el usuario en la sesión");
+  }
+});
+
 module.exports = router;

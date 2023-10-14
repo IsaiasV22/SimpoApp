@@ -128,10 +128,27 @@ function login(userName, userPassword, callback) {
   }
 }
 
+//Funcion para recuperar las actividades del calendario del usuario logueado
+const obtenerActividadesCalendario = (username, callback) => {
+  db.query(
+    `SELECT * FROM actividad INNER JOIN calendario_u ON actividad.PK_actividad = calendario_u.F_actividad WHERE calendario_u.FK_usuario="${username}"`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        callback(err, null);
+        return;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
 module.exports = {
   usuariosAll,
   obtenerUsuarioPorCedula,
   obtenerUsuarioPorUsername,
   estaSuscritoA,
   login,
+  obtenerActividadesCalendario
 };

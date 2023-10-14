@@ -1,8 +1,54 @@
 "use client";
-import { useState } from "react";
-import Scheduler from "@/app/components/SchedulerAll/Scheduler";  
+import { useState, useEffect } from "react";
+import Scheduler from "@/app/components/SchedulerAll/Scheduler";
+import { urlServer } from "@/app/Utiles";
 
 function App() {
+  const [actividades, setActividades] = useState([]);
+
+  const convertTo12HourFormat = (time24) => {
+    const [hours, minutes] = time24.split(":");
+    const hourNumber = parseInt(hours, 10);
+  
+    if (hourNumber === 0) return `12:${minutes} am`;
+    if (hourNumber < 12) return `${hourNumber.toString().padStart(2, "0")}:${minutes} am`;
+    return `${hourNumber}:${minutes} pm`;
+  };  
+
+  const handlerEvents = async () => {
+    try {
+      const response = await fetch(`${urlServer}usuarios/calendarioUsuario`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await response.json();
+
+      // Transformar la respuesta de la API al formato de events
+      const transformedData = data.map((item, index) => ({
+        id: `event-${item.PK_actividad}`,
+        label: item.descripcion,
+        groupLabel: item.FK_usuario,
+        user: item.FK_usuario,
+        color: "#00c0f3", // Puedes asignar un color dinámicamente si lo deseas
+        startHour: convertTo12HourFormat(item.hora_inicio),
+        endHour: convertTo12HourFormat(item.hora_final),
+        date: new Date(item.dia_evento).toISOString().split("T")[0],
+        createdAt: new Date(),
+        createdBy: item.FK_usuario,
+      }));
+
+      setActividades(transformedData);
+    } catch (error) {
+      //FIXME: Mostrar error en pantalla con el tostify
+      console.log("Error: ", error);
+    }
+  };
+
+  useEffect(() => {
+    handlerEvents();
+    console.log("Actividades: ", actividades);
+  }, []);
+
   const [state] = useState({
     options: {
       transitionMode: "zoom", // or fade
@@ -97,10 +143,10 @@ function App() {
   };
 
   return (
-    <div className='m-3 '>
+    <div className="m-3 ">
       <Scheduler
         locale="en"
-        events={events}
+        events={actividades}
         legacyStyle={false}
         options={state?.options}
         alertProps={state?.alertProps}
