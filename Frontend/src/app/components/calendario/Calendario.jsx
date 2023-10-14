@@ -10,9 +10,9 @@ function App() {
     const [hours, minutes] = time24.split(":");
     const hourNumber = parseInt(hours, 10);
   
-    if (hourNumber === 0) return `12:${minutes} am`;
-    if (hourNumber < 12) return `${hourNumber.toString().padStart(2, "0")}:${minutes} am`;
-    return `${hourNumber}:${minutes} pm`;
+    if (hourNumber === 0) return `12:${minutes}`;
+    if (hourNumber < 12) return `${hourNumber.toString().padStart(2, "0")}:${minutes}`;
+    return `${hourNumber}:${minutes}`;
   };  
 
   const handlerEvents = async () => {
@@ -74,57 +74,6 @@ function App() {
       showDatePicker: true,
     },
   });
-
-  const events = [
-    {
-      id: "event-1",
-      label: "Medical consultation",
-      groupLabel: "Dr Shaun Murphy",
-      user: "Dr Shaun Murphy",
-      color: "#f28f6a",
-      startHour: "04:00 AM",
-      endHour: "05:00 AM",
-      date: "2023-10-05",
-      createdAt: new Date(),
-      createdBy: "Kristina Mayer",
-    },
-    {
-      id: "event-2",
-      label: "Medical consultation",
-      groupLabel: "Dr Claire Brown",
-      user: "Dr Claire Brown",
-      color: "#099ce5",
-      startHour: "09:00 AM",
-      endHour: "10:00 AM",
-      date: "2022-05-09",
-      createdAt: new Date(),
-      createdBy: "Kristina Mayer",
-    },
-    {
-      id: "event-3",
-      label: "Medical consultation",
-      groupLabel: "Dr Menlendez Hary",
-      user: "Dr Menlendez Hary",
-      color: "#263686",
-      startHour: "13 PM",
-      endHour: "14 PM",
-      date: "2022-05-10",
-      createdAt: new Date(),
-      createdBy: "Kristina Mayer",
-    },
-    {
-      id: "event-4",
-      label: "Consultation prénatale",
-      groupLabel: "Dr Shaun Murphy",
-      user: "Dr Shaun Murphy",
-      color: "#f28f6a",
-      startHour: "08:00 AM",
-      endHour: "09:00 AM",
-      date: "2022-05-11",
-      createdAt: new Date(),
-      createdBy: "Kristina Mayer",
-    },
-  ];
 
   const handleCellClick = (event, row, day) => {
     // Do something...

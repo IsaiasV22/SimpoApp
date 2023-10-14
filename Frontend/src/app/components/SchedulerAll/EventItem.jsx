@@ -12,11 +12,11 @@ function EventItem(props) {
     isMonthMode,
     onClick,
     onDragStart
-  } = props
+  } = props;
   
   return (
     <Paper
-      sx={sx}
+      sx={{ ...sx, overflow: 'hidden', height: sx.height }} // Forzar la altura
       draggable
       onClick={onClick}
       onDragStart={onDragStart}
@@ -24,17 +24,14 @@ function EventItem(props) {
       key={`item-d-${event?.id}-${rowId}`}
     >
       <Box sx={boxSx}>
-        {/*isMonthMode &&
-        <Typography variant="caption" sx={{fontSize: 8}}>
-          {event?.startHour} - {event?.endHour}
-        </Typography>*/}
         <Typography variant="body2" sx={{fontSize: 11}}>
           {event?.label}
         </Typography>
       </Box>
     </Paper>
-  )
+  );
 }
+
 
 EventItem.propTypes = {
   sx: PropTypes.object,
