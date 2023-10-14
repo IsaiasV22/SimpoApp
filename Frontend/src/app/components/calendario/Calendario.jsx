@@ -14,13 +14,13 @@ function App() {
       maxHeight: 540,
     },
     alertProps: {
-      open: true,
+      /*open: true,
       color: "info", // info | success | warning | error
       severity: "info", // info | success | warning | error
       message: "Let's start with awesome react-mui-scheduler ",
       showActionButton: true,
       showNotification: true,
-      delay: 1500,
+      delay: 1500,*/
     },
     toolbarProps: {
       showSearchBar: true,
