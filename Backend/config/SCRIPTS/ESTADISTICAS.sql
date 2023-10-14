@@ -25,3 +25,6 @@ LEFT JOIN
     calendario_u cu ON a.PK_actividad = cu.F_actividad
 LEFT JOIN 
     usuario u ON cu.FK_usuario = u.PK_nombre_usuario;
+
+
+-- INFO SPECIFIC SIMPOSIUM
