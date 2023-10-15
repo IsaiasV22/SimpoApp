@@ -1,9 +1,10 @@
 "use client";
-import { toast } from "react-toastify";
 import { useState } from 'react';
 import { useRouter } from "next/navigation";
 import useGlobalState from "@/app/components/globalState/GlobalState";
 import { urlServer } from "@/app/Utiles";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -16,19 +17,43 @@ function EditSimposio(element) {
   const [show, setShow] = useState(false);
   
   const PK_evento_contenedor = element.pk;
+  const id=element.pk;
   const [nombre, setNombre] = useState(element.nombre);
   const [descripcion, setDescripcion] = useState(element.descripcion);
   const [lugar, setLugar] = useState(element.lugar);
-  const [startDate, setStartDate] = useState(new Date(element.fecha_inicio));
-  const [endDate, setEndDate] = useState(new Date(element.fecha_final));
+  const [dia_inicio, setDiaInicio] = useState(new Date(element.dia_inicio));
+  const [dia_final, setDiaFinal] = useState(new Date(element.dia_final));
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const newEvento = { PK_evento_contenedor, nombre, descripcion, lugar, startDate, endDate };
-    console.log(newEvento);
+    const newEvento = { id, PK_evento_contenedor, nombre, descripcion, lugar, dia_inicio, dia_final };
+    //console.log(newEvento);
+
+    try {
+      const response = await fetch(`${urlServer}eventos/updateEventById`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newEvento),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        console.log("response: ", response);
+        throw new Error(response.statusText);
+      }
+
+      toast.success("Editado correctamente");
+      setTimeout(() => {
+        handleClose();
+        window.location.reload();
+      }, 1500);
+    } catch (error) {
+      console.log("error -> ",error);
+      toast.error(error.message);
+    }
   }
 
   return (
@@ -90,19 +115,21 @@ function EditSimposio(element) {
                 minTime={new Date(0, 0, 0, 7, 0)}
                 maxTime={new Date(0, 0, 0, 19, 0)}
                 selectsStart
-                selected={startDate}
-                onChange={date => setStartDate(date)}
-                startDate={startDate}
+                selected={dia_inicio}
+                onChange={date => setDiaInicio(date)}
+                startDate={dia_inicio}
               />
               <DatePicker
                 showIcon
                 showTimeSelect
+                minTime={new Date(0, 0, 0, 7, 0)}
+                maxTime={new Date(0, 0, 0, 19, 0)}
                 selectsEnd
-                selected={endDate}
-                onChange={date => setEndDate(date)}
-                endDate={endDate}
-                startDate={startDate}
-                minDate={startDate}
+                selected={dia_final}
+                onChange={date => setDiaFinal(date)}
+                endDate={dia_final}
+                startDate={dia_inicio}
+                minDate={dia_inicio}
             />
             </div>
             </Form>

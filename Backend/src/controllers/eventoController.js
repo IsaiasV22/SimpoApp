@@ -36,7 +36,11 @@ const obtenerEventoPorCodigo = (PK_evento_contenedor, callback) => {
 };
 
 const updateEvent = (eventId, newEvent, callback) => {
-  //console.log(nuevoEvento);
+  console.log(newEvent);
+
+  const fechaInicio = newEvent.dia_inicio.split('T')[0]; // Obtener la parte de la fecha
+  const fechaFinal = newEvent.dia_final.split('T')[0]; // Obtener la parte de la fecha
+
   //Realiza la consulta UPDATE en la base de datos para modificar el evento
   const sql = `UPDATE evento_contenedor
               SET nombre = ?,
@@ -50,8 +54,8 @@ const updateEvent = (eventId, newEvent, callback) => {
     newEvent.nombre,
     newEvent.descripcion,
     newEvent.lugar,
-    newEvent.dia_inicio,
-    newEvent.dia_final,
+    fechaInicio,
+    fechaFinal,
     newEvent.PK_evento_contenedor,
   ];
 
