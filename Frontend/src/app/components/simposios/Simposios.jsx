@@ -152,7 +152,7 @@ export default function Simposios() {
                       </button>
                     </Link>
 
-                    <EditModal nombre={element.nombre} descripcion={element.descripcion} lugar={element.lugar}/>
+                    <EditModal pk={element.PK_evento_contenedor} nombre={element.nombre} descripcion={element.descripcion} lugar={element.lugar} fecha_inicio={element.dia_inicio} fecha_final={element.dia_final}/>
 
                     {/* <button className="btn btn-primary" onClick={() => VerificaSuscripcion(element)}>Ver más</button>*/}
                   </div>
