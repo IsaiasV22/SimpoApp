@@ -53,6 +53,8 @@ app.use("/ponentes", ponenteRoutes);
 const estadisticasRoutes = require("./routes/estadisticasRouter.js");
 app.use("/estadisticas", estadisticasRoutes);
 
+const talleresRoutes = require("./routes/tallerRouter.js");
+app.use("/talleres", talleresRoutes);
 
 //configurar puerto
 const PORT = process.env.PORT || 3000;
