@@ -147,7 +147,7 @@ function WeekModeView (props) {
       transfert.item.startHour = label
       transfert.item.endHour = format(
         newEndHour,
-        'HH:mm aaa'
+        'HH:mm'
       )
       transfert.item.date = format(
         day.date,
