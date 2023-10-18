@@ -11,12 +11,12 @@ import '@/app/css/Heart-wrapper.css';
 import Heart from "@/app/components/Heart like/Heart";
 import'@/app/css/Colors.css'; 
 
-export default function Actividades({ elementId }) {
+export default function Actividades({ elementId,PK_taller }) {
   const [actividades, setActividades] = useState([]);
   const pathname = usePathname();
   const urlActividad = `${pathname}/actividades/actividad`;
 
-  console.log("Actividades del simposio: ", elementId);
+  //console.log("Actividades del simposio: ", elementId);
 
   useEffect(() => {
     handleActividades();
@@ -93,12 +93,12 @@ export default function Actividades({ elementId }) {
   }
 
   return (
-    <div className="main-content">
+    <div className=" ">
       <div className="container my-5">
-        <h1 className="mb-4">Actividades</h1>
+        {/*<h1 className="mb-4">Actividades</h1> */}
         <div className="row">
           {actividades.length > 0 ? (
-            actividades.map((element) => (
+            actividades.filter(e=>e.FK_taller==PK_taller).map((element) => (
               <div key={element.PK_actividad} className={`col-12 mb-4`}>
                 {/* Utiliza el campo PK_actividad como clave única */}
                 <div
@@ -144,7 +144,7 @@ export default function Actividades({ elementId }) {
               </div>
             ))
           ) : (
-            <div className="col-12">No hay Actividades para este simposio.</div>
+            <div className="col-12">No hay Actividades</div>
           )}
         </div>
       </div>

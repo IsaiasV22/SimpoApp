@@ -5,8 +5,10 @@ import "./Simposio.css"; // Asegúrate de que la ruta al archivo CSS sea correct
 import Link from "next/link";
 import Actividades from "../actividades/Actividades";
 import { urlServer } from "@/app/Utiles.jsx";
+import Modalidades from "../modalidades/Modalidades";
 
-export default function Simposio({ element }) {
+export default function Simposio({ element, talleres }) {
+  //console.log("Talleres -> ", talleres);
   //hook simposio
   const [simposio, setSimposio] = useState(null);
   //console.log("Simposio de la actividad: ", element.nombre);
@@ -40,7 +42,10 @@ export default function Simposio({ element }) {
       {simposio ? (
         <div>
           <div className="simposio-container">{simposio.nombre}</div>
-          <Actividades elementId={element} />
+          <div className="simposio-container">{simposio.descripcion}</div>
+          <div className="simposio-container">{simposio.fecha}</div>
+          <Modalidades talleres={talleres} elementId={element}/>
+          {/*<Actividades elementId={element} /> */}
         </div>
       ) : (
         <div>Cargando simposio ...</div>
