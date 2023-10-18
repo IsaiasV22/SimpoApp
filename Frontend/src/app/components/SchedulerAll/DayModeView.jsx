@@ -269,13 +269,13 @@ function DayModeView(props) {
 
       return (
         <EventItem
-          draggable
+          //draggable
           event={task}
           elevation={0}
           boxSx={{ px: 0.3 }}
           onClick={(e) => handleTaskClick(e, task)}
           key={`item_id-${itemIndex}_r-${rowIndex}_d-${dayIndex}`}
-          onDragStart={(e) =>
+          /*onDragStart={(e) =>
             onCellDragStart(
               e,
               { ...task, itemIndex },
@@ -283,7 +283,7 @@ function DayModeView(props) {
               rowIndex,
               dayIndex
             )
-          }
+          }*/
           sx={{
             py: 0,
             mb: 0.5,
@@ -374,11 +374,11 @@ function DayModeView(props) {
                       component="th"
                       colSpan={2}
                       sx={{ px: 0.3, py: 0.5 }}
-                      onDragEnd={onCellDragEnd}
-                      onDragOver={onCellDragOver}
-                      onDragEnter={(e) =>
+                      //onDragEnd={onCellDragEnd}
+                      //onDragOver={onCellDragOver}
+                      /*onDragEnter={(e) =>
                         onCellDragEnter(e, row?.label, rowIndex, dayIndex)
-                      }
+                      }*/
                       onClick={(event) =>
                         handleCellClick(
                           event,
