@@ -11,12 +11,13 @@ import EditModal from "./editModal/EditModal";
 //import "@/app/App.css"
 import { usePathname } from "next/navigation";
 
-export default function Simposios() {
+export default function Simposios({talleres}) {
   const [eventos, setEventos] = useState([]);
   const [suscripcion, setSuscripcion] = useState(null);
   const user = useGlobalState((state) => state.user);
   const pathname = usePathname();
   const urlSimposio = `${pathname}/simposio`;
+  console.log('Talleres -> ', talleres);
 
   useEffect(() => {
     handleEventos();

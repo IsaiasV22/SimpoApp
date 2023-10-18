@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const eventoController = require("../controllers/eventoController.js");
+const tallerController = require("../controllers/tallerController.js");
 
 router.use(express.json());
 
@@ -58,6 +59,17 @@ router.put("/updateEventById", (req, res) => {
     }
     res.status(204).send(); // Envía una respuesta sin contenido en caso de éxito
   });
+});
+
+//ALL TALLERES BY EVENTO
+router.post("/talleresByEventoId", async (req, res) => {
+  try {
+    const results = await tallerController.AllTalleresByEventoID(req.body.id);
+    res.status(200).json(results);
+  } catch (error) {
+    console.error("Error al realizar la consulta:", error);
+    res.status(500).json({ error: "Error al obtener los talleres" });
+  }
 });
 
 module.exports = router;
