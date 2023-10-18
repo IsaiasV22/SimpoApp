@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect, useReducer } from 'react'
 import PropTypes from "prop-types"
 import i18n from '@/app/locales/locale.js'
@@ -479,7 +480,7 @@ function Scheduler(props) {
 
   useEffect(() => {
     if (locale !== i18n.language) { //localStorage.getItem('i18nextLng')
-      localStorage.setItem('i18nextLng', locale.toLowerCase())
+      typeof window !== 'undefined'&& localStorage.setItem('i18nextLng', locale.toLowerCase())
       i18n.changeLanguage(locale.toLowerCase())
       updateWeekDays()
     }

@@ -9,7 +9,7 @@ const useGlobalState = create(
 );
 
 export default useGlobalState;*/
-
+"use client";
 import { create } from 'zustand';
 
 const useGlobalState = create((set) => {

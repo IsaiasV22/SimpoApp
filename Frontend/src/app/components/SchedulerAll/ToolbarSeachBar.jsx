@@ -1,3 +1,4 @@
+"use client";
 import React, {useContext, useState} from 'react'
 import PropTypes from 'prop-types'
 import { format, parse } from 'date-fns'

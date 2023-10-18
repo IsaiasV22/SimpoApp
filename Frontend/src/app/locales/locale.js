@@ -1,3 +1,4 @@
+"use client";
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 
@@ -28,7 +29,7 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     resources,
-    lng: localStorage.getItem('i18nextLng'),
+    lng: typeof window !== 'undefined' && localStorage.getItem('i18nextLng'),
     ns: ["common"],
     defaultNS: "common",
     fallbackNS: "common",

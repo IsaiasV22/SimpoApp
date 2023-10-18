@@ -1,3 +1,4 @@
+"use client";
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 import { styled } from '@mui/material/styles'

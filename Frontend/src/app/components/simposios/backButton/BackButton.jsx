@@ -22,7 +22,7 @@ function BackButton() {
       if (!response.ok) {
         throw new Error("Error al cerrar sesión");
       }
-      localStorage.removeItem('user');
+      typeof window !== 'undefined'&& localStorage.removeItem('user');
       setUserState(false); // Cambia el estado del usuario a false
       router.push("/login");
     } catch (error) {

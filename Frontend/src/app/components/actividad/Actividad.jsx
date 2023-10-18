@@ -20,7 +20,7 @@ export default function Actividad({ actividadId }) {
   useEffect(() => {
     handleActividad();
     handlePonente();
-  }, []);
+  }, []);// eslint-disable-line 
   //handleActividad
   async function handleActividad() {
     try {
