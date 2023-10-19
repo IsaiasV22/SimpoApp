@@ -70,22 +70,3 @@ h2 {
 .navbar-custom {
   background-color: #00c0f3;
 }
-
-/*Estilos para el boton de suscrito*/
-.btn-custom-suscrito,
-.btn-custom-suscrito:disabled {
-    background-color: #8dc63f !important;
-    border-color: #8dc63f !important;
-    color: white !important; /* Cambia esto según tus necesidades */
-    opacity: 1 !important; /* Sobrescribe la opacidad para el estado deshabilitado */
-    cursor: not-allowed !important; /* Cambia el cursor para indicar que el botón está deshabilitado */
-}
-
-.btn-custom-noSuscrito,
-.btn-custom-noSuscrito:disabled {
-    background-color: #670000 !important;
-    border-color: #670000 !important;
-    color: white !important; /* Cambia esto según tus necesidades */
-    opacity: 1 !important; /* Sobrescribe la opacidad para el estado deshabilitado */
-    cursor: not-allowed !important; /* Cambia el cursor para indicar que el botón está deshabilitado */
-}

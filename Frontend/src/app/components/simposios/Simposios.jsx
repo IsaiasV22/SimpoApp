@@ -122,15 +122,9 @@ export default function Simposios() {
                   alignItems: "center",
                 }}
               >
-                <div className="card" style={{ maxWidth: "800px" }}>
+                <div className="card card-simposio">
                   <div
-                    className="card-header"
-                    style={{
-                      background:
-                        "linear-gradient(to right, transparent 0%, #00c0f3 25%, #00c0f3 75%, transparent 100%)",
-                      marginBottom: "2%",
-                      color: "white",
-                    }}
+                    className="card-header header-simposio"
                   >
                     <h3 style={{ textAlign: "center" }}>{element.nombre}</h3>
                   </div>
@@ -148,31 +142,34 @@ export default function Simposios() {
                   />
 
                   <div className="card-body">
-                    <p className="card-text">{element.descripcion}</p>
+                    <p
+                      className="card-text descripcion-simposio"
+                    >
+                      {element.descripcion}
+                    </p>
                     <p className="card-text">
+                      <i
+                        class="bi bi-calendar-event icon"
+                        
+                      >
+                        {" "}
+                      </i>
                       Dia de inicio: {formatDate(element.dia_inicio, "es")}
                     </p>
                     <p className="card-text">
+                      <i
+                        class="bi bi-calendar-event icon"
+                      >
+                        {" "}
+                      </i>
                       Dia final: {formatDate(element.dia_final, "es")}
                     </p>
-                    <p className="card-text">{element.lugar}</p>
-
-                    {suscripcion !== null && (
-                      <div style={{marginBottom:"1%"}}>
-                        <button
-                          className={`btn btn-primary ${
-                            suscripcion[element.PK_evento_contenedor]
-                              ? "btn-custom-suscrito"
-                              : "btn-custom-noSuscrito"
-                          }`}
-                          disabled // Para deshabilitar la interactividad del botón, si lo deseas
-                        >
-                          {suscripcion[element.PK_evento_contenedor]
-                            ? "Suscrito"
-                            : "No suscrito"}
-                        </button>
-                      </div>
-                    )}
+                    <p className="card-text">
+                      <i class="bi bi-map icon">
+                        {" "}
+                      </i>
+                      {element.lugar}
+                    </p>
                     {/*  <Link
                       href={
                         suscripcion && suscripcion[element.PK_evento_contenedor]
@@ -191,6 +188,9 @@ export default function Simposios() {
                       </button>
                     </Link>
                     */}
+                  </div>
+
+                  <div className="card-footer d-flex justify-content-center align-items-center footer-simposio">
                     <Link
                       href={
                         suscripcion && suscripcion[element.PK_evento_contenedor]
@@ -226,7 +226,23 @@ export default function Simposios() {
                         <Estadisticas />
                       </>
                     )}
-                    {/* <button className="btn btn-primary" onClick={() => VerificaSuscripcion(element)}>Ver más</button>*/}
+
+                    {suscripcion !== null && (
+                      <div>
+                        <button
+                          className={`btn btn-primary ${
+                            suscripcion[element.PK_evento_contenedor]
+                              ? "btn-custom-suscrito"
+                              : "btn-custom-noSuscrito"
+                          }`}
+                          disabled // Para deshabilitar la interactividad del botón, si lo deseas
+                        >
+                          {suscripcion[element.PK_evento_contenedor]
+                            ? "Suscrito"
+                            : "No suscrito"}
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
