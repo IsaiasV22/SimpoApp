@@ -1,26 +1,22 @@
-/*import {create} from 'zustand';
-//import { persist } from 'zustand/middleware';
-
-const useGlobalState = create(
-  (set) => ({
-    user: false,
-    setUser: (user) => set({ user })
-  })
-);
-
-export default useGlobalState;*/
 "use client";
 import { create } from 'zustand';
 
 const useGlobalState = create((set) => {
   // Retrieve the user state from localStorage if it exists
   const userState = typeof window !== 'undefined' && localStorage.getItem('user');
+  const rolState = typeof window !== 'undefined' && localStorage.getItem('rol');
   const initialState = {
     user: userState ? JSON.parse(userState) : false,
+    rol: rolState ? JSON.parse(rolState) : 0,
     setUser: (user) => {
       // Update the user state and store it in localStorage
       set({ user });
       typeof window !== 'undefined' && localStorage.setItem('user', JSON.stringify(user));
+    },
+    setRol: (rol) => {
+      // Update the user state and store it in localStorage
+      set({ rol });
+      typeof window !== 'undefined' && localStorage.setItem('rol', JSON.stringify(rol));
     },
   };
 

@@ -7,6 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "@/app/components/globalState/GlobalState";
 import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta sea correcta
+
+import Estadisticas from "../estadisticas/Estadisticas";
+
 import EditModal from "./editModal/EditModal";
 //import "@/app/App.css"
 import { usePathname } from "next/navigation";
@@ -15,6 +18,7 @@ export default function Simposios() {
   const [eventos, setEventos] = useState([]);
   const [suscripcion, setSuscripcion] = useState(null);
   const user = useGlobalState((state) => state.user);
+  const rol = useGlobalState((state) => state.rol);
   const pathname = usePathname();
   const urlSimposio = `${pathname}/simposio`;
 
@@ -103,7 +107,9 @@ export default function Simposios() {
                   <div className="card-body">
                     <h5 className="card-title">{element.nombre}</h5>
                     <p className="card-text">{element.descripcion}</p>
-                    <p className="card-text">Dia de inicio: {element.dia_inicio}</p>
+                    <p className="card-text">
+                      Dia de inicio: {element.dia_inicio}
+                    </p>
                     <p className="card-text">Dia final: {element.dia_final}</p>
                     <p className="card-text">{element.lugar}</p>
 
@@ -136,10 +142,12 @@ export default function Simposios() {
                     <Link
                       href={
                         suscripcion && suscripcion[element.PK_evento_contenedor]
-                          ? `${urlSimposio}/${JSON.stringify(element.PK_evento_contenedor)}`
+                          ? `${urlSimposio}/${JSON.stringify(
+                              element.PK_evento_contenedor
+                            )}`
                           : "#"
                       }
-                      style={{marginRight:"5px"}}
+                      style={{ marginRight: "5px" }}
                     >
                       <button
                         className="btn btn-primary"
@@ -152,8 +160,20 @@ export default function Simposios() {
                       </button>
                     </Link>
 
-                    <EditModal pk={element.PK_evento_contenedor} nombre={element.nombre} descripcion={element.descripcion} lugar={element.lugar} dia_inicio={element.dia_inicio} dia_final={element.dia_final}/>
+                    {user && rol === 1 && (
+                      <>
+                        <EditModal
+                          pk={element.PK_evento_contenedor}
+                          nombre={element.nombre}
+                          descripcion={element.descripcion}
+                          lugar={element.lugar}
+                          dia_inicio={element.dia_inicio}
+                          dia_final={element.dia_final}
+                        />
 
+                        <Estadisticas />
+                      </>
+                    )}
                     {/* <button className="btn btn-primary" onClick={() => VerificaSuscripcion(element)}>Ver más</button>*/}
                   </div>
                 </div>

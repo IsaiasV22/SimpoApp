@@ -8,6 +8,7 @@ import useGlobalState from "@/app/components/globalState/GlobalState";
 const LogoutButton = () => {
   const router = useRouter();
   const setUserState = useGlobalState((state) => state.setUser);
+  const setUserRol = useGlobalState((state) => state.setRol);
 
   //handleLogout que realiza un fetch a urlServer + usuarios/logout
   async function handleLogout() {
@@ -22,6 +23,7 @@ const LogoutButton = () => {
       }
 
       setUserState(false); // Cambia el estado del usuario a false
+      setUserRol(0); // Cambia el rol del usuario a 0
       router.push("/login");
     } catch (error) {
       console.log(error);

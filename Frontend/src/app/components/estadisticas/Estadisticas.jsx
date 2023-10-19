@@ -1,8 +1,9 @@
-"use client"
-import React, { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 import { urlServer } from "@/app/Utiles.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Button from "react-bootstrap/Button";
 
 import Papa from "papaparse";
 
@@ -21,7 +22,6 @@ function generateCSV(data) {
   document.body.removeChild(link);
 }
 
-
 function Estadisticas() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -34,11 +34,14 @@ function Estadisticas() {
   async function fetchData() {
     setLoading(true);
     try {
-      const response = await fetch(`${urlServer}estadisticas/AllSimposiosAllDetails`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${urlServer}estadisticas/AllSimposiosAllDetails`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
 
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -55,18 +58,23 @@ function Estadisticas() {
   }
 
   return (
-    <div>
-      <h1>Estadisticas</h1>
-      <button onClick={fetchData}>Cargar Información</button>
-      {loading ? (
-        <div>Loading...</div>
-      ) : data ? (
-        <div>Loaded</div>
-      ) : null}
+    <>
+      {
+        //<h1>Estadisticas</h1>
+      }
+
+      <button
+        className="btn btn-primary"
+        style={{ margin: "0.5%" }}
+        onClick={fetchData}
+      >
+        Cargar Información Estadistica
+      </button>
+
+      {loading ? <div>Loading...</div> : data ? <div>Loaded</div> : null}
       <ToastContainer />
-    </div>
+    </>
   );
 }
 
 export default Estadisticas;
-

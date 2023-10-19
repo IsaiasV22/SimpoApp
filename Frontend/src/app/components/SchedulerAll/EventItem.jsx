@@ -25,7 +25,7 @@ function EventItem(props) {
       key={`item-d-${event?.id}-${rowId}`}
     >
       <Box sx={boxSx}>
-        <Typography variant="body2" sx={{fontSize: 11}}>
+        <Typography variant="body2" sx={{fontSize: 14, marginTop:"4%"}}>
           {event?.label}
         </Typography>
       </Box>

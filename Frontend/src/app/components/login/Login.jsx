@@ -12,6 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const setUserState = useGlobalState((state) => state.setUser);
+  const setRolState = useGlobalState((state) => state.setRol);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -40,6 +41,8 @@ export default function Login() {
       if (data !== "") {
         localStorage.removeItem('user');
         setUserState(true); // Cambia el estado del usuario a true
+        setRolState(data.user[0].FK_rol); // Guarda el rol del usuario
+
         router.push("/simposios");
         //Redireccion a page simposios
         //window.location.href = "../../simposios";
