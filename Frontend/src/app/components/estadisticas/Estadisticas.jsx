@@ -22,6 +22,8 @@ function generateCSV(data) {
   document.body.removeChild(link);
 }
 
+//TODO: Agregar que se pase el id del simposio para que se cargue la información de ese simposio
+
 function Estadisticas() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
