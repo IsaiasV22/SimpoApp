@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import useGlobalState from "@/app/components/globalState/GlobalState";
 import { urlServer } from "@/app/Utiles";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 function BackButton() {
   const [showModal, setShowModal] = useState(false);
@@ -22,7 +22,7 @@ function BackButton() {
       if (!response.ok) {
         throw new Error("Error al cerrar sesión");
       }
-      typeof window !== 'undefined'&& localStorage.removeItem('user');
+      typeof window !== "undefined" && localStorage.removeItem("user");
       setUserState(false); // Cambia el estado del usuario a false
       router.push("/login");
     } catch (error) {
@@ -40,7 +40,10 @@ function BackButton() {
 
   return (
     <>
-      <button className="btn btn-primary mb-3" onClick={handleBackClick}>
+      <button
+        className="btn btn-primary mb-3"
+        onClick={handleBackClick}
+      >
         ATRAS
       </button>
 

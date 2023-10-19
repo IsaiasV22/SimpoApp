@@ -7,6 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "@/app/components/globalState/GlobalState";
 import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta sea correcta
+import { format, parseISO } from "date-fns";
+import { es, enUS } from "date-fns/locale";
 
 import Estadisticas from "../estadisticas/Estadisticas";
 
@@ -21,6 +23,13 @@ export default function Simposios() {
   const rol = useGlobalState((state) => state.rol);
   const pathname = usePathname();
   const urlSimposio = `${pathname}/simposio`;
+
+  //Funcion para dar formato a la fecha
+  function formatDate(dateString, idioma) {
+    const date = parseISO(dateString); // Convierte la cadena de fecha a un objeto Date
+    const locale = idioma === "es" ? es : enUS; // Determina la localización basada en el idioma
+    return format(date, "dd '/' MM '/' yyyy", { locale }); // Formatea la fecha
+  }
 
   useEffect(() => {
     handleEventos();
@@ -97,29 +106,72 @@ export default function Simposios() {
       <div className="container my-5">
         <BackButton />
 
-        <h1 className="mb-4">Simposios</h1>
+        <h1 className="mb-4" style={{ textAlign: "center" }}>
+          Simposios
+        </h1>
 
         <div className="row">
           {eventos.length > 0 && user ? (
             eventos.map((element) => (
-              <div key={element.PK_evento_contenedor} className="col-12 mb-4">
-                <div className="card">
+              <div
+                key={element.PK_evento_contenedor}
+                className="col-12 mb-4"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <div className="card" style={{ maxWidth: "800px" }}>
+                  <div
+                    className="card-header"
+                    style={{
+                      background:
+                        "linear-gradient(to right, transparent 0%, #00c0f3 25%, #00c0f3 75%, transparent 100%)",
+                      marginBottom: "2%",
+                      color: "white",
+                    }}
+                  >
+                    <h3 style={{ textAlign: "center" }}>{element.nombre}</h3>
+                  </div>
+
+                  <img
+                    src={`Images/${element.PK_evento_contenedor}.png`}
+                    alt="Banner"
+                    className="card-img-top" // clase Bootstrap para imágenes en tarjetas
+                    style={{
+                      maxWidth: "500px", // Establece el ancho máximo a 200px
+                      maxHeight: "500px", // Establece la altura máxima a 200px
+                      objectFit: "cover", // Mantiene la imagen ajustada al tamaño de la tarjeta
+                      margin: "auto",
+                    }}
+                  />
+
                   <div className="card-body">
-                    <h5 className="card-title">{element.nombre}</h5>
                     <p className="card-text">{element.descripcion}</p>
                     <p className="card-text">
-                      Dia de inicio: {element.dia_inicio}
+                      Dia de inicio: {formatDate(element.dia_inicio, "es")}
                     </p>
-                    <p className="card-text">Dia final: {element.dia_final}</p>
+                    <p className="card-text">
+                      Dia final: {formatDate(element.dia_final, "es")}
+                    </p>
                     <p className="card-text">{element.lugar}</p>
 
                     {suscripcion !== null && (
-                      <p className="card-text">
-                        {"Estado de suscripción -> " +
-                          (suscripcion[element.PK_evento_contenedor]
+                      <div style={{marginBottom:"1%"}}>
+                        <button
+                          className={`btn btn-primary ${
+                            suscripcion[element.PK_evento_contenedor]
+                              ? "btn-custom-suscrito"
+                              : "btn-custom-noSuscrito"
+                          }`}
+                          disabled // Para deshabilitar la interactividad del botón, si lo deseas
+                        >
+                          {suscripcion[element.PK_evento_contenedor]
                             ? "Suscrito"
-                            : "No suscrito")}
-                      </p>
+                            : "No suscrito"}
+                        </button>
+                      </div>
                     )}
                     {/*  <Link
                       href={
