@@ -62,6 +62,48 @@ const actividadDelete = (id,username,callback) => {
   });
 }
 
+const updateActivity = (newActivity, callback) => {
+  //console.log(newActivity);
+
+  //Se espera recibir el dia y cada hora por separado
+  //No se actualiza el tema, el taller ni el evento contenedor
+  const sql = `UPDATE actividad
+              SET descripcion = ?,
+                  descripcion_d = ?,
+                  dia_evento = ?,
+                  hora_inicio = ?,
+                  hora_final = ?,
+                  ubicacion = ?,
+                  estatus = ?
+              WHERE PK_actividad = ?`;
+
+  const values = [
+    newActivity.descripcion,
+    newActivity.descripcion_d,
+    newActivity.dia_evento,
+    newActivity.hora_inicio,
+    newActivity.hora_final,
+    newActivity.ubicacion,
+    newActivity.estatus,
+    newActivity.PK_actividad,
+  ];
+
+  db.query(sql, values, (err, results) => {
+    if (err) {
+      console.error("Error al editar la actividad:", err);
+      callback(err, null);
+      return;
+    }
+    if (results.length == 0) {
+      console.warn("No se encontro la actividad");
+      callback(new Error("No se encontro la actividad"), null);
+      return;
+    }
+    //console.log(`Actividad con PK ${newActivity.PK_actividad} editada correctamente`);
+    callback(null, results);
+  });
+};
+
 const registroExiste = (id,username,callback) => {
   db.query(`SELECT * FROM calendario_u WHERE F_actividad=${id} AND FK_usuario="${username}"`, (err, results) => {
     if (err) {
@@ -87,5 +129,6 @@ module.exports = {
   obtenerActividadPorId,
   actividadAdd,
   registroExiste,
-  actividadDelete
+  actividadDelete,
+  updateActivity
 };

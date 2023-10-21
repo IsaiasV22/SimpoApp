@@ -127,4 +127,16 @@ router.post("/checkEstadoActividad", (req, res) => {
   }
 });
 
+router.put("/updateActivity", (req, res) => {
+  const newActivity = req.body; // Los datos de la actividad editada
+  //console.log("entró a updateActivity: " + newActivity);
+
+  actividadController.updateActivity(newActivity, (err) => {
+    if (err) {
+      return res.status(500).json({ error: "Error al editar la actividad" });
+    }
+    res.status(204).send(); // Envía una respuesta sin contenido en caso de éxito
+  });
+});
+
 module.exports = router;
