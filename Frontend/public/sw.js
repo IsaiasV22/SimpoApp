@@ -89,13 +89,5 @@ define(['./workbox-d5a6b829'], (function (workbox) { 'use strict';
     plugins: []
   }), 'GET');
 
-  //intercepting fetch requests
-  self.addEventListener('fetch', function (event) {
-    console.log('fetch intercepted by sw -> ',event.request.url);
-    event.respondWith(caches.match(event.request).then(function (response) {
-      return response || fetch(event.request);
-    }));
-  });
-
 }));
 //# sourceMappingURL=sw.js.map
