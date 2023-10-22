@@ -21,6 +21,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <div style={{ fontFamily: "Trueno, sans-serif" }}>
+          {/*Test 3 */}
           <Header />
           {children}
           <Footer />
