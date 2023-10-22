@@ -13,7 +13,6 @@
 
 // If the loader is already loaded, just stop.
 if (!self.define) {
-  console.log("sw.js: loading workbox");
   let registry = {};
 
   // Used for `eval` and `importScripts` where we can't get script URL by other means.
@@ -22,20 +21,22 @@ if (!self.define) {
 
   const singleRequire = (uri, parentUri) => {
     uri = new URL(uri + ".js", parentUri).href;
-    return (
-      registry[uri] ||
-      new Promise((resolve) => {
-        if ("document" in self) {
-          const script = document.createElement("script");
-          script.src = uri;
-          script.onload = resolve;
-          document.head.appendChild(script);
-        } else {
-          nextDefineUri = uri;
-          importScripts(uri);
-          resolve();
-        }
-      }).then(() => {
+    return registry[uri] || (
+      
+        new Promise(resolve => {
+          if ("document" in self) {
+            const script = document.createElement("script");
+            script.src = uri;
+            script.onload = resolve;
+            document.head.appendChild(script);
+          } else {
+            nextDefineUri = uri;
+            importScripts(uri);
+            resolve();
+          }
+        })
+      
+      .then(() => {
         let promise = registry[uri];
         if (!promise) {
           throw new Error(`Module ${uri} didn’t register its module`);
@@ -46,65 +47,55 @@ if (!self.define) {
   };
 
   self.define = (depsNames, factory) => {
-    const uri =
-      nextDefineUri ||
-      ("document" in self ? document.currentScript.src : "") ||
-      location.href;
+    const uri = nextDefineUri || ("document" in self ? document.currentScript.src : "") || location.href;
     if (registry[uri]) {
       // Module is already loading or loaded.
       return;
     }
     let exports = {};
-    const require = (depUri) => singleRequire(depUri, uri);
+    const require = depUri => singleRequire(depUri, uri);
     const specialDeps = {
       module: { uri },
       exports,
-      require,
+      require
     };
-    registry[uri] = Promise.all(
-      depsNames.map((depName) => specialDeps[depName] || require(depName))
-    ).then((deps) => {
+    registry[uri] = Promise.all(depsNames.map(
+      depName => specialDeps[depName] || require(depName)
+    )).then(deps => {
       factory(...deps);
       return exports;
     });
   };
 }
-define(["./workbox-d5a6b829"], function (workbox) {
-  "use strict";
+define(['./workbox-d5a6b829'], (function (workbox) { 'use strict';
 
   importScripts();
   self.skipWaiting();
   workbox.clientsClaim();
-  workbox.registerRoute(
-    "/",
-    new workbox.NetworkFirst({
-      cacheName: "start-url",
-      plugins: [
-        {
-          cacheWillUpdate: async ({ response: e }) =>
-            e && "opaqueredirect" === e.type
-              ? new Response(e.body, {
-                  status: 200,
-                  statusText: "OK",
-                  headers: e.headers,
-                })
-              : e,
-        },
-      ],
-    }),
-    "GET"
-  );
-  workbox.registerRoute(
-    /.*/i,
-    new workbox.NetworkOnly({
-      cacheName: "dev",
-      plugins: [],
-    }),
-    "GET"
-  );
-});
-//intercept fetch requests and console.log the url
-self.addEventListener("fetch",  (event)=> {
-  console.log('Fetch intercepted by sw -> '+event.request.url);
-});
+  workbox.registerRoute("/", new workbox.NetworkFirst({
+    "cacheName": "start-url",
+    plugins: [{
+      cacheWillUpdate: async ({
+        response: e
+      }) => e && "opaqueredirect" === e.type ? new Response(e.body, {
+        status: 200,
+        statusText: "OK",
+        headers: e.headers
+      }) : e
+    }]
+  }), 'GET');
+  workbox.registerRoute(/.*/i, new workbox.NetworkOnly({
+    "cacheName": "dev",
+    plugins: []
+  }), 'GET');
+
+  //intercepting fetch requests
+  self.addEventListener('fetch', function (event) {
+    console.log('fetch intercepted by sw -> ',event.request.url);
+    event.respondWith(caches.match(event.request).then(function (response) {
+      return response || fetch(event.request);
+    }));
+  });
+
+}));
 //# sourceMappingURL=sw.js.map
