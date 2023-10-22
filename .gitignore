@@ -29,3 +29,11 @@ tmp/
 # Ignorar archivos lock de npm y Yarn
 Frontend/package-lock.json
 yarn.lock
+
+# PWA files
+
+**Frontend/public/workbox-*.js
+**Frontend/public/worker-*.js
+**Frontend/public/sw.js.map
+**Frontend/public/workbox-*.js.map
+**Frontend/public/worker-*.js.map
