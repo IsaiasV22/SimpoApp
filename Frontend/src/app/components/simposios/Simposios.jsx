@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "@/app/components/globalState/GlobalState";
 import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta sea correcta
+import Notificacion from "../Notificacion";
 import { usePathname } from "next/navigation";
 import EventoCard from "./eventoCard/EventoCard"; // Importando el componente EventoCard
 
@@ -84,6 +85,7 @@ export default function Simposios() {
 
   return (
     <div className="main-content">
+      <Notificacion />
       <div className="container my-5">
         <BackButton />
 

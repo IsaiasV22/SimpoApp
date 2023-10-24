@@ -139,4 +139,19 @@ router.put("/updateActivity", (req, res) => {
   });
 });
 
+//obtener username de usuarios con actividad en calendario
+router.post("/usuariosActividad", (req, res) => {
+  const actividad = req.body.actividad;
+  console.log("entró al API " + actividad);
+
+  actividadController.obtenerUsuariosActividad(actividad, (err, results) => {
+    if (err) {
+      return res
+        .status(404)
+        .json({ error: "Error al obtener los usuarios de la actividad" });
+    }
+    res.json(results);
+  });
+});
+
 module.exports = router;

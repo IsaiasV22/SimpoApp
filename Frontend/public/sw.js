@@ -6,10 +6,10 @@ self.addEventListener("push", function (event) {
   try {
     const data = event.data.json();
 
-    console.log("Push notification data -> ", data);
+    //console.log("Push notification data -> ", data);
     self.registration.showNotification(data.title, {
-      body: "Notified by SW!",
-      icon: "https://image.flaticon.com/icons/svg/139/139899.svg",
+      body: data.body,
+      icon: data.icon,
     });
   } catch (err) {
     console.error(err);

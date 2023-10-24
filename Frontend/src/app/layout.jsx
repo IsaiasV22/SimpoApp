@@ -4,6 +4,7 @@ import Footer from "@/app/components/Footer";
 import dynamic from 'next/dynamic';
 import "@/app/App.css";
 import PWA from "@/app/components/PWA";
+import Notificacion from "./components/Notificacion";
 
 const inter = Inter({ subsets: ["latin"] });
 
