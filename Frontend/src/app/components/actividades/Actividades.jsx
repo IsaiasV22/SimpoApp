@@ -32,19 +32,29 @@ export default function Actividades({ elementId, PK_taller }) {
 
   async function handleActividades() {
     try {
-      const response = await fetch(`${urlServer}actividades/porEvento`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ evento: elementId }),
-        credentials: "include",
-      });
-
+      let response = null;
+      if (rol === 1) {
+        response = await fetch(`${urlServer}actividades/porEvento`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ evento: elementId }),
+          credentials: "include",
+        });
+      } else {
+        response = await fetch(`${urlServer}actividades/activasPorEvento`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ evento: elementId }),
+          credentials: "include",
+        });
+      }
+      if (!response.ok) {
+        throw new Error("No se pudo obtener la lista de actividades");
+      }
       const data = await response.json();
-      //console.log("actividades del evento "+elementId+" -> "+JSON.stringify(data));
       setActividades(data);
     } catch (error) {
       toast.error(error.message);
-      //alert(error.message);
     }
   }
 
@@ -100,6 +110,42 @@ export default function Actividades({ elementId, PK_taller }) {
     }
   }
 
+  //handleEstadoStatus
+  async function handleEstadoEstatus(PK_actividad, estatus) {
+    let response = null;
+    try{
+      if(estatus){
+        response = await fetch(`${urlServer}actividades/ocultarActividad`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: PK_actividad }),
+          credentials: "include",
+        })
+      } else {
+        response = await fetch(`${urlServer}actividades/mostrarActividad`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: PK_actividad }),
+          credentials: "include",
+        })
+      }
+      if (!response.ok) {
+        console.log("response: ", response);
+        throw new Error(response.statusText);
+      }
+      const data = await response.json();
+      toast.success(data.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (error) {
+      toast.error(error.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    }
+  }
+
   return (
     <div className=" ">
       <div className="container my-5">
@@ -150,16 +196,31 @@ export default function Actividades({ elementId, PK_taller }) {
                         </Link>
 
                         {user && rol === 1 && (
-                          <UpdateModal
-                            pk={element.PK_actividad}
-                            descripcion={element.descripcion}
-                            descripcion_d={element.descripcion_d}
-                            hora_inicio={element.hora_inicio}
-                            hora_final={element.hora_final}
-                            dia_evento={element.dia_evento}
-                            ubicacion={element.ubicacion}
-                            estatus={element.estatus}
-                          />
+                          <>
+                            <UpdateModal
+                              pk={element.PK_actividad}
+                              descripcion={element.descripcion}
+                              descripcion_d={element.descripcion_d}
+                              hora_inicio={element.hora_inicio}
+                              hora_final={element.hora_final}
+                              dia_evento={element.dia_evento}
+                              ubicacion={element.ubicacion}
+                              estatus={element.estatus}
+                            />
+                            <button
+                              //on click cambiar el estado de activo
+                              onClick={() => {
+                                handleEstadoEstatus(
+                                  element.PK_actividad,
+                                  element.estatus
+                                );
+                              }}
+                              className="btn btn-primary"
+                              style={{ marginLeft: "1px" }}
+                            >
+                              {element.estatus ? "Ocultar" : "Mostrar"}
+                            </button>
+                          </>
                         )}
 
                         <div

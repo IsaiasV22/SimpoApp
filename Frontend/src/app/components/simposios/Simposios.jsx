@@ -57,41 +57,6 @@ export default function Simposios() {
     }
   }
 
-  async function handleEstadoActivo(PK_evento_contenedor, activo) {
-    let response = null;
-    try{
-      if(activo){
-        response = await fetch(`${urlServer}eventos/ocultarEvento`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: PK_evento_contenedor }),
-          credentials: "include",
-        })
-      } else {
-        response = await fetch(`${urlServer}eventos/mostrarEvento`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: PK_evento_contenedor }),
-          credentials: "include",
-        })
-      }
-      if (!response.ok) {
-        console.log("response: ", response);
-        throw new Error(response.statusText);
-      }
-      const data = await response.json();
-      toast.success(data.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    } catch (error) {
-      toast.error(error.message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    }
-  }
-
   //verificar si el usuario de la session esta suscrito al evento
   async function VerificaSuscripcion(element) {
     try {
