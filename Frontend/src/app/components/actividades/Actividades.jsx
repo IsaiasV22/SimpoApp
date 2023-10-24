@@ -103,7 +103,7 @@ export default function Actividades({ elementId, PK_taller }) {
 
       const data = await response.json();
       //console.log("data -> ",data);
-      toast.success(data.success);
+      data.success === "Actividad añadida a tu calendario" ? toast.success(data.success) : toast.error(data.success);
     } catch (error) {
       console.log("error -> ", error);
       toast.error(error.message);
