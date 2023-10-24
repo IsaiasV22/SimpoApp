@@ -28,6 +28,22 @@ const obtenerActividadesPorEvento = (evento, callback) => {
   );
 };
 
+//Obtener solo las actividades con estatus=1 por evento
+const obtenerActividadesActivasPorEvento = (evento, callback) => {
+  db.query(
+    `SELECT * FROM actividad WHERE FK_evento_contenedor=${evento} AND estatus=1`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        callback(err, null);
+        return;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
 //obtenerActividadPorId
 const obtenerActividadPorId = (id, callback) => {
   db.query(
@@ -194,6 +210,7 @@ const obtenerUsuariosActividad = (PK_actividad, callback) => {
 module.exports = {
   actividadesAll,
   obtenerActividadesPorEvento,
+  obtenerActividadesActivasPorEvento,
   obtenerActividadPorId,
   actividadAdd,
   registroExiste,

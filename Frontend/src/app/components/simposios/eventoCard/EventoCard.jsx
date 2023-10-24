@@ -126,7 +126,7 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
             <button
               className="btn btn-primary"
               disabled={
-                !suscripcion || !suscripcion[element.PK_evento_contenedor]
+                rol===1 ? false:(!suscripcion || !suscripcion[element.PK_evento_contenedor])
               }
             >
               Ver más

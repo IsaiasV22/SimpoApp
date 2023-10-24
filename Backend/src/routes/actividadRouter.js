@@ -31,6 +31,19 @@ router.post("/porEvento", (req, res) => {
   });
 });
 
+//Obtener solo las actividades con estatus=1 por evento
+router.post("/activasPorEvento", (req, res) => {
+  const evento = req.body.evento;
+
+  actividadController.obtenerActividadesActivasPorEvento(evento, (err, results) => {
+      if (err) {
+        return res.status(404).json({ error: "Error al obtener las actividades" });
+      }
+      res.json(results);
+    }
+  );
+});
+
 //porId
 router.post("/porId", (req, res) => {
   const id = req.body.id;
