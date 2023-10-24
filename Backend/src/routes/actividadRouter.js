@@ -128,8 +128,9 @@ router.post("/checkEstadoActividad", (req, res) => {
 });
 
 router.put("/updateActivity", (req, res) => {
+  const activityId = req.body.id;
   const newActivity = req.body; // Los datos de la actividad editada
-  //console.log("entró a updateActivity: " + newActivity);
+  console.log("entró al API updateActivity: " + activityId);
 
   actividadController.updateActivity(newActivity, (err) => {
     if (err) {
