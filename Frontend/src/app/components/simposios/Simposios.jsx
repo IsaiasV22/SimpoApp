@@ -9,6 +9,7 @@ import useGlobalState from "@/app/components/globalState/GlobalState";
 import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta sea correcta
 import { format, parseISO } from "date-fns";
 import Notificacion from "../Notificacion";
+import { es, enUS } from "date-fns/locale";
 
 import Estadisticas from "../estadisticas/Estadisticas";
 
