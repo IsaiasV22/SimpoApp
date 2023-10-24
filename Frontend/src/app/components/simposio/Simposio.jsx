@@ -44,7 +44,7 @@ export default function Simposio({ element, talleres }) {
           <div className="simposio-container">{simposio.nombre}</div>
           <div className="simposio-container">{simposio.descripcion}</div>
           <div className="simposio-container">{simposio.fecha}</div>
-          <Modalidades talleres={talleres} elementId={element}/>
+          <Modalidades talleres={talleres} elementId={element} />
           {/*<Actividades elementId={element} /> */}
         </div>
       ) : (
