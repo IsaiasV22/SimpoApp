@@ -25,7 +25,6 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         {/*SW */}
         <PWA />    
-        <Notificacion />
         <div style={{ fontFamily: "Trueno, sans-serif" }}>
           <Header />
           {children}

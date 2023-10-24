@@ -9,7 +9,7 @@ export default function PWA() {
   useEffect(() => {
     //checkSWUpdate();
     registerServiceWorker();
-    usePushNotifications(suscribed, setSuscribed);
+    //usePushNotifications(suscribed, setSuscribed);
   }, []);
 
   return <></>;
