@@ -121,6 +121,38 @@ const updateActivity = (newActivity, callback) => {
   });
 };
 
+//Mostrar actividad
+const mostrarActividad = (id, callback) => {
+  db.query(
+    `UPDATE actividad SET estatus=1 WHERE PK_actividad=${id}`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al mostrar la actividad:", err);
+        callback(err, null);
+        throw err;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
+//Ocultar actividad
+const ocultarActividad = (id, callback) => {
+  db.query(
+    `UPDATE actividad SET estatus=0 WHERE PK_actividad=${id}`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al ocultar la actividad:", err);
+        callback(err, null);
+        throw err;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
 const registroExiste = (id, username, callback) => {
   db.query(
     `SELECT * FROM calendario_u WHERE F_actividad=${id} AND FK_usuario="${username}"`,
@@ -130,21 +162,13 @@ const registroExiste = (id, username, callback) => {
         callback(err, null);
         throw err;
       }
-      console.log("results -> " + results);
-      if (results.length === 0) {
-        console.log("No existe el registro");
-        callback(null, false);
-      } else {
-        console.log("Ya existe el registro");
-        callback(null, true);
-      }
     }
   );
 };
 
 //obtener username de usuarios con actividad en calendario
 const obtenerUsuariosActividad = (PK_actividad, callback) => {
-  console.log('pk actividad: '+PK_actividad);
+  console.log("pk actividad: " + PK_actividad);
   db.query(
     `select FK_usuario from calendario_u where F_actividad =${PK_actividad}`,
     (err, results) => {
@@ -167,7 +191,6 @@ const obtenerUsuariosActividad = (PK_actividad, callback) => {
   );
 };
 
-
 module.exports = {
   actividadesAll,
   obtenerActividadesPorEvento,
@@ -176,9 +199,7 @@ module.exports = {
   registroExiste,
   actividadDelete,
   updateActivity,
-<<<<<<< HEAD
-};
-=======
+  mostrarActividad,
+  ocultarActividad,
   obtenerUsuariosActividad,
 };
->>>>>>> b1ba71644b96dff677a863ba7ef66741adc4d1b6
