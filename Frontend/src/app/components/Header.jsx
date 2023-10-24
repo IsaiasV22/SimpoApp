@@ -19,7 +19,7 @@ const Header = () => {
         <div className="d-flex justify-content-between align-items-center w-100">
           {/* Logo */}
           <a className="navbar-brand" href="#">
-          <img
+            <img
               className="logo-img img-fluid w-75 w-md-100"
               src="/images/LogoUCR.png"
               alt="Cimpa"
@@ -60,24 +60,31 @@ const Header = () => {
         >
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link href={user ? "/simposios" : "/"}
-                
-                  className="nav-link"
-                  aria-current="page"
-                  style={{ color: "#ffffff" }}>
-                
-                  Home
+              <Link
+                href={user ? "/simposios" : "/"}
+                className="nav-link"
+                aria-current="page"
+                style={{ color: "#ffffff" }}
+              >
+                Home
               </Link>
             </li>
             {user && (
-              <li className="nav-item">
-                <Link href='/calendario' className="nav-link" style={{color: "#ffffff"}}>
-                  <div style={{display:"flex"}}>
-                    <i className="bi bi-calendar" style={{marginRight:"5px"}}></i>
+              <Link
+                href="/calendario"
+                className="nav-link"
+                style={{ color: "#ffffff" }}
+              >
+                <li className="nav-item">
+                  <div style={{ display: "flex" }}>
+                    <i
+                      className="bi bi-calendar"
+                      style={{ marginRight: "5px" }}
+                    ></i>
                     <p>Calendario</p>
                   </div>
-                </Link>
-              </li>
+                </li>
+              </Link>
             )}
             {user && (
               <li className="nav-item">
