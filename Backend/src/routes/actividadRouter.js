@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require("path");
 const actividadController = require("../controllers/actividadController.js");
 const usuarioController = require("../controllers/usuarioController.js");
+const pwaController = require("../controllers/pwaController.js");
 
 router.use(express.json());
 
@@ -130,12 +131,18 @@ router.post("/checkEstadoActividad", (req, res) => {
 router.put("/updateActivity", (req, res) => {
   const activityId = req.body.id;
   const newActivity = req.body; // Los datos de la actividad editada
-  console.log("entró al API updateActivity: " + activityId);
+/*   console.log("entró al API updateActivity: " + activityId);
+  console.log("Actividad ->  " + JSON.stringify(newActivity)); */
 
   actividadController.updateActivity(newActivity, (err) => {
     if (err) {
       return res.status(500).json({ error: "Error al editar la actividad" });
     }
+
+    //get suscribers of the activity
+
+    //notifify suscribers of the activity update
+    pwaController.notifyActivityUpdate(newActivity);
     res.status(204).send(); // Envía una respuesta sin contenido en caso de éxito
   });
 });

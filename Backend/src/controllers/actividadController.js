@@ -184,9 +184,9 @@ const obtenerUsuariosActividad = (PK_actividad, callback) => {
         callback(new Error("No users found"), null);
         return;
       }
-      console.log(results);
+      //console.log(results.reduce((acc, curr) => [...acc,curr.FK_usuario], []));
       // Devuelve los resultados de la consulta
-      callback(null, results);
+      callback(null, results.reduce((acc, curr) => [...acc,curr.FK_usuario], []));
     }
   );
 };
