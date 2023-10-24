@@ -29,3 +29,6 @@ tmp/
 # Ignorar archivos lock de npm y Yarn
 Frontend/package-lock.json
 yarn.lock
+
+#Ignorar el suscripciones.json
+Backend/config/suscripciones.json
