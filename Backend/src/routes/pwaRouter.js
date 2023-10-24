@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const path = require("path");
 const webpush = require("web-push");
-const fs = require("fs");
+//pwa controller
+const pwaController = require("../controllers/pwaController.js");
 
 router.use(express.json());
 
@@ -11,13 +12,6 @@ router.use(express.static(path.join(__dirname, "../../public")));
 
 const publicVapidKey = process.env.VAPID_PUBLIC_KEY;
 const privateVapidKey = process.env.VAPID_PRIVATE_KEY;
-
-//json file
-const SUBSCRIPTIONS_FILE_PATH = path.join(
-  __dirname,
-  "../../config/suscripciones.json"
-);
-console.log(SUBSCRIPTIONS_FILE_PATH);
 
 webpush.setVapidDetails(
   "mailto:test@test.com",
@@ -29,8 +23,13 @@ router.post("/suscribe", (req, res) => {
   // Get pushSubscription object
   const subscription = req.body;
 
+  //get user from session
+  if (req.session.user.PK_nombre_usuario) {
+    subscription.user = req.session.user.PK_nombre_usuario;
+  }
+
   //save subscription in file
-  saveSubscriptionToFile(subscription);
+  pwaController.saveSubscriptionToFile(subscription);
 
   // Create payload
   const payload = JSON.stringify({ title: "Push Test" });
@@ -43,22 +42,27 @@ router.post("/suscribe", (req, res) => {
   res.status(201).json({});
 });
 
+//notify all suscribers
+router.get("/notify", (req, res) => {
+  // Get payload from query
+  const payload = JSON.stringify({
+    title: "Push Test",
+    body: "Notified by SW!",
+    icon: "https://image.flaticon.com/icons/svg/139/139899.svg",
+  });
+
+  // Get current subscriptions
+  let subscriptions = pwaController.getSubscriptions();
+
+  // Send notifications to all subscribers
+  subscriptions.forEach((subscription) => {
+    webpush
+      .sendNotification(subscription, payload)
+      .catch((err) => console.error(err));
+  });
+
+  // Send 200 - OK
+  res.status(200).json({});
+});
+
 module.exports = router;
-
-function saveSubscriptionToFile(subscription) {
-  // Carga las suscripciones existentes desde el archivo (si existe)
-  console.log("File path from save function -> ", SUBSCRIPTIONS_FILE_PATH);
-  let subscriptions = [];
-  try {
-    subscriptions = JSON.parse(fs.readFileSync(SUBSCRIPTIONS_FILE_PATH));
-  } catch (error) {
-    // Si el archivo no existe o está vacío, no hay suscripciones previas
-    subscriptions = [];
-  }
-
-  // Agrega la nueva suscripción al arreglo
-  subscriptions.push(subscription);
-
-  // Guarda el arreglo actualizado en el archivo JSON
-  fs.writeFileSync(SUBSCRIPTIONS_FILE_PATH, JSON.stringify(subscriptions));
-}

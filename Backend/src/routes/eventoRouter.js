@@ -72,4 +72,17 @@ router.post("/talleresByEventoId", async (req, res) => {
   }
 });
 
+//obtener username de usuarios que participan en el evento
+router.post("/usuariosByEventoId", (req, res) => {
+  const eventId = req.body.id;
+  console.log("entró al API " + eventId);
+
+  eventoController.obtenerUsuariosEvento(eventId, (err, users) => {
+    if (err) {
+      return res.status(404).json({ error: "Evento no encontrado" });
+    }
+    res.json(users);
+  });
+});
+
 module.exports = router;

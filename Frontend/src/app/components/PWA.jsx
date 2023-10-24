@@ -69,6 +69,7 @@ async function usePushNotifications(sus, setSus) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(subscription),
+          credentials: "include",
         });
 
         // Envía la suscripción al backend si es necesario.

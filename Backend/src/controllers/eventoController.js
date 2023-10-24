@@ -76,8 +76,35 @@ const updateEvent = (eventId, newEvent, callback) => {
   });
 };
 
+//obtener username de usuarios que participan en el evento
+const obtenerUsuariosEvento = (PK_evento_contenedor, callback) => {
+  db.query(
+    `select FK_usuario from participacion_usuario where FK_evento_contenedor =${PK_evento_contenedor}`,
+    (err, results) => {
+      //Recuperar cualquier error del query
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        callback(err, null);
+        return;
+      }
+      //Revisar si el results esta vacio
+      if (results.length == 0) {
+        console.warn("No users found");
+        callback(new Error("No users found"), null);
+        return;
+      }
+      console.log(results);
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
+
+
 module.exports = {
   eventosAll,
   obtenerEventoPorCodigo,
   updateEvent,
+  obtenerUsuariosEvento,
 };
