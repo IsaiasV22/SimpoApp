@@ -169,17 +169,23 @@ const ocultarActividad = (id, callback) => {
   );
 };
 
-const registroExiste = (id, username, callback) => {
-  db.query(
-    `SELECT * FROM calendario_u WHERE F_actividad=${id} AND FK_usuario="${username}"`,
-    (err, results) => {
-      if (err) {
-        console.error("Error al añadir actividad:", err);
-        callback(err, null);
-        throw err;
-      }
+const registroExiste = (id,username,callback) => {
+  db.query(`SELECT * FROM calendario_u WHERE F_actividad=${id} AND FK_usuario="${username}"`, (err, results) => {
+    if (err) {
+      console.error("Error al añadir actividad:", err);
+      callback(err, null);
+      throw err;
     }
-  );
+    console.log("results -> "+results);
+    if(results.length===0){
+      console.log("No existe el registro");
+      callback(null, false);
+    }
+    else{
+      console.log("Ya existe el registro");
+      callback(null, true);
+    }
+  });
 };
 
 //obtener username de usuarios con actividad en calendario
