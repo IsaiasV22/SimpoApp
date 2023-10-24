@@ -37,6 +37,15 @@ router.get("/all", (req, res) => {
   });
 });
 
+router.get("/activos", (req, res) => {
+  eventoController.eventosActivos((err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Error al obtener los eventos" });
+    }
+    res.json(results);
+  });
+});
+
 router.get("/:id", (req, res) => {
   const eventId = req.params.id;
 
@@ -58,6 +67,28 @@ router.put("/updateEventById", (req, res) => {
       return res.status(500).json({ error: "Error al editar el evento" });
     }
     res.status(204).send(); // Envía una respuesta sin contenido en caso de éxito
+  });
+});
+
+//Cambia el atributo activo del evento a 1
+router.put("/mostrarEvento", (req, res) => {
+  eventoController.mostrarEvento(req.body.id, (err, results) => {
+    if (err) {
+      console.error("Error al mostrar el evento:", err);
+      return res.status(404).json({ error: err.message });
+    }
+    res.status(200).json({ message: "Evento mostrado" });
+  });
+});
+
+//Cambia el atributo activo del evento a 0
+router.put("/ocultarEvento", (req, res) => {
+  eventoController.ocultarEvento(req.body.id, (err, results) => {
+    if (err) {
+      console.error("Error al ocultar el evento:", err);
+      return res.status(404).json({ error: err.message });
+    }
+    res.status(200).json({ message: "Evento ocultado" });
   });
 });
 

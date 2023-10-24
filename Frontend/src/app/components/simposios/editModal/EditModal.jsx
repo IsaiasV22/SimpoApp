@@ -13,7 +13,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function EditSimposio(element) {
-  console.log("Elemento a editar: ", element);
+  //console.log("Elemento a editar: ", element);
   const [show, setShow] = useState(false);
   
   const PK_evento_contenedor = element.pk;
@@ -111,9 +111,6 @@ function EditSimposio(element) {
             <div>
               <DatePicker
                 showIcon
-                showTimeSelect
-                minTime={new Date(0, 0, 0, 7, 0)}
-                maxTime={new Date(0, 0, 0, 19, 0)}
                 selectsStart
                 selected={dia_inicio}
                 onChange={date => setDiaInicio(date)}
@@ -121,9 +118,6 @@ function EditSimposio(element) {
               />
               <DatePicker
                 showIcon
-                showTimeSelect
-                minTime={new Date(0, 0, 0, 7, 0)}
-                maxTime={new Date(0, 0, 0, 19, 0)}
                 selectsEnd
                 selected={dia_final}
                 onChange={date => setDiaFinal(date)}

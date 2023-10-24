@@ -12,6 +12,18 @@ const eventosAll = (callback) => {
   });
 };
 
+const eventosActivos = (callback) => {
+  db.query("SELECT * FROM evento_contenedor WHERE activo=1", (err, results) => {
+    if (err) {
+      console.error("Error al realizar la consulta:", err);
+      callback(err, null);
+      return;
+    }
+    // Devuelve los resultados de la consulta
+    callback(null, results);
+  });
+};
+
 const obtenerEventoPorCodigo = (PK_evento_contenedor, callback) => {
   db.query(
     `SELECT * FROM evento_contenedor WHERE PK_evento_contenedor=${PK_evento_contenedor}`,
@@ -38,8 +50,8 @@ const obtenerEventoPorCodigo = (PK_evento_contenedor, callback) => {
 const updateEvent = (eventId, newEvent, callback) => {
   console.log(newEvent);
 
-  const fechaInicio = newEvent.dia_inicio.split('T')[0]; // Obtener la parte de la fecha
-  const fechaFinal = newEvent.dia_final.split('T')[0]; // Obtener la parte de la fecha
+  const fechaInicio = newEvent.dia_inicio.split("T")[0]; // Obtener la parte de la fecha
+  const fechaFinal = newEvent.dia_final.split("T")[0]; // Obtener la parte de la fecha
 
   //Realiza la consulta UPDATE en la base de datos para modificar el evento
   const sql = `UPDATE evento_contenedor
@@ -102,9 +114,42 @@ const obtenerUsuariosEvento = (PK_evento_contenedor, callback) => {
 
 
 
+//Realiza la consulta para modificar el atributo activo del evento a 1
+const mostrarEvento = (eventId, callback) => {
+  db.query(`UPDATE evento_contenedor SET activo=1 WHERE PK_evento_contenedor=${eventId}`, (err, results) => {
+      if (err) {
+        console.error("Error al mostrar el evento:", err);
+        callback(err, null);
+        throw err;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
+//Realiza la consulta para modificar el atributo activo del evento a 0
+const ocultarEvento = (eventId, callback) => {
+  db.query(
+    `UPDATE evento_contenedor SET activo=0 WHERE PK_evento_contenedor=${eventId}`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al ocultar el evento:", err);
+        callback(err, null);
+        throw err;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
 module.exports = {
   eventosAll,
+  eventosActivos,
   obtenerEventoPorCodigo,
   updateEvent,
   obtenerUsuariosEvento,
+  mostrarEvento,
+  ocultarEvento,
 };

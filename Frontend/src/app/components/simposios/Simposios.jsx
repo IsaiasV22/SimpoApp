@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "@/app/components/globalState/GlobalState";
 import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta sea correcta
 import { format, parseISO } from "date-fns";
-import { es, enUS } from "date-fns/locale";
 import Notificacion from "../Notificacion";
 
 import Estadisticas from "../estadisticas/Estadisticas";
@@ -52,17 +51,56 @@ export default function Simposios() {
 
   async function handleEventos() {
     try {
-      const response = await fetch(`${urlServer}eventos/all`);
+      let response = null;
+      if (rol === 1) {
+        response = await fetch(`${urlServer}eventos/all`);
+      } else {
+        response = await fetch(`${urlServer}eventos/activos`);
+      }
       if (!response.ok) {
         throw new Error("No se pudo obtener la lista de eventos");
       }
-
       const data = await response.json();
       //console.log(data);
       setEventos(data);
     } catch (error) {
       toast.error(error.message);
       //alert(error.message);
+    }
+  }
+
+  async function handleEstadoActivo(PK_evento_contenedor, activo) {
+    let response = null;
+    try{
+      if(activo){
+        response = await fetch(`${urlServer}eventos/ocultarEvento`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: PK_evento_contenedor }),
+          credentials: "include",
+        })
+      } else {
+        response = await fetch(`${urlServer}eventos/mostrarEvento`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: PK_evento_contenedor }),
+          credentials: "include",
+        })
+      }
+      if (!response.ok) {
+        console.log("response: ", response);
+        throw new Error(response.statusText);
+      }
+      const data = await response.json();
+      toast.success(data.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (error) {
+      toast.error(error.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     }
   }
 
@@ -125,9 +163,7 @@ export default function Simposios() {
                 }}
               >
                 <div className="card card-simposio">
-                  <div
-                    className="card-header header-simposio"
-                  >
+                  <div className="card-header header-simposio">
                     <h3 style={{ textAlign: "center" }}>{element.nombre}</h3>
                   </div>
 
@@ -144,32 +180,19 @@ export default function Simposios() {
                   />
 
                   <div className="card-body">
-                    <p
-                      className="card-text descripcion-simposio"
-                    >
+                    <p className="card-text descripcion-simposio">
                       {element.descripcion}
                     </p>
                     <p className="card-text">
-                      <i
-                        class="bi bi-calendar-event icon"
-                        
-                      >
-                        {" "}
-                      </i>
+                      <i class="bi bi-calendar-event icon"> </i>
                       Dia de inicio: {formatDate(element.dia_inicio, "es")}
                     </p>
                     <p className="card-text">
-                      <i
-                        class="bi bi-calendar-event icon"
-                      >
-                        {" "}
-                      </i>
+                      <i class="bi bi-calendar-event icon"> </i>
                       Dia final: {formatDate(element.dia_final, "es")}
                     </p>
                     <p className="card-text">
-                      <i class="bi bi-map icon">
-                        {" "}
-                      </i>
+                      <i class="bi bi-map icon"> </i>
                       {element.lugar}
                     </p>
                     {/*  <Link
@@ -226,6 +249,15 @@ export default function Simposios() {
                         />
 
                         <Estadisticas />
+                        <button
+
+                          //on click cambiar el estado de activo
+                          onClick={()=>{handleEstadoActivo(element.PK_evento_contenedor, element.activo)}}
+                          className="btn btn-primary"
+                          style={{ marginRight: "5px" }}
+                        >
+                          {element.activo ? "Ocultar" : "Mostrar"}
+                        </button>
                       </>
                     )}
 

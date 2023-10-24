@@ -155,4 +155,26 @@ router.post("/usuariosActividad", (req, res) => {
   });
 });
 
+//Mostrar actividad
+router.put("/mostrarActividad", (req, res) => {
+  actividadController.mostrarActividad(req.body.id, (err, results) => {
+    if (err) {
+      console.error("Error al mostrar la actividad:", err);
+      return res.status(404).json({ error: err.message });
+    }
+    res.status(200).json({ message: "Actividad mostrada" });
+  });
+})
+
+//Ocultar actividad
+router.put("/ocultarActividad", (req, res) => {
+  actividadController.ocultarActividad(req.body.id, (err, results) => {
+    if (err) {
+      console.error("Error al ocultar la actividad:", err);
+      return res.status(404).json({ error: err.message });
+    }
+    res.status(200).json({ message: "Actividad ocultada" });
+  });
+})
+
 module.exports = router;

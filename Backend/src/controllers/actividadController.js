@@ -121,23 +121,42 @@ const updateActivity = (newActivity, callback) => {
   });
 };
 
-const registroExiste = (id, username, callback) => {
-  db.query(
-    `SELECT * FROM calendario_u WHERE F_actividad=${id} AND FK_usuario="${username}"`,
-    (err, results) => {
+//Mostrar actividad
+const mostrarActividad = (id, callback) => {
+  db.query(`UPDATE actividad SET estatus=1 WHERE PK_actividad=${id}`, (err, results) => {
       if (err) {
-        console.error("Error al añadir actividad:", err);
+        console.error("Error al mostrar la actividad:", err);
         callback(err, null);
         throw err;
       }
-      console.log("results -> " + results);
-      if (results.length === 0) {
-        console.log("No existe el registro");
-        callback(null, false);
-      } else {
-        console.log("Ya existe el registro");
-        callback(null, true);
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
+//Ocultar actividad
+const ocultarActividad = (id, callback) => {
+  db.query(
+    `UPDATE actividad SET estatus=0 WHERE PK_actividad=${id}`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al ocultar la actividad:", err);
+        callback(err, null);
+        throw err;
       }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
+const registroExiste = (id,username,callback) => {
+  db.query(`SELECT * FROM calendario_u WHERE F_actividad=${id} AND FK_usuario="${username}"`, (err, results) => {
+    if (err) {
+      console.error("Error al añadir actividad:", err);
+      callback(err, null);
+      throw err;
     }
   );
 };
@@ -176,7 +195,8 @@ module.exports = {
   registroExiste,
   actividadDelete,
   updateActivity,
-<<<<<<< HEAD
+  mostrarActividad,
+  ocultarActividad,
 };
 =======
   obtenerUsuariosActividad,
