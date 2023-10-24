@@ -6,6 +6,7 @@ import { urlServer } from "@/app/Utiles.jsx";
 import Link from "next/link";
 import EditModal from "./editModal/EditModal";
 import Estadisticas from "../../estadisticas/Estadisticas";
+import { ToastContainer, toast } from "react-toastify";
 
 function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
   const [imageUrl, setImageUrl] = useState("");
@@ -33,6 +34,41 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
   useEffect(() => {
     getImageUrl(element.PK_evento_contenedor);
   }, [element.PK_evento_contenedor]);
+
+  async function handleEstadoActivo(PK_evento_contenedor, activo) {
+    let response = null;
+    try{
+      if(activo){
+        response = await fetch(`${urlServer}eventos/ocultarEvento`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: PK_evento_contenedor }),
+          credentials: "include",
+        })
+      } else {
+        response = await fetch(`${urlServer}eventos/mostrarEvento`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: PK_evento_contenedor }),
+          credentials: "include",
+        })
+      }
+      if (!response.ok) {
+        console.log("response: ", response);
+        throw new Error(response.statusText);
+      }
+      const data = await response.json();
+      toast.success(data.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (error) {
+      toast.error(error.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    }
+  }
 
   return (
     <div
