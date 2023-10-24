@@ -90,8 +90,7 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
             <button
               className="btn btn-primary"
               disabled={
-                !suscripcion ||
-                !suscripcion[element.PK_evento_contenedor]
+                !suscripcion || !suscripcion[element.PK_evento_contenedor]
               }
             >
               Ver más
@@ -108,6 +107,14 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
                 dia_final={element.dia_final}
               />
               <Estadisticas />
+              <button
+                //on click cambiar el estado de activo
+                onClick={() => {handleEstadoActivo(element.PK_evento_contenedor, element.activo);}}
+                className="btn btn-primary"
+                style={{ marginRight: "5px" }}
+              >
+                {element.activo ? "Ocultar" : "Mostrar"}
+              </button>
             </>
           )}
           {suscripcion !== null && (
