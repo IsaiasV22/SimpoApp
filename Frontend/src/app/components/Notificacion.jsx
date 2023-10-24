@@ -1,49 +1,16 @@
 "use client";
+import useGlobalState from "./globalState/GlobalState";
 import { useEffect } from "react";
-import useGlobalState from "@/app/components/globalState/GlobalState";
 import { urlServer } from "../Utiles";
 
-export default function PWA() {
+export default function Notificacion() {
   const suscribed = useGlobalState((state) => state.suscribed);
   const setSuscribed = useGlobalState((state) => state.setSuscribed);
   useEffect(() => {
-    //checkSWUpdate();
-    registerServiceWorker();
-    //usePushNotifications(suscribed, setSuscribed);
+    usePushNotifications(suscribed, setSuscribed);
   }, []);
-
   return <></>;
 }
-
-//check if sw update is available else register sw
-const checkSWUpdate = async () => {
-  "serviceWorker" in navigator && typeof window !== "undefined"
-    ? await navigator.serviceWorker
-        .getRegistration()
-        .then((reg) => {
-          reg && reg.waiting
-            ? updateWorker(reg.waiting)
-            : registerServiceWorker();
-        })
-        .catch((err) => {
-          console.warn("service worker registration failed", err.message);
-        })
-    : null;
-};
-
-//register sw
-const registerServiceWorker = async () => {
-  "serviceWorker" in navigator && typeof window !== "undefined"
-    ? await navigator.serviceWorker
-        .register("/sw.js")
-        .then((reg) => {
-          console.log("service worker registration successful");
-        })
-        .catch((err) => {
-          console.warn("service worker registration failed", err.message);
-        })
-    : null;
-};
 
 async function usePushNotifications(sus, setSus) {
   const suscribed = sus;
@@ -78,14 +45,12 @@ async function usePushNotifications(sus, setSus) {
         // Actualiza el estado global para indicar que el usuario está suscrito
         setSuscribed(true);
       } else {
-        console.warn("Permiso para notificaciones denegado.");
+        console.warn("notifications denied");
       }
     } catch (error) {
-      console.error("Error al suscribirse a las notificaciones push:", error);
+      console.error("Error subscribing to push notifications", error);
     }
   }
 
   return suscribed;
 }
-
-//

@@ -9,6 +9,7 @@ import useGlobalState from "@/app/components/globalState/GlobalState";
 import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta sea correcta
 import { format, parseISO } from "date-fns";
 import { es, enUS } from "date-fns/locale";
+import Notificacion from "../Notificacion";
 
 import Estadisticas from "../estadisticas/Estadisticas";
 
@@ -103,6 +104,7 @@ export default function Simposios() {
 
   return (
     <div className="main-content">
+      <Notificacion />
       <div className="container my-5">
         <BackButton />
 

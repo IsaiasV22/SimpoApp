@@ -4,7 +4,7 @@ import "./Login.css";
 import { urlServer } from "@/app/Utiles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import useGlobalState from "../globalState/GlobalState"; // Asegúrate de que la ruta sea correcta
+import useGlobalState from "../globalState/GlobalState"; 
 import { useRouter } from "next/navigation";
 
 export default function Login() {

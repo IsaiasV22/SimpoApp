@@ -20,7 +20,7 @@ app.use(session({
 
 const corsOptions = {
   credentials: true,
-  origin: 'http://localhost:3000' // Reemplaza esto con la URL de tu frontend
+  origin: 'http://localhost:3000' // URL del cliente
 };
 
 // Configura CORS para permitir todas las solicitudes
@@ -55,6 +55,11 @@ app.use("/estadisticas", estadisticasRoutes);
 
 const talleresRoutes = require("./routes/tallerRouter.js");
 app.use("/talleres", talleresRoutes);
+
+
+//pwa route
+const pwaRoutes = require("./routes/pwaRouter.js");
+app.use("/pwa", pwaRoutes);
 
 //configurar puerto
 const PORT = process.env.PORT || 3000;

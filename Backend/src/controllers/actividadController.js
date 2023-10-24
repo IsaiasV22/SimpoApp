@@ -142,6 +142,32 @@ const registroExiste = (id, username, callback) => {
   );
 };
 
+//obtener username de usuarios con actividad en calendario
+const obtenerUsuariosActividad = (PK_actividad, callback) => {
+  console.log('pk actividad: '+PK_actividad);
+  db.query(
+    `select FK_usuario from calendario_u where F_actividad =${PK_actividad}`,
+    (err, results) => {
+      //Recuperar cualquier error del query
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        callback(err, null);
+        return;
+      }
+      //Revisar si el results esta vacio
+      if (results.length == 0) {
+        console.warn("No users found");
+        callback(new Error("No users found"), null);
+        return;
+      }
+      console.log(results);
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
+
 module.exports = {
   actividadesAll,
   obtenerActividadesPorEvento,
@@ -150,4 +176,9 @@ module.exports = {
   registroExiste,
   actividadDelete,
   updateActivity,
+<<<<<<< HEAD
 };
+=======
+  obtenerUsuariosActividad,
+};
+>>>>>>> b1ba71644b96dff677a863ba7ef66741adc4d1b6
