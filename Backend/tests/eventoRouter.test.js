@@ -66,5 +66,25 @@ describe("Pruebas para el enrutador de eventos", () => {
     ]);
   });
 
+  it("debe responder correctamente a una solicitud PUT /eventos/updateEventById", async () => {
+    const eventoActualizado = {
+      PK_evento_contenedor: 1,
+      nombre: "SIMMAC XXI",
+      descripcion:
+        "El XXI SIMMAC es un simposio internacional que reúne a expertos en estadísticas y matemáticas aplicadas para compartir conocimientos y avances en diversos campos.",
+      lugar: "UCR Ciudad de la Investigación",
+      dia_inicio: "2018-02-27T06:00:00.000Z",
+      dia_final: "2018-03-02T06:00:00.000Z",
+      activo: 1,
+      FK_tipo_evento: 1,
+    };
+
+    const response = await supertest(app)
+      .put("/eventos/updateEventById")
+      .send(eventoActualizado);
+
+    expect(response.status).toBe(204);
+  });
+
   // Agrega más pruebas para otras rutas y casos si es necesario...
 });
