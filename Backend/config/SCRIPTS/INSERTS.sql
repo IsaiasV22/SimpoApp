@@ -425,6 +425,28 @@ VALUES
         1
     );
 
+    -- Inserción de SIMMAC XX
+INSERT INTO
+    evento_contenedor (
+        nombre,
+        descripcion,
+        lugar,
+        dia_inicio,
+        dia_final,
+        activo,
+        FK_Tipo_Evento
+    )
+VALUES
+    (
+        'SIMMAC XX',
+        'XX Simposio Internacional de Métodos Matemáticos Aplicados a las Ciencias (SIMMAC)',
+        'Facultad de Educación y  Edificio de Escuelas de Física y Matemática de la Universidad de Costa Rica',
+        '2016-02-23',
+        '2016-02-26',
+        1,
+        1
+    );
+
 -- Inserción de prueba en la tabla 'eventosC_taller'
 INSERT INTO
     evento_contenedor_taller (FK_Evento_contenedor, FK_taller)

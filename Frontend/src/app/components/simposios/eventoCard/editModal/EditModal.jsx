@@ -179,6 +179,8 @@ function EditSimposio(element) {
               <Form.Control type="file" onChange={handleFileChange} />
             </InputGroup>
             <div>
+            <InputGroup className="mb-3">
+            <InputGroup.Text id="diaInicio">Dia de inicio</InputGroup.Text>
               <DatePicker
                 showIcon
                 selectsStart
@@ -186,6 +188,10 @@ function EditSimposio(element) {
                 onChange={(date) => setDiaInicio(date)}
                 startDate={dia_inicio}
               />
+              </InputGroup>
+
+              <InputGroup className="mb-3">
+              <InputGroup.Text id="diaFinal">Dia de finalizacion</InputGroup.Text>
               <DatePicker
                 showIcon
                 selectsEnd
@@ -195,6 +201,7 @@ function EditSimposio(element) {
                 startDate={dia_inicio}
                 minDate={dia_inicio}
               />
+              </InputGroup>
             </div>
           </Form>
         </Modal.Body>
