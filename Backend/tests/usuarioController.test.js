@@ -42,3 +42,13 @@ test('obtenerUsuarioPorCedula debe llamar al callback con un mensaje de error pa
     done();
   });
 });
+
+// Prueba obtenerActividadesCalendario
+test.only('obtenerActividadesCalendario debe llamar al callback sin errores y devolver una lista de actividades válida', (done) => {
+  const evento = '1'; // Reemplaza con un evento válido existente en la bd
+  usuarioController.obtenerActividadesCalendario(evento, (err, actividades) => {
+    expect(err).toBeNull();
+    expect(Array.isArray(actividades)).toBe(true);
+    done();
+  });
+});
