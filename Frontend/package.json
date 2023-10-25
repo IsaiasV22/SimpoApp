@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test":"react-scripts test"
   },
   "dependencies": {
     "@fontsource/eb-garamond": "^5.0.12",
@@ -30,6 +31,7 @@
     "zustand": "^4.4.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0"
   }
 }
