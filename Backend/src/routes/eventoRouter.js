@@ -76,7 +76,7 @@ router.get("/:id", (req, res) => {
 router.put("/updateEventById", (req, res) => {
   const eventId = req.body.id;
   const newEvent = req.body; // Los datos del evento editado
-  console.log("entró al API " + eventId);
+  console.log("entró al API UPDATE" + eventId);
 
   eventoController.updateEvent(eventId, newEvent, (err) => {
     if (err) {
