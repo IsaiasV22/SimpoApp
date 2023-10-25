@@ -210,7 +210,7 @@ function EditSimposio(element) {
             Close
           </Button>
           <Button form="editSimposio" type="submit" variant="primary">
-            Editar
+            Aplicar cambios
           </Button>
         </Modal.Footer>
       </Modal>
