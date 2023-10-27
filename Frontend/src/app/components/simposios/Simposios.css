@@ -1,0 +1,63 @@
+/* Simposios.css */
+
+/* Estilos para el contenedor principal */
+.simposios-container {
+  text-align: center; /* Centra el contenido horizontalmente */
+  margin: 20px; /* Espacio alrededor del contenido */
+  font-size: 24px; /* Tamaño del texto */
+  font-weight: bold; /* Negrita para el texto */
+  color: #333; /* Color del texto */
+}
+
+/*Estilos para el boton de suscrito y no suscrito*/
+.btn-custom-suscrito,
+.btn-custom-suscrito:disabled {
+  background-color: #8dc63f !important;
+  border-color: #8dc63f !important;
+  color: white !important; /* Cambia esto según tus necesidades */
+  opacity: 1 !important; /* Sobrescribe la opacidad para el estado deshabilitado */
+  cursor: not-allowed !important; /* Cambia el cursor para indicar que el botón está deshabilitado */
+}
+
+.btn-custom-noSuscrito,
+.btn-custom-noSuscrito:disabled {
+  background-color: #670000 !important;
+  border-color: #670000 !important;
+  color: white !important; /* Cambia esto según tus necesidades */
+  opacity: 1 !important; /* Sobrescribe la opacidad para el estado deshabilitado */
+  cursor: not-allowed !important; /* Cambia el cursor para indicar que el botón está deshabilitado */
+}
+
+/*Estilos para el card*/
+
+.card-simposio{
+  max-width: 800px;
+}
+
+.header-simposio {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    #00c0f3 25%,
+    #00c0f3 75%,
+    transparent 100%
+  );
+  margin-bottom: 2%;
+  color: white;
+}
+
+.footer-simposio{
+  background: transparent;
+  color: white;
+}
+
+.descripcion-simposio{
+  text-align: justify;
+  text-justify: inter-word;
+  margin-bottom: 1%;
+  margin-top: 1%;
+}
+
+.icon{
+  font-size: 20px;
+}

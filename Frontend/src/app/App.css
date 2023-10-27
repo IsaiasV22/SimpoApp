@@ -1,18 +1,72 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "@/app/components/login/Login.css";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
-/*create responsive app shell*/
-
-#root {
-  height: 100%;
+.main-content {
+  min-height: 100vh;
 }
 
-.wrapper-center{
-  width: max-content;
-  margin: 0 auto;
+.main-content-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh; /* Esto asegura que el contenedor ocupe toda la altura de la ventana */
 }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+/* Estilo base para los enlaces */
+a.link-footer {
+  color: white;
+  text-decoration: none; /* Esto quita el subrayado */
+}
+
+/* Estilo el enlace con clase register */
+a.register {
+  color: #00c0f3;
+}
+
+/* Estilo para el hover (cuando el mouse está encima) */
+a:hover {
+  color: #00c0f3;
+}
+
+/* En tu archivo Login.css */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-top: 4px solid black;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Esto centra el spinner exactamente en el centro */
+  z-index: 1000; /* Asegúrate de que el spinner esté por encima de otros elementos */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
+  color: #0c0a0a;
+}
+
+.navbar-custom {
+  background-color: #00c0f3;
 }

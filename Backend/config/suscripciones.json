@@ -1,0 +1,11 @@
+[
+  {
+    "endpoint": "https://fcm.googleapis.com/fcm/send/cT6ELRnJO1g:APA91bHgCFtdeAazk9jjyB5KjWlCtIUh5uIDv_ZGAanG_DH9EOeut2uAl9xgjTpOVfy1u1_1LfZ4zZscjJA_kunEPZ_8FU2v1wSJvv7IoPcLJF7yffsnuNWyFehXvUJk4LXUTVsgcHM-",
+    "expirationTime": null,
+    "keys": {
+      "p256dh": "BOBUiEmrc3dxQnxM3nMOpJzXAZ-yhtdleXZiX7QGa0FPwpRczTJwkEuABwrwhohAtVqgUT4qxKJqIUcOV13PZP0",
+      "auth": "WjG1xbohYgSc4yCG8rbZZg"
+    },
+    "user": "Andres21sb"
+  }
+]

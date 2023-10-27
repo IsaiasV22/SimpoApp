@@ -1,0 +1,35 @@
+{
+  "oyentes": [
+    {
+      "id": "oyente1",
+      "password": "contraseña1",
+      "rol": "1"
+    },
+    {
+      "id": "oyente2",
+      "password": "contraseña2",
+      "rol": "1"
+    },
+    {
+      "id": "oyente3",
+      "password": "contraseña3",
+      "rol": "1"
+    },
+    {
+      "id": "oyente4",
+      "password": "contraseña4",
+      "rol": "1"
+    },
+    {
+      "id": "oyente5",
+      "password": "contraseña5",
+      "rol": "1"
+    }
+  ],
+  "administradores": [
+    {
+      "id": "root",
+      "password": "root"
+    }
+  ]
+}
