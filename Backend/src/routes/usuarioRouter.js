@@ -67,13 +67,13 @@ router.post("/logout", (req, res) => {
 });
 
 router.post("/evento", (req, res) => {
-  //console.log("Inside /evento");
+  console.log("Inside /evento");
   //console.log("req headers -> "+JSON.stringify(req.headers));
   // Verifica si req.session.user está definido antes de acceder a sus propiedades
   if (req.session.user && req.session.user.PK_nombre_usuario) {
     const username = req.session.user.PK_nombre_usuario;
     const evento = req.body.evento;
-    //console.log("User in session -> " + username + " " + evento);
+    console.log("User in session -> " + username + " " + evento);
 
     usuarioController.estaSuscritoA(evento, username, (err, estaSuscrito) => {
       if (err) {

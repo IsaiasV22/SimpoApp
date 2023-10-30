@@ -62,7 +62,7 @@ router.post("/cambiaEstadoActividad", (req, res) => {
   console.log("entró al API cambiaEstadoActividad");
   //Imprimir lo que hay en la sesión
   //console.log("Esto hay en la sesión: ", req);
-  if (req.session.user && req.session.user.PK_nombre_usuario) {
+  if (req.session.user && req.session.user.PK_nombre_usuario ) {
     console.log("entró al if " + req.session.user.PK_nombre_usuario);
     const username = req.session.user.PK_nombre_usuario;
     const actividad = req.body.actividad;
