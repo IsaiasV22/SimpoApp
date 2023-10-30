@@ -1,3 +1,3 @@
 @echo off
-start CMD /c "call backend.bat"
-start CMD /c "call frontend.bat"
+start CMD /k "call backend.bat"
+start CMD /k "call frontend.bat"
