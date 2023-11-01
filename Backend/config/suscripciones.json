@@ -1,11 +1,1 @@
-[
-  {
-    "endpoint": "https://fcm.googleapis.com/fcm/send/cT6ELRnJO1g:APA91bHgCFtdeAazk9jjyB5KjWlCtIUh5uIDv_ZGAanG_DH9EOeut2uAl9xgjTpOVfy1u1_1LfZ4zZscjJA_kunEPZ_8FU2v1wSJvv7IoPcLJF7yffsnuNWyFehXvUJk4LXUTVsgcHM-",
-    "expirationTime": null,
-    "keys": {
-      "p256dh": "BOBUiEmrc3dxQnxM3nMOpJzXAZ-yhtdleXZiX7QGa0FPwpRczTJwkEuABwrwhohAtVqgUT4qxKJqIUcOV13PZP0",
-      "auth": "WjG1xbohYgSc4yCG8rbZZg"
-    },
-    "user": "Andres21sb"
-  }
-]
+[{"endpoint":"https://fcm.googleapis.com/fcm/send/cT6ELRnJO1g:APA91bHgCFtdeAazk9jjyB5KjWlCtIUh5uIDv_ZGAanG_DH9EOeut2uAl9xgjTpOVfy1u1_1LfZ4zZscjJA_kunEPZ_8FU2v1wSJvv7IoPcLJF7yffsnuNWyFehXvUJk4LXUTVsgcHM-","expirationTime":null,"keys":{"p256dh":"BOBUiEmrc3dxQnxM3nMOpJzXAZ-yhtdleXZiX7QGa0FPwpRczTJwkEuABwrwhohAtVqgUT4qxKJqIUcOV13PZP0","auth":"WjG1xbohYgSc4yCG8rbZZg"},"user":"Andres21sb"},{"endpoint":"https://fcm.googleapis.com/fcm/send/cCqEOL31VFA:APA91bFs_vdPsqrhuR_NWfH4Tw_-Rl4uY15zjQBVbZlN1ZXuyCqogVPoC4aKqmY8OjoqytBsjgz2LkYU08iSek1Y6CY8BCJ4a85kxUcLdjf_WMSxm21BauOeC82rVNrDQ9SYgcCCD6cU","expirationTime":null,"keys":{"p256dh":"BAq5fzJN8r2QnLwaqG-iVT37xe5OrdPyST7mA_OoFlUMt1bm2CS9Rz6MAjKQw-iGi6oWaXj092PnV_EDlfqEmBQ","auth":"hMM-ezCMDO8fusfW8A16aA"},"user":"Andres21sb"}]
