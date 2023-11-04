@@ -203,7 +203,7 @@ const obtenerUsuariosActividad = (PK_actividad, callback) => {
       //Revisar si el results esta vacio
       if (results.length == 0) {
         console.warn("No users found");
-        callback(null, "No users found");
+        callback(new Error("No users found"), null);
         return;
       }
       //console.log(results.reduce((acc, curr) => [...acc,curr.FK_usuario], []));
