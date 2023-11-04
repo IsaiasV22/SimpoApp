@@ -171,11 +171,6 @@ router.post("/usuariosActividad", (req, res) => {
         .status(404)
         .json({ error: "Error al obtener los usuarios de la actividad" });
     }
-
-    if (results === "No users found") {
-      return res.status(200).json({ warning: "No hay usuarios" });
-    }
-
     res.json(results);
   });
 });

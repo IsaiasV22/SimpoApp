@@ -86,7 +86,7 @@ const notifyActivityUpdate = (activity) => {
     (err, results) => {
       if (err) {
         console.error("Error al realizar la consulta:", err);
-        return new Error(err.message);
+        return res.status(404).json({ error: err.message });
       }
       suscribers = results;
       //notify to users

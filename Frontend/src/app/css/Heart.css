@@ -35,7 +35,7 @@
   }
   #checkbox:checked + label svg #heart {
     transform: scale(0.2);
-    fill: #00c0f3;
+    fill: #18191A;
     animation: animateHeart 0.3s linear forwards 0.25s;
   }
   #checkbox:checked + label svg #main-circ {
