@@ -5,7 +5,7 @@ const app = express();
 require("dotenv").config();
 
 app.use(express.json());
-
+//funciona
 //sesion
 app.use(
   session({
