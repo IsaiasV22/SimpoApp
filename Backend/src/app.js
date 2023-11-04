@@ -13,7 +13,7 @@ app.use(
     resave: true,
     saveUninitialized: false,
     cookie: {
-      secure: true, // Habilita las cookies solo a través de HTTPS
+      //secure: true, // Habilita las cookies solo a través de HTTPS
       httpOnly: true, // Impide que JavaScript acceda a la cookie en el cliente
       maxAge: 3600000, // Tiempo de vida de la sesión en milisegundos (1 hora en este caso)
     },
