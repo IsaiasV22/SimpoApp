@@ -22,13 +22,13 @@ const Header = () => {
           <a className="navbar-brand" href="#">
             <img
               className="logo-img img-fluid w-75 w-md-100 mobile-image"
-              src="/images/LogoUCR.png"
+              src="/Images/LogoUCR.png"
               alt="Cimpa"
               style={{ maxWidth: "170px" }}
             ></img>
             <img
               className="logo-img img-fluid w-75 w-md-100 mobile-image"
-              src="/images/LogoCimpaHorizontal.png"
+              src="/Images/LogoCimpaHorizontal.png"
               alt="Cimpa"
               style={{ maxWidth: "400px" }}
             ></img>
