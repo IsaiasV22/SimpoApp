@@ -1,0 +1,18 @@
+/* Estilos para dispositivos móviles */
+@media (max-width: 767px) {
+    .mobile-image {
+      /* Estilos específicos para las imágenes en dispositivos móviles */
+      max-width: 100%; /* Las imágenes se ajustarán al ancho del contenedor */
+      height: auto; /* La altura se ajustará automáticamente para mantener la proporción */
+      display: block; /* Asegura que las imágenes se comporten como bloques */
+      margin: 0 auto; /* Centra las imágenes en el contenedor */
+    }
+  }
+  
+  /* Estilos para dispositivos de escritorio */
+  @media (min-width: 768px) {
+    .mobile-image {
+      /* Estilos para las imágenes en dispositivos de escritorio, si es necesario */
+    }
+  }
+  

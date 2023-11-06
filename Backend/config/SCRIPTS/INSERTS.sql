@@ -536,7 +536,7 @@ INSERT INTO
     )
 VALUES
     (
-        'A nonlinear relapse model with disaggregated contact rates: analysis of a forward-backward bifurcation',
+        'A nonlinear relapse model with disaggregated contact rates: analysis of a forward-backward bifurcation',
         'Throughout the progress of epidemic scenarios it is expected to have different average daily contact behavior for individuals that are at different health classes. This contact heterogeneity has been studied in recent adaptive models and it allows to better captures the inherent differences across health statuses. Diseases with reinfection bring out more complex scenarios and they offer an important application in which to consider contact disaggregation. Therefore, we developed a nonlinear differential equation model to explore the dynamics of relapse phenomena and contact differences across health statuses. Our incidence rate function is formulated, taking inspiration from recent adaptive algorithms. It incorporates contact behavior for individuals in each health class. We use constant contact rates at each health status for our analytical results and prove conditions for different forward-backward bifurcation scenarios. The relationship between the different contact rates heavily influences these conditions. Numerical examples highlight the effect of temporarily recovered individuals and initial conditions on infected population persistence.',
         '2018-02-27',
         '14:00:00',

@@ -4,6 +4,7 @@ import Link from "next/link";
 import LogoutButton from "./logout/Logout";
 import { toast } from "react-toastify";
 import useGlobalState from "./globalState/GlobalState";
+import '../css/header.css'
 
 const Header = () => {
   const [isMenuCollapsed, setMenuCollapsed] = useState(true);
@@ -20,13 +21,13 @@ const Header = () => {
           {/* Logo */}
           <a className="navbar-brand" href="#">
             <img
-              className="logo-img img-fluid w-75 w-md-100"
+              className="logo-img img-fluid w-75 w-md-100 mobile-image"
               src="/images/LogoUCR.png"
               alt="Cimpa"
               style={{ maxWidth: "170px" }}
             ></img>
             <img
-              className="logo-img img-fluid w-75 w-md-100"
+              className="logo-img img-fluid w-75 w-md-100 mobile-image"
               src="/images/LogoCimpaHorizontal.png"
               alt="Cimpa"
               style={{ maxWidth: "400px" }}

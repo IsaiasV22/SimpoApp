@@ -49,6 +49,8 @@
 .footer-simposio{
   background: transparent;
   color: white;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .descripcion-simposio{

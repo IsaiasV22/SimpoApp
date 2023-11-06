@@ -112,7 +112,7 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
             {element.lugar}
           </p>
         </div>
-        <div className="card-footer d-flex justify-content-center align-items-center footer-simposio">
+        <div className="card-footer d-flex footer-simposio">
           <Link
             href={
               suscripcion && suscripcion[element.PK_evento_contenedor] || rol === 1
