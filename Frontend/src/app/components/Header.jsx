@@ -60,7 +60,9 @@ const Header = () => {
           id="navbarNav"
         >
           <ul className="navbar-nav ms-auto">
+                      
             <li className="nav-item">
+            {user ? (  
               <Link
                 href={user ? "/simposios" : "/"}
                 className="nav-link"
@@ -69,6 +71,8 @@ const Header = () => {
               >
                 Home
               </Link>
+
+              ): <></>}
             </li>
             {user && (
               <Link
