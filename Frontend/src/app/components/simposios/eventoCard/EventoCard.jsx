@@ -37,21 +37,21 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
 
   async function handleEstadoActivo(PK_evento_contenedor, activo) {
     let response = null;
-    try{
-      if(activo){
+    try {
+      if (activo) {
         response = await fetch(`${urlServer}eventos/ocultarEvento`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: PK_evento_contenedor }),
           credentials: "include",
-        })
+        });
       } else {
         response = await fetch(`${urlServer}eventos/mostrarEvento`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: PK_evento_contenedor }),
           credentials: "include",
-        })
+        });
       }
       if (!response.ok) {
         console.log("response: ", response);
@@ -80,97 +80,114 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
         alignItems: "center",
       }}
     >
-      <div className="card card-simposio">
-        <div className="card-header header-simposio">
-          <h3 style={{ textAlign: "center" }}>{element.nombre}</h3>
-        </div>
-        <img
-          src={imageUrl}
-          alt="Banner"
-          className="card-img-top"
-          style={{
-            maxWidth: "500px",
-            maxHeight: "500px",
-            objectFit: "cover",
-            margin: "auto",
-          }}
-        />
-        <div className="card-body">
-          <p className="card-text descripcion-simposio">
-            {element.descripcion}
-          </p>
-          <p className="card-text">
-            <i className="bi bi-calendar-event icon"> </i>
-            Dia de inicio: {formatDate(element.dia_inicio, "es")}
-          </p>
-          <p className="card-text">
-            <i className="bi bi-calendar-event icon"> </i>
-            Dia final: {formatDate(element.dia_final, "es")}
-          </p>
-          <p className="card-text">
-            <i className="bi bi-map icon"> </i>
-            {element.lugar}
-          </p>
-        </div>
-        <div className="card-footer d-flex footer-simposio">
-          <Link
-            href={
-              suscripcion && suscripcion[element.PK_evento_contenedor] || rol === 1
-                ? `${urlSimposio}/${JSON.stringify(
-                    element.PK_evento_contenedor
-                  )}`
-                : "#"
-            }
-            style={{ marginRight: "5px" }}
-          >
-            <button
-              className="btn btn-primary"
-              disabled={
-                rol===1 ? false:(!suscripcion || !suscripcion[element.PK_evento_contenedor])
+      <Link
+        href={
+          (suscripcion && suscripcion[element.PK_evento_contenedor]) ||
+          rol === 1
+            ? `${urlSimposio}/${JSON.stringify(element.PK_evento_contenedor)}`
+            : "#"
+        }
+      >
+        <div className="card card-simposio">
+          <div className="card-header header-simposio">
+            <h3 style={{ textAlign: "center" }}>{element.nombre}</h3>
+          </div>
+          <img
+            src={imageUrl}
+            alt="Banner"
+            className="card-img-top"
+            style={{
+              maxWidth: "500px",
+              maxHeight: "500px",
+              objectFit: "cover",
+              margin: "auto",
+            }}
+          />
+          <div className="card-body">
+            <p className="card-text descripcion-simposio">
+              {element.descripcion}
+            </p>
+            <p className="card-text">
+              <i className="bi bi-calendar-event icon"> </i>
+              Dia de inicio: {formatDate(element.dia_inicio, "es")}
+            </p>
+            <p className="card-text">
+              <i className="bi bi-calendar-event icon"> </i>
+              Dia final: {formatDate(element.dia_final, "es")}
+            </p>
+            <p className="card-text">
+              <i className="bi bi-map icon"> </i>
+              {element.lugar}
+            </p>
+          </div>
+          <div className="card-footer d-flex footer-simposio">
+            <Link
+              href={
+                (suscripcion && suscripcion[element.PK_evento_contenedor]) ||
+                rol === 1
+                  ? `${urlSimposio}/${JSON.stringify(
+                      element.PK_evento_contenedor
+                    )}`
+                  : "#"
               }
+              style={{ marginRight: "5px" }}
             >
-              Ver más
-            </button>
-          </Link>
-          {user && rol === 1 && (
-            <>
-              <EditModal
-                pk={element.PK_evento_contenedor}
-                nombre={element.nombre}
-                descripcion={element.descripcion}
-                lugar={element.lugar}
-                dia_inicio={element.dia_inicio}
-                dia_final={element.dia_final}
-              />
-              <Estadisticas />
               <button
-                //on click cambiar el estado de activo
-                onClick={() => {handleEstadoActivo(element.PK_evento_contenedor, element.activo);}}
                 className="btn btn-primary"
-                style={{ marginRight: "5px" }}
+                disabled={
+                  rol === 1
+                    ? false
+                    : !suscripcion || !suscripcion[element.PK_evento_contenedor]
+                }
               >
-                {element.activo ? "Ocultar" : "Mostrar"}
+                Ver más
               </button>
-            </>
-          )}
-          {suscripcion !== null && (
-            <div>
-              <button
-                className={`btn btn-primary ${
-                  suscripcion[element.PK_evento_contenedor]
-                    ? "btn-custom-suscrito"
-                    : "btn-custom-noSuscrito"
-                }`}
-                disabled
-              >
-                {suscripcion[element.PK_evento_contenedor]
-                  ? "Suscrito"
-                  : "No suscrito"}
-              </button>
-            </div>
-          )}
+            </Link>
+            {user && rol === 1 && (
+              <>
+                <EditModal
+                  pk={element.PK_evento_contenedor}
+                  nombre={element.nombre}
+                  descripcion={element.descripcion}
+                  lugar={element.lugar}
+                  dia_inicio={element.dia_inicio}
+                  dia_final={element.dia_final}
+                />
+                <Estadisticas />
+                <button
+                  //on click cambiar el estado de activo
+                  onClick={() => {
+                    handleEstadoActivo(
+                      element.PK_evento_contenedor,
+                      element.activo
+                    );
+                  }}
+                  className="btn btn-primary"
+                  style={{ marginRight: "5px" }}
+                >
+                  {element.activo ? "Ocultar" : "Mostrar"}
+                </button>
+              </>
+            )}
+            {suscripcion !== null && (
+              <div>
+                <button
+                  className={`btn btn-primary ${
+                    suscripcion[element.PK_evento_contenedor]
+                      ? "btn-custom-suscrito"
+                      : "btn-custom-noSuscrito"
+                  }`}
+                  disabled
+                >
+                  {suscripcion[element.PK_evento_contenedor]
+                    ? "Suscrito"
+                    : "No suscrito"}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }
