@@ -86,7 +86,7 @@ const Header = () => {
                       className="bi bi-calendar"
                       style={{ marginRight: "5px" }}
                     ></i>
-                    <p>Calendario</p>
+                    <p>Calendar</p>
                   </div>
                 </li>
               </Link>
