@@ -109,11 +109,11 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
             </p>
             <p className="card-text">
               <i className="bi bi-calendar-event icon"> </i>
-              Dia de inicio: {formatDate(element.dia_inicio, "es")}
+              Start day: {formatDate(element.dia_inicio, "es")}
             </p>
             <p className="card-text">
               <i className="bi bi-calendar-event icon"> </i>
-              Dia final: {formatDate(element.dia_final, "es")}
+              Final day: {formatDate(element.dia_final, "es")}
             </p>
             <p className="card-text">
               <i className="bi bi-map icon"> </i>
