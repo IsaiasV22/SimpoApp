@@ -94,7 +94,7 @@ export default function Simposios() {
         <BackButton />
 
         <h1 className="mb-4" style={{ textAlign: "center" }}>
-          Simposios
+          Events
         </h1>
 
         <div className="row">
@@ -110,7 +110,7 @@ export default function Simposios() {
               />
             ))
           ) : (
-            <div className="col-12">No hay eventos próximos.</div>
+            <div className="col-12">No events to display</div>
           )}
         </div>
       </div>
