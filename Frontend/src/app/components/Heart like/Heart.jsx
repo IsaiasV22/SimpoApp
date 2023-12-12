@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "@/app/css/Heart.css";
 import { urlServer } from "@/app/Utiles.jsx";
+import Floater from "react-floater";
 
 export default function Heart(actividad) {
   //estatus state hook
@@ -68,7 +69,15 @@ export default function Heart(actividad) {
           checked={isChecked}
         />
         <label htmlFor="checkbox">
+          <Floater
+           title='Add to my calendar' 
+           event='hover'
+           placement='top'
+           eventDelay={2}
+           hideArrow={false}  
+           >
           <button className="btn btn-primary">Me interesa</button>
+          </Floater>
         </label>
       </div>
     </div>

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { urlServer } from "@/app/Utiles.jsx";
 import { usePathname } from "next/navigation";
 
+
 export default function Actividad({ actividadId }) {
   const pathname = usePathname();
 

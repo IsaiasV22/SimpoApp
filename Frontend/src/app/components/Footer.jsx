@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Dirección */}
           <div className="col-md-3">
             <section className="mb-4">
-              <h5>Dirección</h5>
+              <h5>Address</h5>
               <br />
               <p>
                 <a
@@ -37,7 +37,7 @@ const Footer = () => {
           {/* Servicios del CIMPA */}
           <div className="col-md-3">
             <section className="mb-4">
-              <h5>Actividades</h5>
+              <h5>Activities</h5>
               <br />
               <p>
                 <a

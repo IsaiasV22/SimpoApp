@@ -87,8 +87,7 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
 
       //push the url address
       router.push(address);
-    }
-    else{
+    } else {
       toast.error("You are not subscribed to this event");
     }
 
@@ -106,14 +105,6 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
       }}
     >
       <div className="card card-simposio">
-        {/*<Link
-          href={
-            (suscripcion && suscripcion[element.PK_evento_contenedor]) ||
-            rol === 1
-              ? `${urlSimposio}/${JSON.stringify(element.PK_evento_contenedor)}`
-              : "#"
-          }
-        >*/}
         <section
           id="divForUrlPush"
           onClick={(e) => handleUrlPush()}
@@ -167,7 +158,6 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
             </p>
           </div>
         </section>
-        {/* </Link> */}
 
         <div className="card-footer d-flex footer-simposio">
           <Link
