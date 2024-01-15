@@ -126,6 +126,8 @@ CREATE TABLE IF NOT EXISTS `srse`.`usuario` (
   `telefono` VARCHAR(50) NULL,
   `FK_rol` INT NOT NULL,
   `FK_estatus` INT NOT NULL,
+  `Verificado` int default 0 not null comment 'Confirmación del registro',
+  `codigo_activacion` varchar(64)   null comment 'Token que se recibe para confirmar la cuenta',
   PRIMARY KEY (`PK_nombre_usuario`, `FK_rol`, `FK_estatus`),
   CONSTRAINT `fk_usuario_estatus1`
     FOREIGN KEY (`FK_estatus`)
