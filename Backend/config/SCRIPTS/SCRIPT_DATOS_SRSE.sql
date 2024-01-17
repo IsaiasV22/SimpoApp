@@ -8,7 +8,10 @@ INSERT INTO ESTADO (`codigo`,`descripcion`) VALUES (4,'Requiere cambios');
 INSERT INTO ESTADO (`codigo`,`descripcion`) VALUES (5,'Aceptado');
 
 #estatus
-INSERT INTO ESTATUS (`PK_estatus`,`descripcion`) VALUES (1,'Inscrito');
+INSERT INTO ESTATUS (`PK_estatus`,`descripcion`) VALUES (1,'Profesor/a');
+INSERT INTO ESTATUS (`PK_estatus`,`descripcion`) VALUES (2,'Estudiante');
+INSERT INTO ESTATUS (`PK_estatus`,`descripcion`) VALUES (3,'Profesional');
+INSERT INTO ESTATUS (`PK_estatus`,`descripcion`) VALUES (4,'Otro');
 
 #roles
 INSERT INTO ROL (`PK_rol`,`descripcion`) VALUES (1,'Administrador');
@@ -94,4 +97,5 @@ INSERT INTO evento_contenedor_taller (`FK_evento_contenedor`,`FK_taller`) VALUES
 INSERT INTO tema_evento_contenedor (`FK_tema`,`FK_evento_contenedor`) VALUES (2,1);
 INSERT INTO tema_evento_contenedor (`FK_tema`,`FK_evento_contenedor`) VALUES (3,1);
 INSERT INTO tema_evento_contenedor (`FK_tema`,`FK_evento_contenedor`) VALUES (4,2);
+
 
