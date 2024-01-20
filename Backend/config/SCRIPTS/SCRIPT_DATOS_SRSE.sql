@@ -99,3 +99,47 @@ INSERT INTO tema_evento_contenedor (`FK_tema`,`FK_evento_contenedor`) VALUES (3,
 INSERT INTO tema_evento_contenedor (`FK_tema`,`FK_evento_contenedor`) VALUES (4,2);
 
 
+# ACTUALIZACIONES ANDRÉS Y JOSE
+
+# Eventos
+INSERT INTO EVENTO_CONTENEDOR (`PK_evento_contenedor`,`nombre`,`descripcion`,`lugar`,`dia_inicio`,`dia_final`,`activo`,`FK_tipo_evento`) 
+                              VALUES (3,'Mathemathical models in biology and medicine',
+                              'Es común que eventos como estos reúnan a expertos en matemáticas aplicadas, biología y medicina para discutir y presentar investigaciones que involucren modelos matemáticos para comprender mejor los procesos biológicos y médicos. Estos modelos pueden abordar una variedad de temas, como la dinámica de poblaciones celulares, la propagación de enfermedades, la respuesta inmune, la farmacocinética, entre otros.',
+                              'Guanacaste Campus, Liberia, University of Costa Rica (UCR).','2018-12-05','2018-12-16',1,1);
+
+# Actividades
+INSERT INTO actividad (
+    descripcion,
+    descripcion_d,
+    dia_evento,
+    hora_inicio,
+    hora_final,
+    fecha_envio,
+    palabras_claves,
+    bibliografia,
+    estatus,
+    ubicacion,
+    comentarios_director,
+    FK_tema,
+    FK_taller,
+    FK_evento_contenedor,
+    FK_estado,
+    FK_usuario_remitente
+) VALUES (
+    'Valor_descripcion',
+    'Valor_descripcion_d',
+    '2024-01-19',  -- Reemplaza con la fecha deseada
+    '12:00:00',    -- Reemplaza con la hora de inicio deseada
+    '14:00:00',    -- Reemplaza con la hora final deseada
+    '2024-01-18',  -- Reemplaza con la fecha de envío deseada
+    'Valor_palabras_claves',
+    'Valor_bibliografia',
+    1,             -- Reemplaza con el valor de estatus deseado
+    'Valor_ubicacion',
+    'Valor_comentarios_director',
+    1,             -- Reemplaza con el valor de FK_tema deseado
+    2,             -- Reemplaza con el valor de FK_taller deseado
+    3,             -- Reemplaza con el valor de FK_evento_contenedor deseado
+    4,             -- Reemplaza con el valor de FK_estado deseado
+    'Valor_usuario_remitente'
+);
