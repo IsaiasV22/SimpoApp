@@ -34,7 +34,7 @@ INSERT INTO TEMA (`PK_tema`,`descripcion`) VALUES (4,'Ciencias de Datos');
 INSERT INTO TEMA (`PK_tema`,`descripcion`) VALUES (5,'Ecuaciones Diferenciales');
 INSERT INTO TEMA (`PK_tema`,`descripcion`) VALUES (6,'Aplicaciones');
 INSERT INTO TEMA (`PK_tema`,`descripcion`) VALUES (7,'Aproximacion');
-INSERT INTO TEMA (`PK_tema`,`descripcion`) VALUES (8,'Probabilidad');
+--INSERT INTO TEMA (`PK_tema`,`descripcion`) VALUES (8,'Probabilidad');
 
 #tipo de eventos
 INSERT INTO TIPO_EVENTO (`PK_tipo_evento`,`descripcion`) VALUES (1,'Simposio');
