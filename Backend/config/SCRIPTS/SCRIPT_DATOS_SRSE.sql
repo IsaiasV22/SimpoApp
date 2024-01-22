@@ -110,6 +110,9 @@ INSERT INTO EVENTO_CONTENEDOR (`PK_evento_contenedor`,`nombre`,`descripcion`,`lu
                               'Es común que eventos como estos reúnan a expertos en matemáticas aplicadas, biología y medicina para discutir y presentar investigaciones que involucren modelos matemáticos para comprender mejor los procesos biológicos y médicos. Estos modelos pueden abordar una variedad de temas, como la dinámica de poblaciones celulares, la propagación de enfermedades, la respuesta inmune, la farmacocinética, entre otros.',
                               'Guanacaste Campus, Liberia, University of Costa Rica (UCR).','2018-12-05','2018-12-16',1,1);
 
+#Talleres del evento
+INSERT INTO evento_contenedor_taller (`FK_evento_contenedor`,`FK_taller`) VALUES (3,3);
+
 # Actividades
 INSERT INTO actividad (
     descripcion,
