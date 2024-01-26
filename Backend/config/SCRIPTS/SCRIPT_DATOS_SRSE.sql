@@ -169,6 +169,9 @@ INSERT INTO actividad (
     'Felipe'
 );
 
+#insert de felipe como Autor
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (1,'Felipe');
+
 INSERT INTO actividad (
     descripcion,
     descripcion_d,
@@ -211,6 +214,7 @@ La investigación comienza explorando los métodos y técnicas utilizados para l
     'Felipe'
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (2,'Felipe');
 
 #username = juanAntonio | password = juan123
 INSERT INTO USUARIO (
@@ -288,6 +292,7 @@ INSERT INTO actividad (
     'juanAntonio'       -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (3,'juanAntonio');
 
 #username = cristianCruz | password = cristian123
 INSERT INTO USUARIO (
@@ -365,6 +370,8 @@ INSERT INTO actividad (
     'cristianCruz'       -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (4,'cristianCruz');
+
 #username = JoseGranados | password = jose123
 INSERT INTO USUARIO (
     `PK_nombre_usuario`,
@@ -440,6 +447,7 @@ INSERT INTO actividad (
     'JoseGranados' -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (5,'JoseGranados');
 
 #username = LuisBMorales | password = luisB123
 INSERT INTO USUARIO (
@@ -515,6 +523,8 @@ INSERT INTO actividad (
     5,             -- Reemplaza con el valor de FK_estado deseado
     'LuisBMorales' -- Reemplaza con el nombre de usuario del remitente
 );
+
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (6,'LuisBMorales');
 
 #username = CindyCalderonArce | password = cindy123
 INSERT INTO USUARIO (
@@ -592,6 +602,8 @@ INSERT INTO actividad (
     'CindyCalderonArce' -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (7,'CindyCalderonArce');
+
 #username = NancyAguero | password = NancyA123
 INSERT INTO USUARIO (
     PK_nombre_usuario,
@@ -668,6 +680,7 @@ INSERT INTO actividad (
     'NancyAguero' -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (8,'NancyAguero');
 
 #username = IreneSGuevara | password = IreneS123
 
@@ -746,6 +759,7 @@ INSERT INTO actividad (
     'IreneSGuevara' -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (9,'IreneSGuevara');
 
 #username = HugoSSanchez | password = HugoS123
 INSERT INTO USUARIO (
@@ -822,6 +836,8 @@ INSERT INTO actividad (
     'HugoSSanchez' -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (10,'HugoSSanchez');
+
 #username = AlejandroCVargas | password = AlejandroCV123
 INSERT INTO USUARIO (
     PK_nombre_usuario,
@@ -896,6 +912,8 @@ INSERT INTO actividad (
     5,             -- Reemplaza con el valor de FK_estado deseado
     'AlejandroCVargas' -- Reemplaza con el nombre de usuario del remitente
 );
+
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (11,'AlejandroCVargas');
 
 #username = AlejandraJR | password = AlejandraJR123
 
@@ -973,6 +991,7 @@ INSERT INTO actividad (
     'AlejandraJR'  -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (12,'AlejandraJR');
 
 #username = MarisolGS | password = MarisolGSS123
 INSERT INTO USUARIO (
@@ -1049,6 +1068,7 @@ INSERT INTO actividad (
     'MarisolGS'    -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (13,'MarisolGS');
 
 #username = JenniferIAQ | password = JenniferIAQ123
 INSERT INTO USUARIO (
@@ -1124,6 +1144,8 @@ INSERT INTO actividad (
     5,             -- Reemplaza con el valor de FK_estado deseado
     'JenniferIAQ'  -- Reemplaza con el nombre de usuario del remitente
 );
+
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (14,'JenniferIAQ');
 
 #username = RomanAMG | password = RomanAMG123
 
@@ -1201,6 +1223,8 @@ INSERT INTO actividad (
     'RomanAMG'     -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (15,'RomanAMG');
+
 #username = AlbertoAVC | password = AlbertoAVC123
 INSERT INTO USUARIO (
     PK_nombre_usuario,
@@ -1276,6 +1300,10 @@ INSERT INTO actividad (
     'AlbertoAVC'   -- Reemplaza con el nombre de usuario del remitente
 );
 
+
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (16,'AlbertoAVC');
+
+
 INSERT INTO actividad (
     descripcion,
     descripcion_d,
@@ -1311,6 +1339,9 @@ INSERT INTO actividad (
     5,             -- Reemplaza con el valor de FK_estado deseado
     'RomanAMG'      -- Reemplaza con el nombre de usuario del remitente
 );
+
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (17,'RomanAMG');
+
 
 #username = OswaldoGG | password = OswaldoGG123
 INSERT INTO USUARIO (
@@ -1387,6 +1418,9 @@ INSERT INTO actividad (
     'OswaldoGG'    -- Reemplaza con el nombre de usuario del remitente
 );
 
+
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (18,'OswaldoGG');
+
 #username = AndreaET | password = AndreaET123
 INSERT INTO USUARIO (
     PK_nombre_usuario,
@@ -1462,6 +1496,7 @@ INSERT INTO actividad (
     'AndreaET'     -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (19,'AndreaET');
 
 #username = LuisDFG | password = LuisDFG123
 INSERT INTO USUARIO (
@@ -1537,6 +1572,9 @@ INSERT INTO actividad (
     5,             -- Reemplaza con el valor de FK_estado deseado
     'LuisDFG'      -- Reemplaza con el nombre de usuario del remitente
 );
+
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (20,'LuisDFG');
+
 
 
 #username = CarlosCC | password = CarlosCC123
@@ -1614,6 +1652,9 @@ INSERT INTO actividad (
     'CarlosCC'     -- Reemplaza con el nombre de usuario del remitente
 );
 
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (21,'CarlosCC');
+
+
 #username = JorgeAG | password = JorgeAG123
 INSERT INTO USUARIO (
     PK_nombre_usuario,
@@ -1688,3 +1729,5 @@ INSERT INTO actividad (
     5,             -- Reemplaza con el valor de FK_estado deseado
     'JorgeAG'      -- Reemplaza con el nombre de usuario del remitente
 );
+
+INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (22,'JorgeAG');

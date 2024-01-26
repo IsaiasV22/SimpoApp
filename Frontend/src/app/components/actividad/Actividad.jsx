@@ -35,7 +35,7 @@ export default function Actividad({ actividadId }) {
       //console.log("actividad por id: ", data[0]);
       setActividad(data[0]);
     } catch (error) {
-      toast.error(error.message);
+      toast.error('Error fetching activity: ',error.message);
       //alert(error.message);
     }
   }
@@ -52,7 +52,7 @@ export default function Actividad({ actividadId }) {
       //console.log("exponente por id: ", data[0]);
       setPonente(data[0]);
     } catch (error) {
-      toast.error(error.message);
+      toast.error('Error fetching author (Ponente) :',error.message);
       //alert(error.message);
     }
   }

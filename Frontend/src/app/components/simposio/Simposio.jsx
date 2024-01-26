@@ -8,7 +8,7 @@ import { urlServer } from "@/app/Utiles.jsx";
 import Modalidades from "../modalidades/Modalidades";
 
 export default function Simposio({ element, talleres }) {
-  //console.log("Talleres -> ", talleres);
+  console.log("Talleres -> ", talleres);
   //hook simposio
   const [simposio, setSimposio] = useState(null);
   //console.log("Simposio de la actividad: ", element.nombre);
@@ -18,6 +18,7 @@ export default function Simposio({ element, talleres }) {
     //console.log("Simposio seleccionado para hacer peticion : ", element.PK_evento_contenedor);
     getSimposio(element);
   }, []);
+
 
   //fetch in getSimposio
   async function getSimposio(elementId) {
