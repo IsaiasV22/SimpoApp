@@ -32,6 +32,8 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
     } catch (error) {
       console.error(error);
       //setImageUrl(`Images/evento.png`);
+      // Si falla la carga de la imagen, establecer una imagen de fallback
+      setImageUrl('/Images/thumbnail_noimage.jpg');
     }
   };
 

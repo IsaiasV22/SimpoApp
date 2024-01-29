@@ -3,7 +3,7 @@ import { useState } from "react";
 import Actividades from "../actividades/Actividades";
 export default function Modalidades({ talleres, elementId }) {
   const [talleresEstado, setTalleresEstado] = useState({});
-
+  console.log("Talleres: ",talleres);
   const toggleActividades = (tallerId) => {
     setTalleresEstado((prevTalleresEstado) => ({
       ...prevTalleresEstado,
