@@ -67,6 +67,7 @@ const obtenerUsuarioPorUsername = (username, callback) => {
   );
 };
 
+
 const estaSuscritoA = (evento, username, callback) => {
   db.query(
     `SELECT * FROM participacion_usuario WHERE FK_evento_contenedor=${evento} AND FK_usuario="${username}"`,
