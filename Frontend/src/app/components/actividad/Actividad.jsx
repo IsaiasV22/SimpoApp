@@ -8,20 +8,23 @@ import "react-toastify/dist/ReactToastify.css";
 import { urlServer } from "@/app/Utiles.jsx";
 import { usePathname } from "next/navigation";
 
-
 export default function Actividad({ actividadId }) {
   const pathname = usePathname();
 
   const urlPonente = `${pathname}/ponente`;
+  const urlCoautor = `${pathname}/coauthor`;
   //hook actividad
   const [actividad, setActividad] = useState(null);
   //state exponente
   const [ponente, setPonente] = useState(null);
+  //state coautores
+  const [coautores, setCoautores] = useState([]);
   //useEffect
   useEffect(() => {
     handleActividad();
     handlePonente();
-  }, []);// eslint-disable-line 
+    handleCoautores();
+  }, []); // eslint-disable-line
   //handleActividad
   async function handleActividad() {
     try {
@@ -35,7 +38,7 @@ export default function Actividad({ actividadId }) {
       //console.log("actividad por id: ", data[0]);
       setActividad(data[0]);
     } catch (error) {
-      toast.error('Error fetching activity: ',error.message);
+      toast.error("Error fetching activity: ", error.message);
       //alert(error.message);
     }
   }
@@ -52,7 +55,29 @@ export default function Actividad({ actividadId }) {
       //console.log("exponente por id: ", data[0]);
       setPonente(data[0]);
     } catch (error) {
-      toast.error('Error fetching author (Ponente) :',error.message);
+      toast.error("Error fetching author (Ponente) :", error.message);
+      //alert(error.message);
+    }
+  }
+
+  //handle coauthors
+  async function handleCoautores() {
+    try {
+      const response = await fetch(
+        `${urlServer}ponentes/coautoresPorActividadId`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: actividadId }),
+          credentials: "include",
+        }
+      );
+      if (response.status === 204) return setCoautores([]);
+      const data = await response.json();
+      console.log("coautores : ", data);
+      setCoautores(data);
+    } catch (error) {
+      toast.error("Error fetching coauthors: ", error.message);
       //alert(error.message);
     }
   }
@@ -132,6 +157,23 @@ export default function Actividad({ actividadId }) {
                       </>
                     ) : (
                       <p className="card-text">Cargando ponente...</p>
+                    )}
+                    {coautores.length > 0 && (
+                      <div style={{ "margin-top": "10px" }}>
+                        <h5 className="card-title">Coautores</h5>
+                        <ul>
+                          {coautores.map((coautor) => (
+                            <li key={coautor[0].PK_nombre_usuario}>
+                              {coautor[0].nombre + " " + coautor[0].apellidos}
+                              <Link href={`${urlCoautor}/${coautor[0].cedula}`}>
+                                <button className="btn btn-primary" style={{'margin': '10px'}}>
+                                  Ver Información del coautor
+                                </button>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
                   </div>
                 </div>
