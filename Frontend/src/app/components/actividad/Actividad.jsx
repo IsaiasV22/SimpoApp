@@ -176,7 +176,7 @@ export default function Actividad({ actividadId }) {
                         </ul>
                       </div>
                     )}
-                    <QrCode/>
+                    <QrCode activityId={actividadId}/>
                   </div>
                 </div>
               </div>

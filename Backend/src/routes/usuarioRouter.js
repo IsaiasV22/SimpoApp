@@ -91,6 +91,21 @@ router.post("/evento", (req, res) => {
   }
 });
 
+router.post("/qrInfo", (req, res) => {
+  console.log("Inside /qrInfo");
+
+  // Verifica si req.session.user está definido antes de acceder a sus propiedades
+  if (req.session.user && req.session.user.PK_nombre_usuario) {
+    const username = req.session.user.PK_nombre_usuario;
+    
+    console.log("User in session -> " + username);
+    res.status(200).json({ username: username }); // Responder con un objeto JSON que contiene el nombre de usuario
+
+  } else {
+    res.status(404).send("No se encontró el usuario en la sesión");
+  }
+});
+
 //API para las actividades del calendario del usuario logueado
 
 router.get("/calendarioUsuario", (req, res) => {
