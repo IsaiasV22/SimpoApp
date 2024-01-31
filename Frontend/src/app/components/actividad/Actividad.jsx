@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { urlServer } from "@/app/Utiles.jsx";
 import { usePathname } from "next/navigation";
+import QrCode from '../qrCode/QrCode';
 
 export default function Actividad({ actividadId }) {
   const pathname = usePathname();
@@ -175,6 +176,7 @@ export default function Actividad({ actividadId }) {
                         </ul>
                       </div>
                     )}
+                    <QrCode/>
                   </div>
                 </div>
               </div>
