@@ -1747,3 +1747,7 @@ INSERT INTO actividad (
 INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (22,'AndreaET');
 INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (22,'LuisDFG');
 INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (22,'OswaldoGG');
+
+
+-- Asignacion de un usuario al evento 3
+INSERT INTO `srse`.`participacion_usuario` (`FK_evento_contenedor`, `FK_usuario`, `tipo_participante`) VALUES ('3', 'AlbertoAVC', 'Oyente');
