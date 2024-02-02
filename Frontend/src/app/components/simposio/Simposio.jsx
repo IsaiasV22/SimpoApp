@@ -6,6 +6,7 @@ import Link from "next/link";
 import Actividades from "../actividades/Actividades";
 import { urlServer } from "@/app/Utiles.jsx";
 import Modalidades from "../modalidades/Modalidades";
+import SearchBar from "../searchbar/SearchBar";
 
 export default function Simposio({ element, talleres }) {
   //console.log("Talleres -> ", talleres);
@@ -18,7 +19,6 @@ export default function Simposio({ element, talleres }) {
     //console.log("Simposio seleccionado para hacer peticion : ", element.PK_evento_contenedor);
     getSimposio(element);
   }, []);
-
 
   //fetch in getSimposio
   async function getSimposio(elementId) {
@@ -45,6 +45,7 @@ export default function Simposio({ element, talleres }) {
           <div className="simposio-container">{simposio.nombre}</div>
           <div className="simposio-container">{simposio.descripcion}</div>
           <div className="simposio-container">{simposio.fecha}</div>
+          <SearchBar/>
           <Modalidades talleres={talleres} elementId={element} />
           {/*<Actividades elementId={element} /> */}
         </div>
