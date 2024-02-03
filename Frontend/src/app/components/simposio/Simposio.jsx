@@ -66,7 +66,7 @@ export default function Simposio({ element, talleres }) {
           <p>State mode: {state.mode}</p>
           {state.value? <p>State value: {state.value}</p>:null}
           <SearchBar dispatch={dispatch}/>
-          <Modalidades talleres={talleres} elementId={element} />
+          {state.mode === 'Modalities' ? <Modalidades talleres={talleres} elementId={element} /> : null}
           {/*<Actividades elementId={element} /> */}
         </div>
       ) : (
