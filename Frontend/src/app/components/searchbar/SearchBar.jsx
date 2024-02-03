@@ -1,5 +1,6 @@
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import Badge from 'react-bootstrap/Badge';
 import { useState } from "react";
 //Searchbar component with dropdown menu for search by options
 export default function SearchBar({ dispatch }) {
@@ -50,6 +51,7 @@ export default function SearchBar({ dispatch }) {
         <Dropdown.Item eventKey="Date">Date</Dropdown.Item>
         <Dropdown.Item eventKey="Modalities">Modalities</Dropdown.Item>
       </DropdownButton>
+      <Badge bg="success">Success</Badge>
       </div>
       <div className="row">
         <div className="col-12">

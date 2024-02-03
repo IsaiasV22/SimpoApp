@@ -7,6 +7,7 @@ import Actividades from "../actividades/Actividades";
 import { urlServer } from "@/app/Utiles.jsx";
 import Modalidades from "../modalidades/Modalidades";
 import SearchBar from "../searchbar/SearchBar";
+import ActividadesFilter from "../actividades/ActividadesFilter";
 import { ca } from "date-fns/locale";
 
 function reducer(state, action) {
@@ -33,8 +34,6 @@ export default function Simposio({ element, talleres }) {
   //console.log("Simposio de la actividad: ", element.nombre);
   //useEffect
   useEffect(() => {
-    //fetch by element
-    //console.log("Simposio seleccionado para hacer peticion : ", element.PK_evento_contenedor);
     getSimposio(element);
   }, []);
 
@@ -56,6 +55,13 @@ export default function Simposio({ element, talleres }) {
     }
   }
 
+  const filterActividades = (actividad) => {
+    if(state.value === "") return true;
+    if(state.mode === "Name") return actividad.descripcion.toLowerCase().includes(state.value);
+    if(state.mode === "Author") return actividad.autor.toLowerCase().includes(state.value);
+    if(state.mode === "Date") return actividad.dia_evento.includes(state.value);
+  }
+
   return (
     <div>
       {simposio ? (
@@ -68,6 +74,7 @@ export default function Simposio({ element, talleres }) {
           <SearchBar dispatch={dispatch}/>
           {state.mode === 'Modalities' ? <Modalidades talleres={talleres} elementId={element} /> : null}
           {/*<Actividades elementId={element} /> */}
+          <ActividadesFilter elementId={element} filterFunction={filterActividades}/>
         </div>
       ) : (
         <div>Cargando simposio ...</div>
