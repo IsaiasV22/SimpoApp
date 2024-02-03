@@ -14,7 +14,7 @@ export default function Modalidades({ talleres, elementId }) {
   return (
     <div className="main-content">
       <div className="container my-5">
-        <h1 className="mb-4">Modalidades</h1>
+        <h1 className="mb-4">Modalities</h1>
         <div className="row">
           <div>
             {talleres ? (
