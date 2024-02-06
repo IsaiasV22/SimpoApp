@@ -2,20 +2,23 @@ const db = require("../../config/database.js");
 const { use } = require("../routes/usuarioRouter.js");
 
 const actividadesAll = (callback) => {
-  db.query("SELECT * FROM actividad", (err, results) => {
-    if (err) {
-      console.error("Error al realizar la consulta:", err);
-      callback(err, null);
-      return;
+  db.query(
+    "SELECT actividad.*, CONCAT(usuario.nombre, ' ', usuario.segundo_nombre, ' ', usuario.apellidos) AS PonenteNombre FROM actividad INNER JOIN usuario ON actividad.FK_usuario_remitente = usuario.PK_nombre_usuario",
+    (err, results) => {
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        callback(err, null);
+        return;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
     }
-    // Devuelve los resultados de la consulta
-    callback(null, results);
-  });
+  );
 };
 
 const obtenerActividadesPorEvento = (evento, callback) => {
   db.query(
-    `SELECT * FROM actividad WHERE FK_evento_contenedor=${evento}`,
+    `SELECT actividad.*, CONCAT(usuario.nombre, ' ', usuario.segundo_nombre, ' ', usuario.apellidos) AS PonenteNombre FROM actividad INNER JOIN usuario ON actividad.FK_usuario_remitente = usuario.PK_nombre_usuario WHERE actividad.FK_evento_contenedor=${evento}`,
     (err, results) => {
       if (err) {
         console.error("Error al realizar la consulta:", err);
@@ -31,7 +34,7 @@ const obtenerActividadesPorEvento = (evento, callback) => {
 //Obtener solo las actividades con estatus=1 por evento
 const obtenerActividadesActivasPorEvento = (evento, callback) => {
   db.query(
-    `SELECT * FROM actividad WHERE FK_evento_contenedor=${evento} AND estatus=1`,
+    `SELECT actividad.*, CONCAT(usuario.nombre, ' ', usuario.segundo_nombre, ' ', usuario.apellidos) AS PonenteNombre FROM actividad INNER JOIN usuario ON actividad.FK_usuario_remitente = usuario.PK_nombre_usuario WHERE actividad.FK_evento_contenedor=${evento} AND actividad.estatus=1`,
     (err, results) => {
       if (err) {
         console.error("Error al realizar la consulta:", err);
@@ -47,7 +50,7 @@ const obtenerActividadesActivasPorEvento = (evento, callback) => {
 //obtenerActividadPorId
 const obtenerActividadPorId = (id, callback) => {
   db.query(
-    `SELECT * FROM actividad WHERE PK_actividad=${id}`,
+    `SELECT actividad.*, CONCAT(usuario.nombre, ' ', usuario.segundo_nombre, ' ', usuario.apellidos) AS PonenteNombre FROM actividad INNER JOIN usuario ON actividad.FK_usuario_remitente = usuario.PK_nombre_usuario WHERE actividad.PK_actividad=${id}`,
     (err, results) => {
       if (err) {
         console.error("Error al realizar la consulta:", err);
@@ -169,23 +172,25 @@ const ocultarActividad = (id, callback) => {
   );
 };
 
-const registroExiste = (id,username,callback) => {
-  db.query(`SELECT * FROM calendario_u WHERE F_actividad=${id} AND FK_usuario="${username}"`, (err, results) => {
-    if (err) {
-      console.error("Error al añadir actividad:", err);
-      callback(err, null);
-      throw err;
+const registroExiste = (id, username, callback) => {
+  db.query(
+    `SELECT * FROM calendario_u WHERE F_actividad=${id} AND FK_usuario="${username}"`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al añadir actividad:", err);
+        callback(err, null);
+        throw err;
+      }
+      console.log("results -> " + results);
+      if (results.length === 0) {
+        console.log("No existe el registro");
+        callback(null, false);
+      } else {
+        console.log("Ya existe el registro");
+        callback(null, true);
+      }
     }
-    console.log("results -> "+results);
-    if(results.length===0){
-      console.log("No existe el registro");
-      callback(null, false);
-    }
-    else{
-      console.log("Ya existe el registro");
-      callback(null, true);
-    }
-  });
+  );
 };
 
 //obtener username de usuarios con actividad en calendario
@@ -208,7 +213,10 @@ const obtenerUsuariosActividad = (PK_actividad, callback) => {
       }
       //console.log(results.reduce((acc, curr) => [...acc,curr.FK_usuario], []));
       // Devuelve los resultados de la consulta
-      callback(null, results.reduce((acc, curr) => [...acc,curr.FK_usuario], []));
+      callback(
+        null,
+        results.reduce((acc, curr) => [...acc, curr.FK_usuario], [])
+      );
     }
   );
 };

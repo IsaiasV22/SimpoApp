@@ -40,7 +40,7 @@ export default function Heart(actividad) {
       }
 
       const data = await response.json();
-      console.log("data -> ", data);
+      //console.log("data -> ", data);
       setIsChecked(data.estatus);
       //return data.estatus;
       //toast.success(data.success);
@@ -48,7 +48,7 @@ export default function Heart(actividad) {
       //console.log("error -> ",error);
       console.error(error.message);
     }
-    console.log("Heart checking state");
+    //console.log("Heart checking state");
   }
   const handleCheckboxChange = (event) => {
     // Esta función se ejecutará cuando el estado del checkbox cambie

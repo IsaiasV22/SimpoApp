@@ -4,7 +4,6 @@ import { urlServer } from "@/app/Utiles.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
 
-
 export default function PonenteActividadesCard({ actividadIdP }) {
   //hook ponente
   const [ponente, setPonente] = useState(null);
@@ -33,7 +32,9 @@ export default function PonenteActividadesCard({ actividadIdP }) {
   const urlPonente = "#/ponente";
   return (
     <div>
-        <p className="card-text">Author: </p>
+      <p className="card-text">
+      <i className="bi bi-person-circle icon"></i> Author:{" "}
+      </p>
       {ponente ? (
         <>
           <p className="card-text">
@@ -43,7 +44,7 @@ export default function PonenteActividadesCard({ actividadIdP }) {
       ) : (
         <p className="card-text">Cargando ponente...</p>
       )}
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }

@@ -51,8 +51,9 @@ export default function SearchBar({ dispatch }) {
         <Dropdown.Item eventKey="Date">Date</Dropdown.Item>
         <Dropdown.Item eventKey="Modalities">Modalities</Dropdown.Item>
       </DropdownButton>
-      <Badge bg="success">Success</Badge>
+      <Badge bg="success">{selectedOption}</Badge>
       </div>
+      {selectedOption !== "Modalities"  ? (
       <div className="row">
         <div className="col-12">
           <div className="input-group">
@@ -76,6 +77,9 @@ export default function SearchBar({ dispatch }) {
           </div>
         </div>
       </div>
+      ) : (
+        null
+    )}
     </div>
   );
 }

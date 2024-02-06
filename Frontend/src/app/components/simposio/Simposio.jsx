@@ -3,11 +3,11 @@ import React, { useEffect, useState, useReducer } from "react";
 import "./Simposio.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
 //import Link
 import Link from "next/link";
-import Actividades from "../actividades/Actividades";
+
 import { urlServer } from "@/app/Utiles.jsx";
 import Modalidades from "../modalidades/Modalidades";
 import SearchBar from "../searchbar/SearchBar";
-import ActividadesFilter from "../actividades/ActividadesFilter";
+import ActividadesFilter from "../actividades/Actividades";
 import { ca } from "date-fns/locale";
 
 function reducer(state, action) {
@@ -58,7 +58,7 @@ export default function Simposio({ element, talleres }) {
   const filterActividades = (actividad) => {
     if(state.value === "") return true;
     if(state.mode === "Name") return actividad.descripcion.toLowerCase().includes(state.value);
-    if(state.mode === "Author") return actividad.autor.toLowerCase().includes(state.value);
+    if(state.mode === "Author") return actividad.PonenteNombre.toLowerCase().includes(state.value.toLowerCase());
     if(state.mode === "Date") return actividad.dia_evento.includes(state.value);
   }
 
@@ -69,12 +69,9 @@ export default function Simposio({ element, talleres }) {
           <div className="simposio-container">{simposio.nombre}</div>
           <div className="simposio-container">{simposio.descripcion}</div>
           <div className="simposio-container">{simposio.fecha}</div>
-          <p>State mode: {state.mode}</p>
-          {state.value? <p>State value: {state.value}</p>:null}
           <SearchBar dispatch={dispatch}/>
-          {state.mode === 'Modalities' ? <Modalidades talleres={talleres} elementId={element} /> : null}
-          {/*<Actividades elementId={element} /> */}
-          <ActividadesFilter elementId={element} filterFunction={filterActividades}/>
+          {state.mode === 'Modalities' ? <Modalidades talleres={talleres} elementId={element} /> : 
+          <ActividadesFilter elementId={element} filterFunction={filterActividades}/>}
         </div>
       ) : (
         <div>Cargando simposio ...</div>
