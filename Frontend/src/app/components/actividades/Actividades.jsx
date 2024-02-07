@@ -17,7 +17,7 @@ import UpdateModal from "./UpdateModal/UpdateModal";
 import PonenteActividadesCard from "../ponente/PonenteActividadesCard";
 
 export default function ActividadesFilter({ elementId, filterFunction }) {
-  //console.log('filterFunction: ', filterFunction.toString())
+  console.log('filterFunction: ', filterFunction.toString())
   const [actividades, setActividades] = useState([]);
   const user = useGlobalState((state) => state.user);
   const rol = useGlobalState((state) => state.rol);

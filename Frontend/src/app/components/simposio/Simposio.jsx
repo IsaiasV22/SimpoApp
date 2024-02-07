@@ -47,7 +47,7 @@ export default function Simposio({ element, talleres }) {
         credentials: "include",
       });
       const data = await response.json();
-      //console.log("Simposio por id: ", data[0]);
+      console.log("Simposio por id: ", data[0]);
       setSimposio(data[0]);
     } catch (error) {
       toast.error(error.message);
@@ -62,6 +62,10 @@ export default function Simposio({ element, talleres }) {
     if(state.mode === "Date") return actividad.dia_evento.includes(state.value);
   }
 
+  const formatDiaInicio = (dia) => {
+    
+  } 
+
   return (
     <div>
       {simposio ? (
@@ -69,7 +73,7 @@ export default function Simposio({ element, talleres }) {
           <div className="simposio-container">{simposio.nombre}</div>
           <div className="simposio-container">{simposio.descripcion}</div>
           <div className="simposio-container">{simposio.fecha}</div>
-          <SearchBar dispatch={dispatch}/>
+          <SearchBar dispatch={dispatch} dia_inicio={simposio.dia_inicio.slice(0,10)}/>
           {state.mode === 'Modalities' ? <Modalidades talleres={talleres} elementId={element} /> : 
           <ActividadesFilter elementId={element} filterFunction={filterActividades}/>}
         </div>

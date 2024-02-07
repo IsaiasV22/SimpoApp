@@ -2,10 +2,15 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Badge from 'react-bootstrap/Badge';
 import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 //Searchbar component with dropdown menu for search by options
-export default function SearchBar({ dispatch }) {
+export default function SearchBar({ dispatch, dia_inicio }) {
+  console.log("dia_inicio: ", dia_inicio);
   //text hook
   const [searchText, setSearchText] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
   //selected option hook
   const [selectedOption, setSelectedOption] = useState("Name");
   //handle input change
@@ -53,7 +58,7 @@ export default function SearchBar({ dispatch }) {
       </DropdownButton>
       <Badge bg="success">{selectedOption}</Badge>
       </div>
-      {selectedOption !== "Modalities"  ? (
+      {["Name","Author"].includes(selectedOption)  ? (
       <div className="row">
         <div className="col-12">
           <div className="input-group">
@@ -80,6 +85,28 @@ export default function SearchBar({ dispatch }) {
       ) : (
         null
     )}
+    {selectedOption === "Date" ? (
+  <div>
+    <DatePicker
+      showIcon
+      selected={selectedDate}
+      placeholderText="Click to select a date"
+      openToDate={new Date(dia_inicio)}
+      toggleCalendarOnIconClick
+      dateFormat={"MM / dd / yyyy"}
+      onChange={(date) => {
+        console.log('date to be dispatched -> ',date.toISOString());
+        setSelectedDate(date);
+        dispatch({
+          type: "UpdateModeAndValue",
+          mode: selectedOption,
+          value: date.toISOString(),
+        });
+      }}
+      startDate={searchText}
+    />
+    </div>
+    ): null}
     </div>
   );
 }
