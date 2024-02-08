@@ -15,10 +15,19 @@ import Heart from "@/app/components/Heart like/Heart";
 import "@/app/css/Colors.css";
 import UpdateModal from "./UpdateModal/UpdateModal";
 import PonenteActividadesCard from "../ponente/PonenteActividadesCard";
+import Pagination from "./Pagination";
 
 export default function ActividadesFilter({ elementId, filterFunction }) {
-  console.log('filterFunction: ', filterFunction.toString())
+  //console.log('filterFunction: ', filterFunction.toString())
   const [actividades, setActividades] = useState([]);
+  const [currentPage, setCurrentPage] = useState(5);
+  const [actividadesPerPage, setActividadesPerPage] = useState(5);
+  //last activity index
+  const indexOfLastActividad = currentPage * actividadesPerPage;
+  //first activity index
+  const indexOfFirstActividad = indexOfLastActividad - actividadesPerPage;
+  //current activities
+  const currentActividades = actividades.slice(indexOfFirstActividad, indexOfLastActividad);
   const user = useGlobalState((state) => state.user);
   const rol = useGlobalState((state) => state.rol);
   const pathname = usePathname();
@@ -195,9 +204,13 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
   return (
     <div className=" ">
       <div className="container my-5">
+        <h3>Total results: {actividades.length}</h3>
+        <h3>Total per page: {currentActividades.length}</h3>
         <div className="row">
-          {actividades.length > 0 ? (
-            actividades.map((element) => (
+          
+          {currentActividades.length > 0 ? (
+            <>
+            {currentActividades.map((element) => (
               <div key={element.PK_actividad} className={`col-12 mb-4`}>
                 {/* Utiliza el campo PK_actividad como clave única */}
                 <div
@@ -284,7 +297,12 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
                   </div>
                 </div>
               </div>
-            ))
+            ))}
+            <Pagination
+              actividadesPerPage={actividadesPerPage}
+              totalActividades={actividades.length}
+              />
+            </>
           ) : (
             <div className="col-12">No hay Actividades</div>
           )}
