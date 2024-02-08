@@ -1,7 +1,5 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import  Pagination  from "react-bootstrap/Pagination";
 
 const pagination = ({ totalActividades, actividadesPerPage }) => {
   let pages = [];
@@ -10,19 +8,19 @@ const pagination = ({ totalActividades, actividadesPerPage }) => {
   }
   return (
     <div>
-      {totalActividades > 0 ? (
-        <ButtonToolbar aria-label="Toolbar with button groups">
-          <Button variant="primary" className='m-2 '>Previous</Button>
-          <ButtonGroup className="me-2" aria-label="First group">
+
+        <Pagination>
+            <Pagination.First title="Go back to First page"/>
+            <Pagination.Prev title="Go to previous page"/>
             {pages.map((number) => (
-              <Button key={number} variant="primary">
+            <Pagination.Item key={number} active={number ===1}>
                 {number}
-              </Button>
+            </Pagination.Item>
             ))}
-          </ButtonGroup>
-          <Button variant="primary">Next</Button>
-        </ButtonToolbar>
-      ) : null}
+            <Pagination.Next title="Go to Next page"/>
+            <Pagination.Last title="Go to Last page"/>
+        </Pagination>
+
     </div>
   );
 };
