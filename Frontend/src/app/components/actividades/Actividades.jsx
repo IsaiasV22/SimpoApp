@@ -21,7 +21,7 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
   //console.log('filterFunction: ', filterFunction.toString())
   const [actividades, setActividades] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [actividadesPerPage, setActividadesPerPage] = useState(5);
+  const [actividadesPerPage, setActividadesPerPage] = useState(1);
   //last activity index
   const indexOfLastActividad = currentPage * actividadesPerPage;
   //first activity index
@@ -205,7 +205,8 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
     <div className=" ">
       <div className="container my-5">
         <h3>Total results: {actividades.length}</h3>
-        <h3>Total per page: {currentActividades.length}</h3>
+        <h3>Total activities per page: {currentActividades.length}</h3>
+        <h3>Current page : {currentPage}</h3>
         <div className="row">
           
           {currentActividades.length > 0 ? (
@@ -301,6 +302,9 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
             <Pagination
               actividadesPerPage={actividadesPerPage}
               totalActividades={actividades.length}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              setActividadesPerPage={setActividadesPerPage}
               />
             </>
           ) : (
