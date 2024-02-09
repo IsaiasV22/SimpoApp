@@ -1,10 +1,10 @@
 import React from "react";
 import  Pagination  from "react-bootstrap/Pagination";
 
-const pagination = ({ totalActividades, actividadesPerPage,setCurrentPage,currentPage, setActividadesPerPage }) => {
+const pagination = ({ Actividades, actividadesPerPage,setCurrentPage,currentPage, setActividadesPerPage }) => {
   console.log(currentPage)
   let pages = [];
-  for (let i = 1; i <= Math.ceil(totalActividades / actividadesPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(Actividades.length / actividadesPerPage); i++) {
     pages.push(i);
   }
 
@@ -39,8 +39,8 @@ const pagination = ({ totalActividades, actividadesPerPage,setCurrentPage,curren
     <div>
         <br/>
         <span>Activities per page: </span>
-        <select onChange={handleActivitiesPerPage}>
-        {Array.from({ length: totalActividades }, (_, i) => (
+        <select onChange={handleActivitiesPerPage} value={actividadesPerPage}>
+        {Array.from({ length: Actividades.length }, (_, i) => (
           <option key={i + 1} value={i + 1}>
             {i + 1}
           </option>
