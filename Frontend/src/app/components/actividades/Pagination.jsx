@@ -44,10 +44,11 @@ const pagination = ({
   const handleActivitiesPerPage = (event) => {
     console.log(event.target.value);
     setActividadesPerPage(event.target.value);
+    setCurrentPage(1);
   };
 
   const handlePageChange = (page) => {
-    console.log('Page : ',page);
+    console.log("Page : ", page);
     setCurrentPage(page);
   };
   return (
@@ -69,12 +70,12 @@ const pagination = ({
             )}
           </select>
         </div>
-        <ResponsivePagination
-          total={Actividades.length}
-          current={currentPage}
-          onPageChange={(page) => handlePageChange(page)}
-        />
       </div>
+      <ResponsivePagination
+        total={pages.length}
+        current={currentPage}
+        onPageChange={(page) => handlePageChange(page)}
+      />
     </div>
   );
 };
