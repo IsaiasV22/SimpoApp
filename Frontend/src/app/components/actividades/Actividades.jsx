@@ -21,7 +21,7 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
   //console.log('filterFunction: ', filterFunction.toString())
   const [actividades, setActividades] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [actividadesPerPage, setActividadesPerPage] = useState(5);
+  const [actividadesPerPage, setActividadesPerPage] = useState(1);
   //last activity index
   const indexOfLastActividad = currentPage * actividadesPerPage;
   //first activity index
