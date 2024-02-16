@@ -20,7 +20,7 @@ import Pagination from "./Pagination";
 export default function ActividadesFilter({ elementId, filterFunction }) {
   //console.log('filterFunction: ', filterFunction.toString())
   const [actividades, setActividades] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(5);
   const [actividadesPerPage, setActividadesPerPage] = useState(1);
   //last activity index
   const indexOfLastActividad = currentPage * actividadesPerPage;
@@ -248,7 +248,7 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
                         actividadIdP={element.PK_actividad}
                       />
                     </p>
-                    <div className="card-footer d-flex justify-content-left align-items-left">
+                    <div className='card-footer responsive-footer'>
                       <Link
                         href={`${urlActividad}/${JSON.stringify(
                           element.PK_actividad
