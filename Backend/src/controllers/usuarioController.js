@@ -67,7 +67,6 @@ const obtenerUsuarioPorUsername = (username, callback) => {
   );
 };
 
-
 const estaSuscritoA = (evento, username, callback) => {
   db.query(
     `SELECT * FROM participacion_usuario WHERE FK_evento_contenedor=${evento} AND FK_usuario="${username}"`,
@@ -110,11 +109,14 @@ function login(userName, userPassword, callback) {
         .then((passwordMatch) => {
           // Si las contraseñas no coinciden, devuelve un error
           if (!passwordMatch) {
-            return callback(new Error(
-              "Contraseña incorrecta" +
-              "1-Por favor, verifique que la contraseña este bien escrita \n" +
-              "2-Si no recuerda su contraseña, por favor, contacte al administrador del sistema en la seccion de 'Soporte' \n"
-              ), null);
+            return callback(
+              new Error(
+                "Contraseña incorrecta" +
+                  "1-Por favor, verifique que la contraseña este bien escrita \n" +
+                  "2-Si no recuerda su contraseña, por favor, contacte al administrador del sistema en la seccion de 'Soporte' \n"
+              ),
+              null
+            );
           }
 
           // Devuelve el usuario si el inicio de sesión es exitoso
@@ -145,11 +147,29 @@ const obtenerActividadesCalendario = (username, callback) => {
   );
 };
 
+//Funcion para recuperar la lista total de usuarios del sistema
+const obtenerListaUsuarios = (callback) => {
+  db.query(`SELECT * FROM usuario`, (err, results) => {
+    if (err) {
+      console.error(
+        "Error al realizar la consulta(obtenerListaUsuarios):",
+        err
+      );
+      callback(err, null);
+      return;
+    }
+    // Devuelve los resultados de la consulta
+    console.log("Resultados de la consulta(obtenerListaUsuarios):", results);
+    callback(null, results);
+  });
+};
+
 module.exports = {
   usuariosAll,
   obtenerUsuarioPorCedula,
   obtenerUsuarioPorUsername,
   estaSuscritoA,
   login,
-  obtenerActividadesCalendario
+  obtenerActividadesCalendario,
+  obtenerListaUsuarios,
 };

@@ -97,10 +97,9 @@ router.post("/qrInfo", (req, res) => {
   // Verifica si req.session.user está definido antes de acceder a sus propiedades
   if (req.session.user && req.session.user.PK_nombre_usuario) {
     const username = req.session.user.PK_nombre_usuario;
-    
+
     console.log("User in session -> " + username);
     res.status(200).json({ username: username }); // Responder con un objeto JSON que contiene el nombre de usuario
-
   } else {
     res.status(404).send("No se encontró el usuario en la sesión");
   }
@@ -125,6 +124,22 @@ router.get("/calendarioUsuario", (req, res) => {
     });
   } else {
     res.status(404).send("No se encontró el usuario en la sesión");
+  }
+});
+
+router.get("/listaUsuarios", (req, res) => {
+  console.log("Inside /ruta obtenerListaUsuarios en el controller");
+  if (req.session.user && req.session.user.PK_nombre_usuario) {
+    console.log("Entro al if lista/usuarios -> ");
+    usuarioController.obtenerListaUsuarios((err, results) => {
+      if (err) {
+        return res.status(404).json({ error: err.message });
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  } else {
+    res.status(404).send("No se encontraron usuarios");
   }
 });
 
