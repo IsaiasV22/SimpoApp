@@ -159,7 +159,6 @@ const obtenerListaUsuarios = (callback) => {
       return;
     }
     // Devuelve los resultados de la consulta
-    console.log("Resultados de la consulta(obtenerListaUsuarios):", results);
     callback(null, results);
   });
 };

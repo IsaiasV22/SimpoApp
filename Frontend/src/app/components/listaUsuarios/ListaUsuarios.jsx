@@ -26,20 +26,18 @@ export default function ListaUsuarios() {
   }, []);
 
   async function handleUsuarios() {
-    console.log("entro al handleUsuarios");
     let response = null;
     try {
-      console.log("1");
-      response = await fetch(`${urlServer}usuarios/listaUsuarios`);
-            console.log("2");
-                        console.log(response);
+      response = await fetch(`${urlServer}usuarios/listaUsuarios`, {
+        method: "GET",
+        credentials: "include",
+      });
 
       if (!response.ok) {
         throw new Error("No se pudo obtener la lista de eventos");
       }
       const data = await response.json();
-      setEventos(data);
-      console.log(data);
+      setUsuarios(data);
     } catch (error) {
       toast.error(error.message);
     }
