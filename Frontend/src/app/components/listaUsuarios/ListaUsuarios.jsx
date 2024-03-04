@@ -12,11 +12,11 @@ import Notificacion from "../Notificacion";
 import { usePathname } from "next/navigation";
 //import usuarioCard from "./usuarioCard/EventoCard"; // Importando el componente usuarioCard
 
-export default function ListaUsuarios() {
+export default function ListaUsuarios({ idEvento }) {
   const [usuarios, setUsuarios] = useState([]);
+  const [suscripcion, setSuscripcion] = useState(null);
   const user = useGlobalState((state) => state.user);
   const pathname = usePathname();
-  const [suscripcion, setSuscripcion] = useState(null);
   const evento = useGlobalState((state) => state.evento);
   const rol = useGlobalState((state) => state.rol);
   const urlUsuarios = `${pathname}/listaUsuarios`;
@@ -29,14 +29,19 @@ export default function ListaUsuarios() {
     let response = null;
     try {
       response = await fetch(`${urlServer}usuarios/listaUsuarios`, {
-        method: "GET",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ evento: idEvento}),
         credentials: "include",
       });
 
       if (!response.ok) {
-        throw new Error("No se pudo obtener la lista de eventos");
+        throw new Error("No se pudo obtener la lista de usuarios");
       }
       const data = await response.json();
+      console.log(data);
       setUsuarios(data);
     } catch (error) {
       toast.error(error.message);

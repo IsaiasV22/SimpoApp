@@ -123,9 +123,10 @@ router.get("/calendarioUsuario", (req, res) => {
   }
 });
 
-router.get("/listaUsuarios", (req, res) => {
-  if (req.session.user && req.session.user.PK_nombre_usuario) {
-    usuarioController.obtenerListaUsuarios((err, results) => {
+router.post("/listaUsuarios", (req, res) => {
+  const evento = req.body.evento;
+  if (req.session.user && req.session.user.PK_nombre_usuario && req.session.user.FK_rol === 1) {
+    usuarioController.obtenerListaUsuarios(evento, (err, results) => {
       if (err) {
         return res.status(404).json({ error: err.message });
       } else {
@@ -133,7 +134,7 @@ router.get("/listaUsuarios", (req, res) => {
       }
     });
   } else {
-    res.status(404).send("No se encontraron usuarios");
+    res.status(404).send("Rol no aceptado");
   }
 });
 

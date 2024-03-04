@@ -148,19 +148,31 @@ const obtenerActividadesCalendario = (username, callback) => {
 };
 
 //Funcion para recuperar la lista total de usuarios del sistema
-const obtenerListaUsuarios = (callback) => {
-  db.query(`SELECT * FROM usuario`, (err, results) => {
-    if (err) {
-      console.error(
-        "Error al realizar la consulta(obtenerListaUsuarios):",
-        err
-      );
-      callback(err, null);
-      return;
+const obtenerListaUsuarios = (evento, callback) => {
+  db.query(
+    `SELECT u.*, 
+      CASE 
+          WHEN pu.FK_evento_contenedor IS NOT NULL THEN 'Suscrito'
+          ELSE 'No Suscrito'
+      END AS estado_suscripcion
+    FROM usuario u
+    LEFT JOIN participacion_usuario pu
+    ON u.PK_nombre_usuario = pu.FK_usuario
+      AND pu.FK_evento_contenedor = ${evento}
+      WHERE u.FK_rol <> 1;`,
+    (err, results) => {
+      if (err) {
+        console.error(
+          "Error al realizar la consulta(obtenerListaUsuarios):",
+          err
+        );
+        callback(err, null);
+        return;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
     }
-    // Devuelve los resultados de la consulta
-    callback(null, results);
-  });
+  );
 };
 
 module.exports = {
