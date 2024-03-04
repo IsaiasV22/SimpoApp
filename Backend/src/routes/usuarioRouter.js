@@ -138,4 +138,38 @@ router.post("/listaUsuarios", (req, res) => {
   }
 });
 
+router.post("/cambiaSuscripcionEvento", (req, res) => {
+  if (req.session.user && req.session.user.PK_nombre_usuario && req.session.user.FK_rol === 1) {
+    const evento = req.body.evento;
+    const username = req.body.username;
+
+    //registroExiste?
+    usuarioController.participacionExiste(evento, username, (err, results) => {
+      if (err) {
+        return res.status(404).json({ error: err.message });
+      }
+
+      if (results === false) {
+        //añadir
+        usuarioController.participacionAdd(evento, username, (err, results) => {
+            if (err) {
+              return res.status(404).json({ error: err.message });
+            }
+            res.status(200).json({ success: "Cambio a Suscrito!" });
+          }
+        );
+      } else {
+        //eliminar
+        usuarioController.participacionDelete(evento, username, (err, results) => {
+            if (err) {
+              return res.status(404).json({ error: err.message });
+            }
+            res.status(200).json({ success: "Cambio a No suscrito!" });
+          }
+        );
+      }
+    });
+  }
+});
+
 module.exports = router;
