@@ -202,7 +202,7 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
   };
 
   return (
-    <div className=" ">
+    <div className="">
       <div className="container my-5">
         <h3>Total results: {actividades.length}</h3>
         <h3>Total activities per page: {currentActividades.length}</h3>
