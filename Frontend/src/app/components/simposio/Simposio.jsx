@@ -13,20 +13,18 @@ import { ca } from "date-fns/locale";
 function reducer(state, action) {
   switch (action.type) {
     case "UpdateMode":
-      return {...state, mode: action.mode};
+      return { ...state, mode: action.mode };
     case "UpdateValue":
-      return {...state, value: action.value};
+      return { ...state, value: action.value };
     case "UpdateModeAndValue":
-      return {...state, mode: action.mode, value: action.value};
+      return { ...state, mode: action.mode, value: action.value };
     default:
       return state;
   }
 }
 
-
 export default function Simposio({ element, talleres }) {
-
-  const [state, dispatch] = useReducer(reducer, {mode:"Name", value:""});
+  const [state, dispatch] = useReducer(reducer, { mode: "Name", value: "" });
 
   //console.log("Talleres -> ", talleres);
   //hook simposio
@@ -36,6 +34,22 @@ export default function Simposio({ element, talleres }) {
   useEffect(() => {
     getSimposio(element);
   }, []);
+
+  //fetch in getSimposio
+  async function getListaUsuarios() {
+    try {
+      const response = await fetch(`${urlServer}usuarios/listaUsuarios`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      toast.error(error.message);
+      //alert(error.message);
+    }
+  }
 
   //fetch in getSimposio
   async function getSimposio(elementId) {
@@ -56,15 +70,18 @@ export default function Simposio({ element, talleres }) {
   }
 
   const filterActividades = (actividad) => {
-    if(state.value === "") return true;
-    if(state.mode === "Name") return actividad.descripcion.toLowerCase().includes(state.value);
-    if(state.mode === "Author") return actividad.PonenteNombre.toLowerCase().includes(state.value.toLowerCase());
-    if(state.mode === "Date") return actividad.dia_evento.includes(state.value);
-  }
+    if (state.value === "") return true;
+    if (state.mode === "Name")
+      return actividad.descripcion.toLowerCase().includes(state.value);
+    if (state.mode === "Author")
+      return actividad.PonenteNombre.toLowerCase().includes(
+        state.value.toLowerCase()
+      );
+    if (state.mode === "Date")
+      return actividad.dia_evento.includes(state.value);
+  };
 
-  const formatDiaInicio = (dia) => {
-    
-  } 
+  const formatDiaInicio = (dia) => {};
 
   return (
     <div>
@@ -73,9 +90,18 @@ export default function Simposio({ element, talleres }) {
           <div className="simposio-container">{simposio.nombre}</div>
           <div className="simposio-container">{simposio.descripcion}</div>
           <div className="simposio-container">{simposio.fecha}</div>
-          <SearchBar dispatch={dispatch} dia_inicio={simposio.dia_inicio.slice(0,10)}/>
-          {state.mode === 'Modalities' ? <Modalidades talleres={talleres} elementId={element} /> : 
-          <ActividadesFilter elementId={element} filterFunction={filterActividades}/>}
+          <SearchBar
+            dispatch={dispatch}
+            dia_inicio={simposio.dia_inicio.slice(0, 10)}
+          />
+          {state.mode === "Modalities" ? (
+            <Modalidades talleres={talleres} elementId={element} />
+          ) : (
+            <ActividadesFilter
+              elementId={element}
+              filterFunction={filterActividades}
+            />
+          )}
         </div>
       ) : (
         <div>Cargando simposio ...</div>

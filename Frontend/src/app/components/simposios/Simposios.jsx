@@ -34,7 +34,7 @@ export default function Simposios() {
           [element.PK_evento_contenedor]: suscrito,
         }));
       } catch (error) {
-        console.error('Error setting verification status ',error);
+        console.error("Error setting verification status ", error);
       }
     });
   }, [eventos]);
@@ -82,7 +82,7 @@ export default function Simposios() {
       return true;
     } catch (error) {
       console.log("error: ", error);
-      toast.error('Error verifying suscription ',error.message);
+      toast.error("Error verifying suscription ", error.message);
       return false;
     }
   }
@@ -105,6 +105,7 @@ export default function Simposios() {
                 element={element}
                 suscripcion={suscripcion}
                 urlSimposio={urlSimposio}
+                pathname={pathname}
                 user={user}
                 rol={rol}
               />
