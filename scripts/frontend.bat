@@ -1,6 +1,6 @@
 @echo off
 cd ../Frontend
 echo Installing new packages
-call npm install
+call yarn install
 echo Starting Next server and deploying Frontend
-npm run dev
+yarn dev
