@@ -223,6 +223,22 @@ const participacionDelete = (FK_evento_contenedor, FK_usuario, callback) => {
   );
 };
 
+// TODO: meter la tabla en la BD
+const attendanceList = (activityId, username, callback) => {
+  db.query(
+    `INSERT INTO asistencia_usuario_actividad(FK_actividad, FK_usuario) VALUES (${activityId}, "${username}")`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        callback(err, null);
+        return;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
 module.exports = {
   usuariosAll,
   obtenerUsuarioPorCedula,

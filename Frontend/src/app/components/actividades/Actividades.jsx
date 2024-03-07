@@ -202,7 +202,7 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
   };
 
   return (
-    <div className=" ">
+    <div className="">
       <div className="container my-5">
         <h3>Total results: {actividades.length}</h3>
         <h3>Total activities per page: {currentActividades.length}</h3>
@@ -248,7 +248,7 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
                         actividadIdP={element.PK_actividad}
                       />
                     </p>
-                    <div className="card-footer d-flex justify-content-left align-items-left">
+                    <div className='card-footer responsive-footer'>
                       <Link
                         href={`${urlActividad}/${JSON.stringify(
                           element.PK_actividad

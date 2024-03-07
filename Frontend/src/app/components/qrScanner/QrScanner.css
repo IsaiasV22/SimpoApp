@@ -1,0 +1,47 @@
+/* Estilos generales */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card-container {
+  width: 90%;
+  max-width: 40rem;
+}
+
+@media (max-width: 768px) {
+  .card-container {
+    width: 90%;
+  }
+}
+
+/* Estilos para mensajes */
+.scanning-message {
+  text-align: center;
+  color: #555;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+/* Animación de carga */
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+.loading-text {
+  animation: pulse 1.5s infinite;
+}
+
+/* Estilos para botones */
+.buttonCard {
+  width: 100%;
+}
+
+.scanned {
+  margin-bottom: 5px;
+  background-color: green !important;
+}

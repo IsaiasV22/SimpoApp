@@ -8,7 +8,9 @@ import '../css/header.css'
 
 const Header = () => {
   const [isMenuCollapsed, setMenuCollapsed] = useState(true);
-  const [user] = useGlobalState((state) => [state.user]);
+  //const [user] = useGlobalState((state) => [state.user]);
+  const [user, rol] = useGlobalState((state) => [state.user, state.rol]);
+  
 
   const toggleMenu = () => {
     setMenuCollapsed(!isMenuCollapsed);
@@ -69,11 +71,36 @@ const Header = () => {
                 aria-current="page"
                 style={{ color: "#ffffff" }}
               >
-                Home
+                <li className="nav-item">
+                  <div style={{ display: "flex" }}>
+                    <i
+                      className="bi bi-house-door-fill"
+                      style={{ marginRight: "5px", transform: "scale(1.2)"}}
+                    ></i>
+                    <p>Home</p>
+                  </div>
+                </li>
               </Link>
 
               ): <></>}
             </li>
+          {user && rol === 1 && (
+              <Link
+                href="/qrScanner"
+                className="nav-link"
+                style={{ color: "#ffffff" }}
+              >
+                <li className="nav-item">
+                  <div style={{ display: "flex" }}>
+                    <i
+                      className="bi bi-qr-code-scan"
+                      style={{ marginRight: "5px",transform: "scale(1.2)"}}
+                    ></i>
+                    <p>Scanner</p>
+                  </div>
+                </li>
+              </Link>
+            )}
             {user && (
               <Link
                 href="/calendario"
