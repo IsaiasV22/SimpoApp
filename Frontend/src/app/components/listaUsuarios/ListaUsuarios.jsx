@@ -79,36 +79,51 @@ export default function ListaUsuarios({ idEvento }) {
     <div className="main-content">
       <Notificacion />
       <div className="container my-5">
-        {/*         <BackButton />
-         */}
         <h1 className="mb-4" style={{ textAlign: "center" }}>
           Usuarios
         </h1>
 
         <div className="row">
           {usuarios.length > 0 && user ? (
-            usuarios.map((element, index) => (
-              <div key={index} className="d-flex">
-                {element.nombre}
-                <div>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => {
-                      handleSuscripcion(idEvento, element.PK_nombre_usuario);
-                      setTimeout(() => {
-                        location.reload();
-                      }, 5000);
-                    }}
-                  >
-                    {element.estado_suscripcion === "Suscrito"
-                      ? "Suscrito"
-                      : "No suscrito"}
-                  </button>
-                </div>
-              </div>
-            ))
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Cédula</th>
+                  <th>Nombre</th>
+                  <th>Estado de suscripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                {usuarios.map((element, index) => (
+                  <tr key={index}>
+                    <td>{element.cedula}</td>
+                    <td>{element.nombre_documentos}</td>
+                    <td>
+                      <button
+                        className={
+                          element.estado_suscripcion === "Suscrito"
+                            ? "btn btn-primary"
+                            : "btn btn-danger"
+                        }
+                        onClick={() => {
+                          handleSuscripcion(
+                            idEvento,
+                            element.PK_nombre_usuario
+                          );
+                          setTimeout(() => {
+                            location.reload();
+                          }, 5000);
+                        }}
+                      >
+                        {element.estado_suscripcion}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           ) : (
-            <div className="col-12">No users to display</div>
+            <div className="col-12">No hay usuarios para mostrar</div>
           )}
         </div>
       </div>
