@@ -14,6 +14,10 @@ import { usePathname } from "next/navigation";
 
 export default function ListaUsuarios({ idEvento }) {
   const [usuarios, setUsuarios] = useState([]);
+  //This array will hold the updated list from usurios by filtering criteria
+  const [usuariosFiltrados, setUsuariosFiltrados] = useState([]);
+  //text for searching funtionality
+  const [searchText, setSearchText] = useState("");
   const [suscripcion, setSuscripcion] = useState(null);
   const user = useGlobalState((state) => state.user);
   const pathname = usePathname();
@@ -24,6 +28,10 @@ export default function ListaUsuarios({ idEvento }) {
   useEffect(() => {
     handleUsuarios();
   }, []);
+
+  useEffect(() => {
+    setUsuariosFiltrados(usuarios);
+  }, [usuarios]);
 
   async function handleUsuarios() {
     let response = null;
@@ -75,6 +83,21 @@ export default function ListaUsuarios({ idEvento }) {
     }
   }
 
+  const handleSearchButtonClick = (event) => {
+    const valueFromEvent=event.target.value;
+    // setear el searText
+    setSearchText(valueFromEvent);
+    //setear los usuarios filtrados
+    console.log('val -> ',valueFromEvent);
+    if (!valueFromEvent.trim()) {
+      setUsuariosFiltrados(usuarios);
+      return;
+    }
+    setUsuariosFiltrados(
+      usuarios.filter((user) => user.cedula.startsWith(valueFromEvent))
+    );
+  };
+
   return (
     <div className="main-content">
       <Notificacion />
@@ -82,46 +105,70 @@ export default function ListaUsuarios({ idEvento }) {
         <h1 className="mb-4" style={{ textAlign: "center" }}>
           Usuarios
         </h1>
-
         <div className="row">
-          {usuarios.length > 0 && user ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Cédula</th>
-                  <th>Nombre</th>
-                  <th>Estado de suscripción</th>
-                </tr>
-              </thead>
-              <tbody>
-                {usuarios.map((element, index) => (
-                  <tr key={index}>
-                    <td>{element.cedula}</td>
-                    <td>{element.nombre_documentos}</td>
-                    <td>
-                      <button
-                        className={
-                          element.estado_suscripcion === "Suscrito"
-                            ? "btn btn-primary"
-                            : "btn btn-danger"
-                        }
-                        onClick={() => {
-                          handleSuscripcion(
-                            idEvento,
-                            element.PK_nombre_usuario
-                          );
-                          setTimeout(() => {
-                            location.reload();
-                          }, 5000);
-                        }}
-                      >
-                        {element.estado_suscripcion}
-                      </button>
-                    </td>
+          <div className="col-12">
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search"
+                aria-label="users id"
+                value={searchText}
+                onChange={handleSearchButtonClick}
+                aria-describedby="button-addon2"
+              />
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                id="button-addon2"
+                onClick={handleSearchButtonClick}
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          {usuariosFiltrados.length > 0 && user ? (
+            <div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Cédula</th>
+                    <th>Nombre</th>
+                    <th>Estado de suscripción</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {usuariosFiltrados.map((element, index) => (
+                    <tr key={index}>
+                      <td>{element.cedula}</td>
+                      <td>{element.nombre_documentos}</td>
+                      <td>
+                        <button
+                          className={
+                            element.estado_suscripcion === "Suscrito"
+                              ? "btn btn-primary"
+                              : "btn btn-danger"
+                          }
+                          onClick={() => {
+                            handleSuscripcion(
+                              idEvento,
+                              element.PK_nombre_usuario
+                            );
+                            setTimeout(() => {
+                              location.reload();
+                            }, 5000);
+                          }}
+                        >
+                          {element.estado_suscripcion}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <div className="col-12">No hay usuarios para mostrar</div>
           )}
