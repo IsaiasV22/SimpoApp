@@ -20,7 +20,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i class="bi bi-geo-alt"></i>
+                  <i className="bi bi-geo-alt"></i>
                   Costa Rica, San José, Montes de Oca, Ciudad de la
                   Investigación, 100m N del Colegio Monterrey
                 </a>

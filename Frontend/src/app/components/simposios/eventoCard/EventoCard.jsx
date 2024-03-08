@@ -10,7 +10,14 @@ import { ToastContainer, toast } from "react-toastify";
 //router from next/navigation
 import { useRouter } from "next/navigation";
 
-function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
+function EventoCard({
+  element,
+  suscripcion,
+  urlSimposio,
+  pathname,
+  user,
+  rol,
+}) {
   const [imageUrl, setImageUrl] = useState("");
   //router to change the url
   const router = useRouter();
@@ -33,7 +40,7 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
       console.error(error);
       //setImageUrl(`Images/evento.png`);
       // Si falla la carga de la imagen, establecer una imagen de fallback
-      setImageUrl('/Images/thumbnail_noimage.jpg');
+      setImageUrl("/Images/thumbnail_noimage.jpg");
     }
   };
 
@@ -186,6 +193,16 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
           </Link>
           {user && rol === 1 && (
             <>
+              {
+                <Link
+                  href={`${urlSimposio}/${JSON.stringify(
+                    element.PK_evento_contenedor
+                  )}/listaUsuarios`}
+                  style={{ marginRight: "5px" }}
+                >
+                  <button className="btn btn-primary">Lista de usuarios</button>
+                </Link>
+              }
               <EditModal
                 pk={element.PK_evento_contenedor}
                 nombre={element.nombre}

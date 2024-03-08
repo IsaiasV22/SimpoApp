@@ -97,10 +97,9 @@ router.post("/qrInfo", (req, res) => {
   // Verifica si req.session.user está definido antes de acceder a sus propiedades
   if (req.session.user && req.session.user.PK_nombre_usuario) {
     const username = req.session.user.PK_nombre_usuario;
-    
+
     console.log("User in session -> " + username);
     res.status(200).json({ username: username }); // Responder con un objeto JSON que contiene el nombre de usuario
-
   } else {
     res.status(404).send("No se encontró el usuario en la sesión");
   }
@@ -109,12 +108,8 @@ router.post("/qrInfo", (req, res) => {
 //API para las actividades del calendario del usuario logueado
 
 router.get("/calendarioUsuario", (req, res) => {
-  console.log("Inside /calendario");
-  //console.log("req headers -> "+JSON.stringify(req.headers));
-  // Verifica si req.session.user está definido antes de acceder a sus propiedades
   if (req.session.user && req.session.user.PK_nombre_usuario) {
     const username = req.session.user.PK_nombre_usuario;
-    console.log("User in session -> " + username);
 
     usuarioController.obtenerActividadesCalendario(username, (err, results) => {
       if (err) {
@@ -125,6 +120,55 @@ router.get("/calendarioUsuario", (req, res) => {
     });
   } else {
     res.status(404).send("No se encontró el usuario en la sesión");
+  }
+});
+
+router.post("/listaUsuarios", (req, res) => {
+  const evento = req.body.evento;
+  if (req.session.user && req.session.user.PK_nombre_usuario && req.session.user.FK_rol === 1) {
+    usuarioController.obtenerListaUsuarios(evento, (err, results) => {
+      if (err) {
+        return res.status(404).json({ error: err.message });
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  } else {
+    res.status(404).send("Rol no aceptado");
+  }
+});
+
+router.post("/cambiaSuscripcionEvento", (req, res) => {
+  if (req.session.user && req.session.user.PK_nombre_usuario && req.session.user.FK_rol === 1) {
+    const evento = req.body.evento;
+    const username = req.body.username;
+
+    //registroExiste?
+    usuarioController.participacionExiste(evento, username, (err, results) => {
+      if (err) {
+        return res.status(404).json({ error: err.message });
+      }
+
+      if (results === false) {
+        //añadir
+        usuarioController.participacionAdd(evento, username, (err, results) => {
+            if (err) {
+              return res.status(404).json({ error: err.message });
+            }
+            res.status(200).json({ success: "Cambio a Suscrito!" });
+          }
+        );
+      } else {
+        //eliminar
+        usuarioController.participacionDelete(evento, username, (err, results) => {
+            if (err) {
+              return res.status(404).json({ error: err.message });
+            }
+            res.status(200).json({ success: "Cambio a No suscrito!" });
+          }
+        );
+      }
+    });
   }
 });
 
