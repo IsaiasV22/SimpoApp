@@ -67,7 +67,6 @@ const obtenerUsuarioPorUsername = (username, callback) => {
   );
 };
 
-
 const estaSuscritoA = (evento, username, callback) => {
   db.query(
     `SELECT * FROM participacion_usuario WHERE FK_evento_contenedor=${evento} AND FK_usuario="${username}"`,
@@ -110,11 +109,14 @@ function login(userName, userPassword, callback) {
         .then((passwordMatch) => {
           // Si las contraseñas no coinciden, devuelve un error
           if (!passwordMatch) {
-            return callback(new Error(
-              "Contraseña incorrecta" +
-              "1-Por favor, verifique que la contraseña este bien escrita \n" +
-              "2-Si no recuerda su contraseña, por favor, contacte al administrador del sistema en la seccion de 'Soporte' \n"
-              ), null);
+            return callback(
+              new Error(
+                "Contraseña incorrecta" +
+                  "1-Por favor, verifique que la contraseña este bien escrita \n" +
+                  "2-Si no recuerda su contraseña, por favor, contacte al administrador del sistema en la seccion de 'Soporte' \n"
+              ),
+              null
+            );
           }
 
           // Devuelve el usuario si el inicio de sesión es exitoso
@@ -145,11 +147,107 @@ const obtenerActividadesCalendario = (username, callback) => {
   );
 };
 
+//Funcion para recuperar la lista total de usuarios del sistema
+const obtenerListaUsuarios = (evento, callback) => {
+  db.query(
+    `SELECT u.*, 
+      CASE 
+          WHEN pu.FK_evento_contenedor IS NOT NULL THEN 'Suscrito'
+          ELSE 'No Suscrito'
+      END AS estado_suscripcion
+    FROM usuario u
+    LEFT JOIN participacion_usuario pu
+    ON u.PK_nombre_usuario = pu.FK_usuario
+      AND pu.FK_evento_contenedor = ${evento}
+      WHERE u.FK_rol <> 1;`,
+    (err, results) => {
+      if (err) {
+        console.error(
+          "Error al realizar la consulta(obtenerListaUsuarios):",
+          err
+        );
+        callback(err, null);
+        return;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
+const participacionExiste = (FK_evento_contenedor, FK_usuario, callback) => {
+  db.query(
+    `SELECT * FROM participacion_usuario WHERE FK_evento_contenedor=${FK_evento_contenedor} AND FK_usuario="${FK_usuario}"`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al buscar el registro:", err);
+        callback(err, null);
+        throw err;
+      }
+      if (results.length === 0) {
+        callback(null, false);
+      } else {
+        callback(null, true);
+      }
+    }
+  );
+};
+
+const participacionAdd = (FK_evento_contenedor, FK_usuario, callback) => {
+  db.query(
+    `INSERT INTO participacion_usuario (FK_evento_contenedor, FK_usuario, tipo_participante) VALUES (${FK_evento_contenedor},"${FK_usuario}", "Oyente")`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al añadir participacion:", err);
+        callback(err, null);
+        throw err;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
+const participacionDelete = (FK_evento_contenedor, FK_usuario, callback) => {
+  db.query(
+    `DELETE FROM participacion_usuario WHERE FK_evento_contenedor=${FK_evento_contenedor} AND FK_usuario="${FK_usuario}"`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al eliminar participacion:", err);
+        callback(err, null);
+        throw err;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
+// TODO: meter la tabla en la BD
+const attendanceList = (activityId, username, callback) => {
+  db.query(
+    `INSERT INTO asistencia_usuario_actividad(FK_actividad, FK_usuario) VALUES (${activityId}, "${username}")`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        callback(err, null);
+        return;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
 module.exports = {
   usuariosAll,
   obtenerUsuarioPorCedula,
   obtenerUsuarioPorUsername,
   estaSuscritoA,
   login,
-  obtenerActividadesCalendario
+  obtenerActividadesCalendario,
+  obtenerListaUsuarios,
+  participacionExiste,
+  participacionAdd,
+  participacionDelete,
 };
