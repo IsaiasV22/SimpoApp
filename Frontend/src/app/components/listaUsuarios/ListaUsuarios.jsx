@@ -94,7 +94,7 @@ export default function ListaUsuarios({ idEvento }) {
       return;
     }
     setUsuariosFiltrados(
-      usuarios.filter((user) => user.cedula.startsWith(valueFromEvent))
+      usuarios.filter((user) => user.nombre_documentos.toLowerCase().includes(valueFromEvent.toLowerCase()))
     );
   };
 
@@ -111,7 +111,7 @@ export default function ListaUsuarios({ idEvento }) {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search"
+                placeholder="Buscar por nombre"
                 aria-label="users id"
                 value={searchText}
                 onChange={handleSearchButtonClick}
@@ -123,7 +123,7 @@ export default function ListaUsuarios({ idEvento }) {
                 id="button-addon2"
                 onClick={handleSearchButtonClick}
               >
-                Search
+                Buscar
               </button>
             </div>
           </div>
