@@ -1,171 +1,167 @@
 "use client";
 import { urlServer } from "@/app/Utiles";
+import styles from "./QRScanner.module.css"; // Importa los estilos específicos para este componente
 
-import React, { Component } from "react";
+// Importación de dependencias necesarias para el componente
+import React, { useEffect, useRef, useState } from "react";
+import jsQR from "jsqr"; // Librería para decodificar códigos QR
+import { toast } from "react-toastify"; 
 import { Card, Button } from "react-bootstrap";
-import { BrowserQRCodeReader } from "@zxing/browser";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./QrScanner.css";
 
-// Definición de la clase QRScanner que extiende de Component
-class QRScanner extends Component {
-  constructor(props) {
-    super(props);
-    // Inicialización del estado del componente
-    this.state = {
-      cameraError: null, // Error de la cámara
-      scannedData: null, // Datos escaneados
-      scanning: true, // Estado del escaneo
+// Componente QRScanner funcional
+const QRScanner = () => {
+  // Referencias al video y al canvas HTML donde se mostrará la cámara y se dibujará el QR escaneado
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  // Estado para controlar si se está escaneando o no
+  const [isScanning, setIsScanning] = useState(false);
+
+  // Efecto que se ejecuta al montar el componente. Configura el acceso a la cámara.
+  useEffect(() => {
+    let streamActive = null; // Guarda la referencia al stream de video para poder detenerlo después
+
+    // Solicita acceso a la cámara del dispositivo
+    navigator.mediaDevices
+      .getUserMedia({ video: { facingMode: "environment" } }) // Intenta usar la cámara trasera por defecto
+      .then((stream) => {
+        streamActive = stream; // Guarda la referencia al stream
+        videoRef.current.srcObject = stream; // Asigna el stream al elemento de video
+        videoRef.current.play(); // Comienza a reproducir el video
+        setIsScanning(true); // Actualiza el estado para indicar que se está escaneando
+        scanQRCode(); // Inicia la función de escaneo de QR
+      })
+      .catch((error) => console.error(error)); // Captura y loguea errores si no se puede acceder a la cámara
+
+    // Función de limpieza que se ejecuta al desmontar el componente
+    return () => {
+      // Detiene todas las pistas del stream para liberar la cámara
+      if (streamActive) {
+        streamActive.getTracks().forEach((track) => {
+          track.stop();
+        });
+      }
+      // Limpia el srcObject del video para evitar fugas de memoria
+      if (videoRef.current && videoRef.current.srcObject) {
+        videoRef.current.srcObject = null;
+      }
     };
-    // Creación de referencias a los elementos de video y lector de códigos
-    this.videoRef = React.createRef();
-    this.codeReader = React.createRef();
-  }
+  }, []);
 
-  // Método que se ejecuta después de que el componente se ha montado
-  componentDidMount() {
-    // Inicialización del lector de códigos QR
-    this.codeReader.current = new BrowserQRCodeReader();
-    // Solicitud de permiso para usar la cámara
-    this.requestCameraPermission();
-  }
+  // Función para registrar la asistencia con el código QR escaneado
+  const registerAttendace = (code) => {
+    const { username, activityId } = code; // Extrae los datos necesarios del código QR
 
-  // Método que se ejecuta antes de que el componente se desmonte
-  componentWillUnmount() {
-    // Si el video está en reproducción, detiene la transmisión y recarga la página
-    if (this.videoRef.current && this.videoRef.current.srcObject) {
-      const stream = this.videoRef.current.srcObject;
-      stream.getTracks().forEach((track) => track.stop());
-    }
-    //Recarga la pagina
-    window.location.reload();
-  }
+    console.log(`Registrando asistencia de ${username} al evento ${activityId}`);
 
-  // Método que se ejecuta cuando se escanea un código QR con éxito
-  handleScanSuccess = (data) => {
-    // Parseo de los datos escaneados
-    const parsedData = JSON.parse(data);
-    const username = parsedData.username;
-    const activityId = parsedData.activityId;
-
-    console.log("QR code scanned:", username, activityId);
-
-    // Actualización del estado con los datos escaneados
-    this.setState({ scannedData: parsedData, scanning: false });
-    this.codeReader.current.reset();
-
-    //hacer un fetch a la API urlServer/usuarios/asistirEvento y dara lo que contiene es {"username":"AlbertoAVC","activityId":"1"}
-    /*fetch(`${urlServer}/usuarios/asistirEvento`, {
+    // Hace una petición POST al servidor para registrar la asistencia
+    fetch(`${urlServer}usuarios/asistirEvento`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         username: username,
-        activityId: activityId 
+        activityId: activityId,
       }),
+      credentials: "include",
     })
       .then((response) => {
+        // Maneja la respuesta del servidor
         if (response.ok) {
-          toast.success("¡Asistencia registrada!");
+          toast.success("¡Asistencia registrada!"); // Notificación de éxito
         } else {
-          toast.error("Error al registrar asistencia");
+          toast.error("Error al registrar asistencia"); // Notificación de error
         }
       })
       .catch((error) => {
+        // Captura y loguea errores en la petición
         toast.error("Error al registrar asistencia: " + error.message);
-      });*/
-  };
-
-  // Método para solicitar permiso para usar la cámara
-  requestCameraPermission = async () => {
-    try {
-      // Solicita permiso para usar la cámara
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      this.videoRef.current.srcObject = stream;
-      // Inicia el escaneo de códigos QR
-      this.codeReader.current
-        .decodeFromVideoDevice(undefined, this.videoRef.current, (result) => {
-          if (result) {
-            const text = result.getText();
-            this.handleScanSuccess(text);
-          }
-        })
-        .catch((error) => {
-          // En caso de error, actualiza el estado con el mensaje de error
-          this.setState({ cameraError: "Error accessing QR reader: " + error });
-        });
-    } catch (error) {
-      // En caso de error, actualiza el estado con el mensaje de error
-      this.setState({
-        cameraError: "Error accessing camera: " + error.message,
       });
-    }
   };
 
-  // Método para iniciar un nuevo escaneo
-  handleScanAgain = () => {
-    // Reinicia el estado del escaneo
-    this.setState({ scannedData: null, scanning: true });
-    // Inicia el escaneo de códigos QR
-    this.codeReader.current.decodeFromVideoDevice(
-      undefined,
-      this.videoRef.current,
-      (result) => {
-        if (result) {
-          const text = result.getText();
-          this.handleScanSuccess(text);
+  // Función para iniciar el escaneo de códigos QR
+  const scanQRCode = () => {
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    const context = canvas.getContext("2d"); // Obtiene el contexto 2D para dibujar en el canvas
+
+    const scan = () => {
+      // Verifica que el video esté listo para ser procesado
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        // Ajusta las dimensiones del canvas para que coincidan con las del video
+        canvas.height = video.videoHeight;
+        canvas.width = video.videoWidth;
+        // Dibuja el frame actual del video en el canvas
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Obtiene la imagen del canvas para decodificar el QR
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        // Intenta decodificar un código QR de la imagen
+        const code = jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: "dontInvert",
+        });
+
+        if (code) {
+          // Si encuentra un código QR, loguea el resultado
+          console.log(`Código QR detectado: ${code.data}`);
+          video.srcObject.getTracks().forEach((track) => track.stop()); // Detiene el video
+          registerAttendace(JSON.parse(code.data)); // Registra la asistencia con los datos del QR
+          setIsScanning(false); // Actualiza el estado a no escaneando
         }
       }
-    );
+      requestAnimationFrame(scan); // Continúa escaneando en el próximo frame
+    };
+
+    scan(); // Inicia el bucle de escaneo
   };
 
-  // Método para renderizar el componente
-  render() {
-    const { cameraError, scannedData, scanning } = this.state;
+  // Función para reiniciar el escaneo en caso de ser necesario
+  const restartScanning = () => {
+    // Repite el proceso de solicitud de acceso a la cámara y comienza el escaneo
+    navigator.mediaDevices
+      .getUserMedia({ video: { facingMode: "environment" } })
+      .then((stream) => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.play();
+          setIsScanning(true);
+          scanQRCode();
+        }
+      })
+      .catch((error) => console.error(error));
+  };
 
-    return (
-      <div className="container">
-        <Card className="card-container">
-          <Card.Body>
-            {cameraError ? (
-              <p>{cameraError}</p>
-            ) : (
-              <>
-                <video
-                  ref={this.videoRef}
-                  autoPlay
-                  playsInline
-                  style={{ width: "100%"}}
-                ></video>
-                {scannedData ? (
-                  <>
-                    <Button className={"buttonCard scanned"} disabled>
-                      Scanned data
-                    </Button>
-                    <Button
-                      className={"buttonCard"}
-                      onClick={this.handleScanAgain}
-                    >
-                      Scan Again
-                    </Button>
-                  </>
-                ) : (
-                  <Button
-                    className={scanning ? "loading-text buttonCard" : ""}
-                    disabled
-                  >
-                    Scanning...
-                  </Button>
-                )}
-              </>
-            )}
-          </Card.Body>
-        </Card>
-      </div>
-    );
-  }
-}
+  // Renderiza el componente UI
+  return (
+    <div className={styles.container}>
+      <Card className={`${styles.cardContainer}`}>
+        <Card.Body>
+          {/* Elementos ocultos de video y canvas para el escaneo */}
+          <video style={{ display: "none" }} ref={videoRef}></video>
+          <canvas  ref={canvasRef}></canvas>
+        </Card.Body>
+        <Card.Footer>
+          {/* Botones para controlar el escaneo */}
+          {!isScanning ? (
+            <Button variant="primary" onClick={restartScanning} className="w-100">
+              Scan Again
+            </Button>
+          ) : (
+            <Button variant="primary" disabled className={`w-100 ${styles.loadingText}`}>
+              Scanning...
+            </Button>
+          )}
+
+          {!isScanning && (
+            <Button className={styles.scanned} disabled>
+              Scanned data
+            </Button>
+          )}
+        </Card.Footer>
+      </Card>
+    </div>
+  );
+};
 
 export default QRScanner;
