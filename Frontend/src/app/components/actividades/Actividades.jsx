@@ -64,6 +64,7 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
         throw new Error("No se pudo obtener la lista de actividades");
       }
       const data = await response.json();
+      console.log("Data: ", data);
       setActividades(filterFunction ? data.filter(filterFunction) : data);
       console.log("Actividades: ", actividades);
     } catch (error) {
@@ -226,7 +227,7 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
                   }`}
                 >
                   <div className="card-body position-relative">
-                    <h5 className="card-title">Name: {element.descripcion}</h5>
+                    <h5 className="card-title">Title: {element.descripcion}</h5>
                     <p className="card-text">
                     <i className="bi bi-calendar-event icon"> </i>
                       {'Date: '+ formatDate(element.dia_evento,'es')}

@@ -12,7 +12,7 @@ export default function SearchBar({ dispatch, dia_inicio }) {
   const [searchText, setSearchText] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   //selected option hook
-  const [selectedOption, setSelectedOption] = useState("Name");
+  const [selectedOption, setSelectedOption] = useState("Title");
   //handle input change
   const handleInputChange = (event) => {
     setSearchText(event.target.value);
@@ -51,14 +51,14 @@ export default function SearchBar({ dispatch, dia_inicio }) {
         title="Search by"
         onSelect={handleSelect}
       >
-        <Dropdown.Item eventKey="Name">Name</Dropdown.Item>
+        <Dropdown.Item eventKey="Title">Title</Dropdown.Item>
         <Dropdown.Item eventKey="Author">Author</Dropdown.Item>
         <Dropdown.Item eventKey="Date">Date</Dropdown.Item>
         <Dropdown.Item eventKey="Modalities">Modalities</Dropdown.Item>
       </DropdownButton>
       <Badge bg="success">{selectedOption}</Badge>
       </div>
-      {["Name","Author"].includes(selectedOption)  ? (
+      {["Title","Author"].includes(selectedOption)  ? (
       <div className="row">
         <div className="col-12">
           <div className="input-group">

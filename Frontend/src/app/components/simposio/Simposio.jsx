@@ -24,7 +24,7 @@ function reducer(state, action) {
 }
 
 export default function Simposio({ element, talleres }) {
-  const [state, dispatch] = useReducer(reducer, { mode: "Name", value: "" });
+  const [state, dispatch] = useReducer(reducer, { mode: "Title", value: "" });
 
   //console.log("Talleres -> ", talleres);
   //hook simposio
@@ -71,7 +71,7 @@ export default function Simposio({ element, talleres }) {
 
   const filterActividades = (actividad) => {
     if (state.value === "") return true;
-    if (state.mode === "Name")
+    if (state.mode === "Title")
       return actividad.descripcion.toLowerCase().includes(state.value.toLowerCase());
     if (state.mode === "Author")
       return actividad.PonenteNombre.toLowerCase().includes(
