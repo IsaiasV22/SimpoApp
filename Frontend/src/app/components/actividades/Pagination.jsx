@@ -1,4 +1,4 @@
-import React from "react";
+
 import Pagination from "react-bootstrap/Pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import "./Pagination.css";
@@ -10,7 +10,7 @@ const pagination = ({
   currentPage,
   setActividadesPerPage,
 }) => {
-  console.log(currentPage);
+
   let pages = [];
   for (
     let i = 1;
