@@ -6,6 +6,7 @@ import { urlServer } from "@/app/Utiles.jsx";
 import Link from "next/link";
 import EditModal from "./editModal/EditModal";
 import Estadisticas from "../../estadisticas/Estadisticas";
+import AsistenciaActividades from "../../asistenciaActividades/AsistenciaActividades";
 import { ToastContainer, toast } from "react-toastify";
 //router from next/navigation
 import { useRouter } from "next/navigation";
@@ -212,6 +213,9 @@ function EventoCard({
                 dia_final={element.dia_final}
               />
               <Estadisticas />
+
+              <AsistenciaActividades pk={element.PK_evento_contenedor}/>
+
               <button
                 //on click cambiar el estado de activo
                 onClick={() => {

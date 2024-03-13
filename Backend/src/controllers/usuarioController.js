@@ -195,7 +195,8 @@ const participacionExiste = (FK_evento_contenedor, FK_usuario, callback) => {
 
 const participacionAdd = (FK_evento_contenedor, FK_usuario, callback) => {
   db.query(
-    `INSERT INTO participacion_usuario (FK_evento_contenedor, FK_usuario, tipo_participante) VALUES (${FK_evento_contenedor},"${FK_usuario}", "Oyente")`,
+    `INSERT INTO participacion_usuario (FK_evento_contenedor, FK_usuario, tipo_participante, pagina, departamento, becado, comentarios) 
+    VALUES (${FK_evento_contenedor},"${FK_usuario}", "Oyente", "N/A", "N/A", ${1}, "N/A")`,
     (err, results) => {
       if (err) {
         console.error("Error al añadir participacion:", err);
@@ -210,7 +211,8 @@ const participacionAdd = (FK_evento_contenedor, FK_usuario, callback) => {
 
 const participacionDelete = (FK_evento_contenedor, FK_usuario, callback) => {
   db.query(
-    `DELETE FROM participacion_usuario WHERE FK_evento_contenedor=${FK_evento_contenedor} AND FK_usuario="${FK_usuario}"`,
+    `DELETE FROM participacion_usuario WHERE FK_evento_contenedor=${FK_evento_contenedor} 
+    AND FK_usuario="${FK_usuario}"`,
     (err, results) => {
       if (err) {
         console.error("Error al eliminar participacion:", err);
@@ -224,19 +226,44 @@ const participacionDelete = (FK_evento_contenedor, FK_usuario, callback) => {
 };
 
 // TODO: meter la tabla en la BD
+// Función para registrar la asistencia de un usuario a una actividad
 const attendanceList = (activityId, username, callback) => {
-  db.query(
-    `INSERT INTO asistencia_usuario_actividad(FK_actividad, FK_usuario) VALUES (${activityId}, "${username}")`,
-    (err, results) => {
-      if (err) {
-        console.error("Error al realizar la consulta:", err);
-        callback(err, null);
-        return;
-      }
-      // Devuelve los resultados de la consulta
-      callback(null, results);
-    }
-  );
+
+  console.log("Inside attendanceList");
+  console.log("activityId:", activityId);
+  console.log("username:", username);
+
+    // Primero, realizamos una consulta para verificar si el usuario ya ha sido registrado en la actividad
+    db.query(
+        `SELECT * FROM asistencia_actividad_evento WHERE FK_actividad = ${activityId} AND FK_usuario = "${username}"`,
+        (err, results) => {
+            // Si hay un error en la consulta, lo registramos y devolvemos un mensaje de error
+            if (err) {
+                console.error("Error al realizar la consulta:", err);
+                callback("Error al scannear QR", null);
+                return;
+            }
+            // Si el usuario ya ha sido registrado en la actividad, devolvemos un mensaje indicando esto
+            if (results.length > 0) {
+                callback("La asistencia del usuario ya fue registrada en esta actividad", null);
+                return;
+            }
+            // Si el usuario no ha sido registrado en la actividad, intentamos insertar el registro
+            db.query(
+                `INSERT INTO asistencia_actividad_evento(FK_actividad, FK_usuario) VALUES (${activityId}, "${username}")`,
+                (err, results) => {
+                    // Si hay un error en la consulta, lo registramos y devolvemos un mensaje de error
+                    if (err) {
+                        console.error("Error al realizar la consulta:", err);
+                        callback("Error al scannear QR", null);
+                        return;
+                    }
+                    // Si la inserción es exitosa, devolvemos un mensaje de éxito
+                    callback(null, "Asistencia del usuario registrada con éxito");
+                }
+            );
+        }
+    );
 };
 
 module.exports = {
@@ -250,4 +277,5 @@ module.exports = {
   participacionExiste,
   participacionAdd,
   participacionDelete,
+  attendanceList
 };

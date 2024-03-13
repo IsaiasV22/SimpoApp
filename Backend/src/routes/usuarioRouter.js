@@ -174,19 +174,21 @@ router.post("/cambiaSuscripcionEvento", (req, res) => {
 
 //API for assisting users at an event
 router.post("/asistirEvento", (req, res) => {
+
   console.log("Inside /asistirEvento");
-  //console.log("req headers -> "+JSON.stringify(req.headers));
   // Verifica si req.session.user está definido antes de acceder a sus propiedades
   if (req.session.user && req.session.user.PK_nombre_usuario) {
 
     const username = req.body.username;
-    const activityId = req.body.eventId;
+    const activityId = req.body.activityId;
 
-    usuarioController.attendanceList(activityId, username, (err, results) => {
+    usuarioController.attendanceList(activityId, username, (err, message) => {
       if (err) {
-        return res.status(404).json({ error: err.message });
+        // Si hay un error, devolvemos el mensaje de error
+        return res.status(404).json({ error: err });
       } else {
-        res.status(200).json(results);
+        // Si no hay un error, devolvemos el mensaje de éxito
+        res.status(200).json({ message: message });
       }
     });
   } else {
