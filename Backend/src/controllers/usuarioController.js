@@ -195,7 +195,8 @@ const participacionExiste = (FK_evento_contenedor, FK_usuario, callback) => {
 
 const participacionAdd = (FK_evento_contenedor, FK_usuario, callback) => {
   db.query(
-    `INSERT INTO participacion_usuario (FK_evento_contenedor, FK_usuario, tipo_participante) VALUES (${FK_evento_contenedor},"${FK_usuario}", "Oyente")`,
+    `INSERT INTO participacion_usuario (FK_evento_contenedor, FK_usuario, tipo_participante, pagina, departamento, becado, comentarios) 
+    VALUES (${FK_evento_contenedor},"${FK_usuario}", "Oyente", "N/A", "N/A", ${1}, "N/A")`,
     (err, results) => {
       if (err) {
         console.error("Error al añadir participacion:", err);
@@ -210,7 +211,8 @@ const participacionAdd = (FK_evento_contenedor, FK_usuario, callback) => {
 
 const participacionDelete = (FK_evento_contenedor, FK_usuario, callback) => {
   db.query(
-    `DELETE FROM participacion_usuario WHERE FK_evento_contenedor=${FK_evento_contenedor} AND FK_usuario="${FK_usuario}"`,
+    `DELETE FROM participacion_usuario WHERE FK_evento_contenedor=${FK_evento_contenedor} 
+    AND FK_usuario="${FK_usuario}"`,
     (err, results) => {
       if (err) {
         console.error("Error al eliminar participacion:", err);
