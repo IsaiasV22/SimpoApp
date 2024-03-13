@@ -179,7 +179,7 @@ const AttendanceInfo = async (idEventoContenedor) => {
         groupedResults[actividad].push(result);
       }
     }
-
+    
     return { eventName, results: groupedResults };
   } catch (error) {
     console.error("Error al realizar la consulta:", error);
