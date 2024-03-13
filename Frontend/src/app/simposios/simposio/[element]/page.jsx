@@ -24,7 +24,12 @@ const Page = async ({ params }) => {
   return (
     <>
       <div className="main-content">
-        <Simposio element={element} talleres={talleres} />
+        <Simposio
+          element={element}
+          talleres={talleres.sort((a, b) =>
+            a.descripcion.localeCompare(b.descripcion)
+          )}
+        />
       </div>
     </>
   );
