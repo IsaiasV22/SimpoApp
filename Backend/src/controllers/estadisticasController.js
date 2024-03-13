@@ -142,9 +142,13 @@ ORDER BY
 // Attendance information for event activity
 const AttendanceInfo = async (idEventoContenedor) => {
   try {
+    let eventName = await dbQuery(
+      `SELECT nombre AS 'Simposio' FROM evento_contenedor WHERE PK_evento_contenedor = ?`,
+      [idEventoContenedor]
+    );
+
     let results = await dbQuery(
       `SELECT
-          ec.nombre AS 'Simposio',
           a.descripcion AS 'Actividad',
           u.nombre AS 'Nombre',
           u.apellidos AS 'Apellidos',
@@ -157,21 +161,26 @@ const AttendanceInfo = async (idEventoContenedor) => {
       LEFT JOIN usuario u ON aae.FK_usuario = u.PK_nombre_usuario
       WHERE ec.PK_evento_contenedor = ?
       ORDER BY
-          ec.nombre,
           a.descripcion,
           u.apellidos,
           u.nombre;`,
       [idEventoContenedor]
     );
 
-    if (results.length === 0) {
-      results = await dbQuery(
-        `SELECT nombre AS 'Simposio' FROM evento_contenedor WHERE PK_evento_contenedor = ?`,
-        [idEventoContenedor]
-      );
+    let groupedResults = {};
+
+    for (let result of results) {
+      let actividad = result['Actividad'];
+      delete result['Actividad'];
+
+      if (!groupedResults[actividad]) {
+        groupedResults[actividad] = [result];
+      } else {
+        groupedResults[actividad].push(result);
+      }
     }
 
-    return results;
+    return { eventName, results: groupedResults };
   } catch (error) {
     console.error("Error al realizar la consulta:", error);
     throw error; // Propaga el error para que sea manejado en un nivel superior
