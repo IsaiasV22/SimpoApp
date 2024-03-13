@@ -38,4 +38,15 @@ router.post("/ActividadDetails", async (req, res) => {
   }
 });
 
+// Attendace information for event activity
+router.post("/Attendance", async (req, res) => {
+  try {
+    const results = await estadisticasController.AttendanceInfo(req.body.eventId);
+    res.status(200).json(results);
+  } catch (error) {
+    console.error("Error al realizar la consulta:", error);
+    res.status(500).json({ error: "Error al obtener las estadísticas" });
+  }
+});
+
 module.exports = router;

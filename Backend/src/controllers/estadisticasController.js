@@ -79,7 +79,7 @@ const SimposioDetails = async (id) => {
                                 WHERE 
                                     ec.PK_evento_contenedor = ?;
                                 `,
-                                            [id]
+      [id]
     );
     //console.log("Query results -> ", results);
     return results;
@@ -110,9 +110,67 @@ const ActividadDetails = async (id) => {
                                 WHERE 
                                     a.PK_actividad = ?;
                                 `,
-                                            [id]
+      [id]
     );
     console.log("Query results -> ", results);
+    return results;
+  } catch (error) {
+    console.error("Error al realizar la consulta:", error);
+    throw error; // Propaga el error para que sea manejado en un nivel superior
+  }
+};
+
+/* SELECT
+    ec.nombre AS 'Nombre Evento Contenedor',
+    a.descripcion AS 'Titulo Actividad',
+    u.nombre AS 'Nombre Usuario',
+    u.apellidos AS 'Apellidos Usuario',
+    u.correo AS 'Correo Usuario',
+    u.genero AS 'Genero Usuario'
+FROM
+    asistencia_actividad_evento aae
+INNER JOIN actividad a ON aae.FK_actividad = a.PK_actividad
+INNER JOIN evento_contenedor ec ON a.FK_evento_contenedor = ec.PK_evento_contenedor
+INNER JOIN usuario u ON aae.FK_usuario = u.PK_nombre_usuario
+ORDER BY
+    ec.nombre,
+    a.descripcion,
+    u.apellidos,
+    u.nombre;
+ */
+
+// Attendance information for event activity
+const AttendanceInfo = async (idEventoContenedor) => {
+  try {
+    let results = await dbQuery(
+      `SELECT
+          ec.nombre AS 'Simposio',
+          a.descripcion AS 'Actividad',
+          u.nombre AS 'Nombre',
+          u.apellidos AS 'Apellidos',
+          u.correo AS 'Correo',
+          u.genero AS 'Genero'
+      FROM
+          actividad a 
+      LEFT JOIN asistencia_actividad_evento aae ON aae.FK_actividad = a.PK_actividad
+      INNER JOIN evento_contenedor ec ON a.FK_evento_contenedor = ec.PK_evento_contenedor
+      LEFT JOIN usuario u ON aae.FK_usuario = u.PK_nombre_usuario
+      WHERE ec.PK_evento_contenedor = ?
+      ORDER BY
+          ec.nombre,
+          a.descripcion,
+          u.apellidos,
+          u.nombre;`,
+      [idEventoContenedor]
+    );
+
+    if (results.length === 0) {
+      results = await dbQuery(
+        `SELECT nombre AS 'Simposio' FROM evento_contenedor WHERE PK_evento_contenedor = ?`,
+        [idEventoContenedor]
+      );
+    }
+
     return results;
   } catch (error) {
     console.error("Error al realizar la consulta:", error);
@@ -124,4 +182,5 @@ module.exports = {
   AllSimposiosAllDetails,
   SimposioDetails,
   ActividadDetails,
+  AttendanceInfo
 };
