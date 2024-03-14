@@ -26,6 +26,23 @@ app.use(express.json());
 app.use("/usuarios", usuarioRouter);
 
 describe("Pruebas para el enrutador de usuarios", () => {
+
+  it.only("debe responder con el nombre de usuario cuando req.session.user está definido", async () => {
+    // Simula una sesión de usuario definida
+    const sessionUser = {
+      PK_nombre_usuario: "TestUser123",
+    };
+
+    // Simula la solicitud con req.session.user definido
+    const response = await supertest(app)
+      .post("/usuarios/qrInfo")
+      .set("Cookie", [`connect.sid=s:${sessionUser}`])
+      .send();
+
+    expect(response.status).toBe(200);
+    expect(response.body.username).toEqual(sessionUser.PK_nombre_usuario);
+  });
+
   it("debe responder correctamente a una solicitud GET /usuarios", async () => {
     const response = await supertest(app).get("/usuarios");
 
