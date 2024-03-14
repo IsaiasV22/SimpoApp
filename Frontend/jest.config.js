@@ -6,7 +6,6 @@ const createJestConfig = nextJest({
   dir: './',
 })
 const mockFilePath = path.resolve(__dirname, 'src/app/components/actividades/react-responsive-pagination.js');
-console.log('mockFilePath: ', mockFilePath);
 // Add any custom config to be passed to Jest
 const config = {
   coverageProvider: 'v8',
