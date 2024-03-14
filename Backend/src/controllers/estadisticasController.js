@@ -153,7 +153,9 @@ const AttendanceInfo = async (idEventoContenedor) => {
           u.nombre AS 'Nombre',
           u.apellidos AS 'Apellidos',
           u.correo AS 'Correo',
-          u.genero AS 'Genero'
+          u.genero AS 'Genero',
+          u.afiliacion AS 'Afiliacion',
+          u.pais AS 'Pais'
       FROM
           actividad a 
       LEFT JOIN asistencia_actividad_evento aae ON aae.FK_actividad = a.PK_actividad

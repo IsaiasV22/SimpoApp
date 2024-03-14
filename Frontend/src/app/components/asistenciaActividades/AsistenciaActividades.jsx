@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { urlServer } from "@/app/Utiles";
 
-export default function AsistenciaActividades({pk}) {
+export default function AsistenciaActividades({ pk }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function AsistenciaActividades({pk}) {
       ws[titleCellRef].s = {
         font: { sz: 14, bold: true },
         alignment: { horizontal: "center", vertical: "center" },
-        fill: { fgColor: { rgb: "FFFF00" } },
+        fill: { fgColor: { rgb: "33FFFF" } }, // Cambiar el color aquí
       };
 
       let rowIndex = 2; // Iniciar en la tercera fila después del título y una fila en blanco
@@ -66,7 +66,7 @@ export default function AsistenciaActividades({pk}) {
         ws[activityCellRef].s = {
           font: { sz: 12, bold: true },
           alignment: { horizontal: "center", vertical: "center" },
-          fill: { fgColor: { rgb: "FFFF00" } },
+          fill: { patternType: "solid", fgColor: { theme: 8, tint: 0.3999755851924192, rgb: "FFFF99" } }, // Cambiar el color aquí, // Cambiar el color aquí
         };
 
         rowIndex++; // Mover a la siguiente fila
@@ -85,6 +85,12 @@ export default function AsistenciaActividades({pk}) {
           "Genero",
           "",
           "",
+          "Afiliacion",
+          "",
+          "",
+          "Pais",
+          "",
+          "",
         ];
         XLSX.utils.sheet_add_aoa(ws, [headers], {
           origin: { r: rowIndex, c: 0 },
@@ -96,6 +102,8 @@ export default function AsistenciaActividades({pk}) {
           { s: { r: rowIndex, c: 3 }, e: { r: rowIndex, c: 5 } }, // D:F
           { s: { r: rowIndex, c: 6 }, e: { r: rowIndex, c: 8 } }, // G:I
           { s: { r: rowIndex, c: 9 }, e: { r: rowIndex, c: 11 } }, // J:L
+          { s: { r: rowIndex, c: 12 }, e: { r: rowIndex, c: 14 } }, // M:O
+          { s: { r: rowIndex, c: 15 }, e: { r: rowIndex, c: 17 } }, // P:R
         ];
         headerRanges.forEach((range) => {
           ws["!merges"].push(range);
@@ -126,10 +134,30 @@ export default function AsistenciaActividades({pk}) {
             { v: user.Genero || "" },
             "",
             "",
+            { v: user.Afiliacion || "" },
+            "",
+            "",
+            { v: user.Pais || "" },
+            "",
+            "",
           ];
           XLSX.utils.sheet_add_aoa(ws, [userRow], {
             origin: { r: rowIndex, c: 0 },
           });
+
+          // Fusionar celdas de datos de usuario
+          const userRanges = [
+            { s: { r: rowIndex, c: 0 }, e: { r: rowIndex, c: 2 } }, // A:C
+            { s: { r: rowIndex, c: 3 }, e: { r: rowIndex, c: 5 } }, // D:F
+            { s: { r: rowIndex, c: 6 }, e: { r: rowIndex, c: 8 } }, // G:I
+            { s: { r: rowIndex, c: 9 }, e: { r: rowIndex, c: 11 } }, // J:L
+            { s: { r: rowIndex, c: 12 }, e: { r: rowIndex, c: 14 } }, // M:O
+            { s: { r: rowIndex, c: 15 }, e: { r: rowIndex, c: 17 } }, // P:R
+          ];
+          userRanges.forEach((range) => {
+            ws["!merges"].push(range);
+          });
+
           rowIndex++; // Mover a la siguiente fila después de cada usuario
         });
 
@@ -142,7 +170,10 @@ export default function AsistenciaActividades({pk}) {
       XLSX.utils.book_append_sheet(wb, ws, "Asistencia");
 
       // Escribir el archivo
-      XLSX.writeFile(wb, "AsistenciaActividades.xlsx");
+      XLSX.writeFile(
+        wb,
+        `Registro de asistencia del Simposio ${data.eventName[0].Simposio}.xlsx`
+      );
     }
   };
 
