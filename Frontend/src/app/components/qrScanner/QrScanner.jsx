@@ -38,7 +38,7 @@ const QRScanner = () => {
     // Función de limpieza que se ejecuta al desmontar el componente
     return () => {
       // Detiene todas las pistas del stream para liberar la cámara
-      if (streamActive.current) {
+      if (streamActive.current&& typeof streamActive.current.getTracks === 'function') {
         streamActive.current.getTracks().forEach((track) => {
           track.stop();
         });

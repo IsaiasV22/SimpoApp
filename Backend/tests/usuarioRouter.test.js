@@ -27,7 +27,7 @@ app.use("/usuarios", usuarioRouter);
 
 describe("Pruebas para el enrutador de usuarios", () => {
 
-  it.only("debe responder con el nombre de usuario cuando req.session.user está definido", async () => {
+  it("debe responder con el nombre de usuario cuando req.session.user está definido", async () => {
     // Simula una sesión de usuario definida
     const sessionUser = {
       PK_nombre_usuario: "TestUser123",
