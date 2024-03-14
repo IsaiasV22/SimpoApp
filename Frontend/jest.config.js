@@ -6,14 +6,19 @@ const createJestConfig = nextJest({
   dir: './',
 })
 const mockFilePath = path.resolve(__dirname, 'src/app/components/actividades/react-responsive-pagination.js');
+const mockFilePathUuid = path.resolve(__dirname, 'src/app/components/asistenciaActividades/uuidMock.js');
+
 // Add any custom config to be passed to Jest
 const config = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+
+
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "^uuid$": mockFilePathUuid,
     "^react-responsive-pagination$": mockFilePath,
     // Add more mappings for other non-standard imports if needed
   },
