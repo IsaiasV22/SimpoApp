@@ -1750,4 +1750,6 @@ INSERT INTO presentacion_usuario_actvidad (FK_actividad ,FK_usuario) VALUES (22,
 
 
 -- Asignacion de un usuario al evento 3
-INSERT INTO `srse`.`participacion_usuario` (`FK_evento_contenedor`, `FK_usuario`, `tipo_participante`) VALUES ('3', 'AlbertoAVC', 'Oyente');
+INSERT INTO `srse`.`participacion_usuario` 
+(`FK_evento_contenedor`, `FK_usuario`, `tipo_participante`, `pagina`, `departamento`,`becado`, `comentarios`) 
+VALUES ('3', 'AlbertoAVC', 'Oyente', '.', 'mat', '2','.');

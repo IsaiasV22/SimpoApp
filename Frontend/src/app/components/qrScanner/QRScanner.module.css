@@ -1,5 +1,7 @@
 /* Estilos generales */
 .container {
+  margin-top: 20px;
+  margin-bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,6 +28,12 @@
 }
 
 /* Animación de carga */
+@-webkit-keyframes pulse { /* Chrome, Safari, Opera */
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
 @keyframes pulse {
   0% { opacity: 0.5; }
   50% { opacity: 1; }
@@ -43,5 +51,13 @@
 
 .scanned {
   margin-bottom: 5px;
+  margin-top: 5px;
   background-color: green !important;
+  width: 100%;
+}
+
+.error-message {
+  color: red; /* Color del texto en rojo */
+  font-weight: bold; /* Texto en negrita */
+  margin-bottom: 15px; /* Margen inferior para separar los mensajes */
 }
