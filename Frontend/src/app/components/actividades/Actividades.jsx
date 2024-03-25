@@ -81,15 +81,9 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
     });
     const fechaActual = new Date().toISOString().split("T")[0]; // Obtiene la fecha actual en formato 'YYYY-MM-DD'
 
-    /* console.log("Dia evento:", dia_evento);
-    console.log("Hora inicio:", horaInicio);
-    console.log("Hora final:", horaFinal);
-    console.log("Hora actual:", ahora);
-    console.log("Fecha actual:", fechaActual); */
-
     // Compara las fechas y las horas de inicio y finalización con la fecha y hora actual
     const output =
-      dia_evento === fechaActual && horaInicio <= ahora && horaFinal >= ahora;
+      dia_evento.split("T")[0] === fechaActual && horaInicio <= ahora && horaFinal >= ahora;
     /*  console.log("Esta en curso:", output); */
 
     return output;
@@ -222,7 +216,7 @@ export default function ActividadesFilter({ elementId, filterFunction }) {
                       element.hora_final,
                       element.dia_evento
                     )
-                      ? "border-danger"
+                      ? "border-success"
                       : ""
                   }`}
                 >
