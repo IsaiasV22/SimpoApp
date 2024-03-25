@@ -72,7 +72,9 @@ export default function Simposio({ element, talleres }) {
   const filterActividades = (actividad) => {
     if (state.value === "") return true;
     if (state.mode === "Title")
-      return actividad.descripcion.toLowerCase().includes(state.value.toLowerCase());
+      return actividad.descripcion
+        .toLowerCase()
+        .includes(state.value.toLowerCase());
     if (state.mode === "Author")
       return actividad.PonenteNombre.toLowerCase().includes(
         state.value.toLowerCase()
