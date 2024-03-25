@@ -7,15 +7,27 @@ import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "@/app/components/globalState/GlobalState";
-
+import { format, parseISO } from "date-fns";
+import { es, enUS } from "date-fns/locale";
 import { usePathname } from "next/navigation";
 import "@/app/css/Heart-wrapper.css";
 import Heart from "@/app/components/Heart like/Heart";
 import "@/app/css/Colors.css";
 import UpdateModal from "./UpdateModal/UpdateModal";
+import PonenteActividadesCard from "../ponente/PonenteActividadesCard";
+import Pagination from "./Pagination";
 
-export default function Actividades({ elementId, PK_taller }) {
+export default function ActividadesFilter({ elementId, filterFunction }) {
+  //console.log('filterFunction: ', filterFunction.toString())
   const [actividades, setActividades] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [actividadesPerPage, setActividadesPerPage] = useState(5);
+  //last activity index
+  const indexOfLastActividad = currentPage * actividadesPerPage;
+  //first activity index
+  const indexOfFirstActividad = indexOfLastActividad - actividadesPerPage;
+  //current activities
+  const currentActividades = actividades.slice(indexOfFirstActividad, indexOfLastActividad);
   const user = useGlobalState((state) => state.user);
   const rol = useGlobalState((state) => state.rol);
   const pathname = usePathname();
@@ -25,7 +37,7 @@ export default function Actividades({ elementId, PK_taller }) {
 
   useEffect(() => {
     handleActividades();
-  }, []);
+  }, [filterFunction]);
 
   //obtener la lista de actividades por el simposi seleccionado
   //console.log("Simposio seleccionado para hacer peticion : ", elementId);
@@ -52,7 +64,9 @@ export default function Actividades({ elementId, PK_taller }) {
         throw new Error("No se pudo obtener la lista de actividades");
       }
       const data = await response.json();
-      setActividades(data);
+      console.log("Data: ", data);
+      setActividades(filterFunction ? data.filter(filterFunction) : data);
+      console.log("Actividades: ", actividades);
     } catch (error) {
       toast.error(error.message);
     }
@@ -103,7 +117,9 @@ export default function Actividades({ elementId, PK_taller }) {
 
       const data = await response.json();
       //console.log("data -> ",data);
-      data.success === "Actividad añadida a tu calendario" ? toast.success(data.success) : toast.error(data.success);
+      data.success === "Actividad añadida a tu calendario"
+        ? toast.success(data.success)
+        : toast.error(data.success);
     } catch (error) {
       console.log("error -> ", error);
       toast.error(error.message);
@@ -113,21 +129,21 @@ export default function Actividades({ elementId, PK_taller }) {
   //handleEstadoStatus
   async function handleEstadoEstatus(PK_actividad, estatus) {
     let response = null;
-    try{
-      if(estatus){
+    try {
+      if (estatus) {
         response = await fetch(`${urlServer}actividades/ocultarActividad`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: PK_actividad }),
           credentials: "include",
-        })
+        });
       } else {
         response = await fetch(`${urlServer}actividades/mostrarActividad`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: PK_actividad }),
           credentials: "include",
-        })
+        });
       }
       if (!response.ok) {
         console.log("response: ", response);
@@ -146,101 +162,158 @@ export default function Actividades({ elementId, PK_taller }) {
     }
   }
 
+  //handleExponente
+  async function handlePonente(actividadId) {
+    try {
+      const response = await fetch(`${urlServer}ponentes/porActividadId`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: actividadId }),
+        credentials: "include",
+      });
+      const data = await response.json();
+      console.log("exponente por id: ", data[0]);
+      return data[0];
+    } catch (error) {
+      toast.error("Error fetching author (Ponente) :", error.message);
+      //alert(error.message);
+    }
+  }
+
+  async function attachPonentetoActividades() {
+    try {
+      const actividadesConPonente = await Promise.all(
+        actividades.map(async (actividad) => ({
+          ...actividad,
+          ponente: await handlePonente(actividad.PK_actividad),
+        }))
+      );
+
+      setActividades(actividadesConPonente);
+      console.log("Actividades after attachment : ", actividadesConPonente);
+    } catch (error) {
+      console.error("Error attaching ponente to actividades:", error);
+    }
+  }
+
+  const formatDate = (dateString, idioma) => {
+    const date = parseISO(dateString);
+    const locale = idioma === "es" ? es : enUS;
+    return format(date, "dd '/' MM '/' yyyy", { locale });
+  };
+
   return (
-    <div className=" ">
+    <div className="">
       <div className="container my-5">
-        {/*<h1 className="mb-4">Actividades</h1> */}
+        <h3>Total results: {actividades.length}</h3>
+        <h3>Total activities per page: {currentActividades.length}</h3>
+        <h3>Current page : {currentPage}</h3>
         <div className="row">
-          {actividades.length > 0 ? (
-            actividades
-              .filter((e) => e.FK_taller == PK_taller)
-              .map((element) => (
-                <div key={element.PK_actividad} className={`col-12 mb-4`}>
-                  {/* Utiliza el campo PK_actividad como clave única */}
-                  <div
-                    className={`card ${
-                      estaEnCurso(
-                        element.hora_inicio,
-                        element.hora_final,
-                        element.dia_evento
-                      )
-                        ? "border-danger"
-                        : ""
-                    }`}
-                  >
-                    <div className="card-body position-relative">
-                      <h5 className="card-title">{element.descripcion}</h5>
-                      <p className="card-text">
-                        {"Fecha: " + element.dia_evento.slice(0, 10)}
-                      </p>
-                      <p className="card-text">
-                        {"Hora Inicio: " + element.hora_inicio}
-                      </p>
-                      <p className="card-text">
-                        {"Hora Final: " + element.hora_final}
-                      </p>
-                      <p className="card-text">
-                        {"Ubicación: " + element.ubicacion}
-                      </p>
-                      <p className="card-text">
-                        {"Estatus: " + element.estatus}
-                      </p>
-                      <div className="card-footer d-flex justify-content-left align-items-left">
-                        <Link
-                          href={`${urlActividad}/${JSON.stringify(
-                            element.PK_actividad
-                          )}`}
-                          style={{ marginRight: "1px" }}
-                        >
-                          <button className="btn btn-primary">Ver más</button>
-                        </Link>
+          
+          {currentActividades.length > 0 ? (
+            <>
+            {currentActividades.map((element) => (
+              <div key={element.PK_actividad} className={`col-12 mb-4`}>
+                {/* Utiliza el campo PK_actividad como clave única */}
+                <div
+                  className={`card ${
+                    estaEnCurso(
+                      element.hora_inicio,
+                      element.hora_final,
+                      element.dia_evento
+                    )
+                      ? "border-danger"
+                      : ""
+                  }`}
+                >
+                  <div className="card-body position-relative">
+                    <h5 className="card-title">Title: {element.descripcion}</h5>
+                    <p className="card-text">
+                    <i className="bi bi-calendar-event icon"> </i>
+                      {'Date: '+ formatDate(element.dia_evento,'es')}
+                    </p>
+                    <p className="card-text">
+                    <i className="bi bi-clock icon"></i>
+                      {" Start time: " + element.hora_inicio}
+                    </p>
+                    <p className="card-text">
+                    <i className="bi bi-clock icon"></i>
+                      {" End time: " + element.hora_final}
+                    </p>
+                    <p className="card-text">
+                    <i className="bi bi-map icon"></i>
+                      {" Location: " + element.ubicacion}
+                    </p>
+                    <p className="card-text">
+                      <PonenteActividadesCard
+                        actividadIdP={element.PK_actividad}
+                      />
+                    </p>
+                    <div className='card-footer responsive-footer'>
+                      <Link
+                        href={`${urlActividad}/${JSON.stringify(
+                          element.PK_actividad
+                        )}`}
+                        style={{ marginRight: "1px" }}
+                      >
+                        <button className="btn btn-primary">Ver más</button>
+                      </Link>
 
-                        {user && rol === 1 && (
-                          <>
-                            <UpdateModal
-                              pk={element.PK_actividad}
-                              descripcion={element.descripcion}
-                              descripcion_d={element.descripcion_d}
-                              hora_inicio={element.hora_inicio}
-                              hora_final={element.hora_final}
-                              dia_evento={element.dia_evento}
-                              ubicacion={element.ubicacion}
-                              estatus={element.estatus}
-                            />
-                            <button
-                              //on click cambiar el estado de activo
-                              onClick={() => {
-                                handleEstadoEstatus(
-                                  element.PK_actividad,
-                                  element.estatus
-                                );
-                              }}
-                              className="btn btn-primary"
-                              style={{ marginLeft: "1px" }}
-                            >
-                              {element.estatus ? "Ocultar" : "Mostrar"}
-                            </button>
-                          </>
-                        )}
+                      {user && rol === 1 && (
+                        <>
+                          <UpdateModal
+                            pk={element.PK_actividad}
+                            descripcion={element.descripcion}
+                            descripcion_d={element.descripcion_d}
+                            hora_inicio={element.hora_inicio}
+                            hora_final={element.hora_final}
+                            dia_evento={element.dia_evento}
+                            ubicacion={element.ubicacion}
+                            estatus={element.estatus}
+                          />
+                          <button
+                            //on click cambiar el estado de activo
+                            onClick={() => {
+                              handleEstadoEstatus(
+                                element.PK_actividad,
+                                element.estatus
+                              );
+                            }}
+                            className="btn btn-primary"
+                            style={{ marginLeft: "1px" }}
+                          >
+                            {element.estatus ? "Ocultar" : "Mostrar"}
+                          </button>
+                        </>
+                      )}
 
-                        <div
-                          onClick={() => {
-                            handleMeInteresa(element.PK_actividad);
-                          }}
-                          className="Heart-wrapper"
-                        >
-                          <Heart actividad={element.PK_actividad} />
-                        </div>
+                      <div
+                        onClick={() => {
+                          handleMeInteresa(element.PK_actividad);
+                        }}
+                        className="Heart-wrapper"
+                      >
+                        <Heart actividad={element.PK_actividad} />
                       </div>
                     </div>
                   </div>
                 </div>
-              ))
+              </div>
+            ))}
+            <Pagination
+              actividadesPerPage={actividadesPerPage}
+              Actividades={actividades}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              setActividadesPerPage={setActividadesPerPage}
+              />
+            </>
           ) : (
             <div className="col-12">No hay Actividades</div>
           )}
         </div>
       </div>
+
       <ToastContainer />
     </div>
   );

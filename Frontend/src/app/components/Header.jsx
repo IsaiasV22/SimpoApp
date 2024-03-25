@@ -4,11 +4,12 @@ import Link from "next/link";
 import LogoutButton from "./logout/Logout";
 import { toast } from "react-toastify";
 import useGlobalState from "./globalState/GlobalState";
-import '../css/header.css'
+import "../css/header.css";
 
 const Header = () => {
   const [isMenuCollapsed, setMenuCollapsed] = useState(true);
-  const [user] = useGlobalState((state) => [state.user]);
+  //const [user] = useGlobalState((state) => [state.user]);
+  const [user, rol] = useGlobalState((state) => [state.user, state.rol]);
 
   const toggleMenu = () => {
     setMenuCollapsed(!isMenuCollapsed);
@@ -60,20 +61,49 @@ const Header = () => {
           id="navbarNav"
         >
           <ul className="navbar-nav ms-auto">
-                      
             <li className="nav-item">
-            {user ? (  
+              {user ? (
+                <Link
+                  href={user ? "/simposios" : "/"}
+                  className="nav-link"
+                  aria-current="page"
+                  style={{ color: "#ffffff" }}
+                >
+                  <li className="nav-item">
+                    <div style={{ display: "flex" }}>
+                      <i
+                        className="bi bi-house-door-fill"
+                        style={{
+                          marginRight: "5px",
+                          transform: "scale(1.2)",
+                        }}
+                      ></i>
+                      <p>Home</p>
+                    </div>
+                  </li>
+                </Link>
+              ) : (
+                <></>
+              )}
+            </li>
+
+            {user && rol === 1 && (
               <Link
-                href={user ? "/simposios" : "/"}
+                href="/qrScanner"
                 className="nav-link"
-                aria-current="page"
                 style={{ color: "#ffffff" }}
               >
-                Home
+                <li className="nav-item">
+                  <div style={{ display: "flex" }}>
+                    <i
+                      className="bi bi-qr-code-scan"
+                      style={{ marginRight: "5px", transform: "scale(1.2)" }}
+                    ></i>
+                    <p>Scanner</p>
+                  </div>
+                </li>
               </Link>
-
-              ): <></>}
-            </li>
+            )}
             {user && (
               <Link
                 href="/calendario"
@@ -86,11 +116,26 @@ const Header = () => {
                       className="bi bi-calendar"
                       style={{ marginRight: "5px" }}
                     ></i>
-                    <p>Calendario</p>
+                    <p>Calendar</p>
                   </div>
                 </li>
               </Link>
             )}
+            <Link
+              href="/calendario"
+              className="nav-link"
+              style={{ color: "#ffffff" }}
+            >
+              <li className="nav-item">
+                <div style={{ display: "flex" }}>
+                  <i
+                    style={{ marginRight: "5px" }}
+                    class="bi bi-universal-access-circle"
+                  ></i>
+                  <p>Accessibility</p>
+                </div>
+              </li>
+            </Link>
             {user && (
               <li className="nav-item">
                 <LogoutButton />

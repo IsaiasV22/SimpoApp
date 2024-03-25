@@ -34,7 +34,7 @@ export default function Simposios() {
           [element.PK_evento_contenedor]: suscrito,
         }));
       } catch (error) {
-        console.error(error);
+        console.error("Error setting verification status ", error);
       }
     });
   }, [eventos]);
@@ -82,7 +82,7 @@ export default function Simposios() {
       return true;
     } catch (error) {
       console.log("error: ", error);
-      toast.error(error.message);
+      toast.error("Error verifying suscription ", error.message);
       return false;
     }
   }
@@ -94,7 +94,7 @@ export default function Simposios() {
         <BackButton />
 
         <h1 className="mb-4" style={{ textAlign: "center" }}>
-          Simposios
+          Events
         </h1>
 
         <div className="row">
@@ -105,12 +105,13 @@ export default function Simposios() {
                 element={element}
                 suscripcion={suscripcion}
                 urlSimposio={urlSimposio}
+                pathname={pathname}
                 user={user}
                 rol={rol}
               />
             ))
           ) : (
-            <div className="col-12">No hay eventos próximos.</div>
+            <div className="col-12">No events to display</div>
           )}
         </div>
       </div>

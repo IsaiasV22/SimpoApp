@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Dirección */}
           <div className="col-md-3">
             <section className="mb-4">
-              <h5>Dirección</h5>
+              <h5>Address</h5>
               <br />
               <p>
                 <a
@@ -20,7 +20,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i class="bi bi-geo-alt"></i>
+                  <i className="bi bi-geo-alt"></i>
                   Costa Rica, San José, Montes de Oca, Ciudad de la
                   Investigación, 100m N del Colegio Monterrey
                 </a>
@@ -37,7 +37,7 @@ const Footer = () => {
           {/* Servicios del CIMPA */}
           <div className="col-md-3">
             <section className="mb-4">
-              <h5>Actividades</h5>
+              <h5>Activities</h5>
               <br />
               <p>
                 <a

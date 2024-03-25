@@ -10,7 +10,6 @@ export default function Home() {
     <div>
       <div className="main-content">
         <Login />
-
       </div>
     </div>
   );

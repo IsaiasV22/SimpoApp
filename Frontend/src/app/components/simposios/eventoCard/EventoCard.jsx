@@ -6,10 +6,22 @@ import { urlServer } from "@/app/Utiles.jsx";
 import Link from "next/link";
 import EditModal from "./editModal/EditModal";
 import Estadisticas from "../../estadisticas/Estadisticas";
+import AsistenciaActividades from "../../asistenciaActividades/AsistenciaActividades";
 import { ToastContainer, toast } from "react-toastify";
+//router from next/navigation
+import { useRouter } from "next/navigation";
 
-function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
+function EventoCard({
+  element,
+  suscripcion,
+  urlSimposio,
+  pathname,
+  user,
+  rol,
+}) {
   const [imageUrl, setImageUrl] = useState("");
+  //router to change the url
+  const router = useRouter();
 
   const formatDate = (dateString, idioma) => {
     const date = parseISO(dateString);
@@ -28,6 +40,8 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
     } catch (error) {
       console.error(error);
       //setImageUrl(`Images/evento.png`);
+      // Si falla la carga de la imagen, establecer una imagen de fallback
+      setImageUrl("/Images/thumbnail_noimage.jpg");
     }
   };
 
@@ -70,6 +84,26 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
     }
   }
 
+  function handleUrlPush() {
+    let address;
+    //update url address for pushing into the router
+    if (
+      (suscripcion && suscripcion[element.PK_evento_contenedor]) ||
+      rol === 1
+    ) {
+      address = `${urlSimposio}/${JSON.stringify(
+        element.PK_evento_contenedor
+      )}`;
+
+      //push the url address
+      router.push(address);
+    } else {
+      toast.error("You are not subscribed to this event");
+    }
+
+    console.log("handleUrlPush");
+  }
+
   return (
     <div
       key={element.PK_evento_contenedor}
@@ -80,17 +114,30 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
         alignItems: "center",
       }}
     >
-      <Link
-        href={
-          (suscripcion && suscripcion[element.PK_evento_contenedor]) ||
-          rol === 1
-            ? `${urlSimposio}/${JSON.stringify(element.PK_evento_contenedor)}`
-            : "#"
-        }
-      >
-        <div className="card card-simposio">
-          <div className="card-header header-simposio">
-            <h3 style={{ textAlign: "center" }}>{element.nombre}</h3>
+      <div className="card card-simposio">
+        <section
+          id="divForUrlPush"
+          onClick={(e) => handleUrlPush()}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            cursor: "pointer",
+          }}
+        >
+          <div
+            className="card-header header-simposio"
+            style={{
+              width: "100%",
+            }}
+          >
+            <h3
+              style={{
+                textAlign: "center",
+              }}
+            >
+              {element.nombre}
+            </h3>
           </div>
           <img
             src={imageUrl}
@@ -109,85 +156,99 @@ function EventoCard({ element, suscripcion, urlSimposio, user, rol }) {
             </p>
             <p className="card-text">
               <i className="bi bi-calendar-event icon"> </i>
-              Dia de inicio: {formatDate(element.dia_inicio, "es")}
+              Start day: {formatDate(element.dia_inicio, "es")}
             </p>
             <p className="card-text">
               <i className="bi bi-calendar-event icon"> </i>
-              Dia final: {formatDate(element.dia_final, "es")}
+              Final day: {formatDate(element.dia_final, "es")}
             </p>
             <p className="card-text">
               <i className="bi bi-map icon"> </i>
               {element.lugar}
             </p>
           </div>
-          <div className="card-footer d-flex footer-simposio">
-            <Link
-              href={
-                (suscripcion && suscripcion[element.PK_evento_contenedor]) ||
+        </section>
+
+        <div className="card-footer d-flex footer-simposio">
+          <Link
+            href={
+              (suscripcion && suscripcion[element.PK_evento_contenedor]) ||
+              rol === 1
+                ? `${urlSimposio}/${JSON.stringify(
+                    element.PK_evento_contenedor
+                  )}`
+                : "#"
+            }
+            style={{ marginRight: "5px" }}
+          >
+            <button
+              className="btn btn-primary"
+              disabled={
                 rol === 1
-                  ? `${urlSimposio}/${JSON.stringify(
-                      element.PK_evento_contenedor
-                    )}`
-                  : "#"
+                  ? false
+                  : !suscripcion || !suscripcion[element.PK_evento_contenedor]
               }
-              style={{ marginRight: "5px" }}
             >
-              <button
-                className="btn btn-primary"
-                disabled={
-                  rol === 1
-                    ? false
-                    : !suscripcion || !suscripcion[element.PK_evento_contenedor]
-                }
-              >
-                Ver más
-              </button>
-            </Link>
-            {user && rol === 1 && (
-              <>
-                <EditModal
-                  pk={element.PK_evento_contenedor}
-                  nombre={element.nombre}
-                  descripcion={element.descripcion}
-                  lugar={element.lugar}
-                  dia_inicio={element.dia_inicio}
-                  dia_final={element.dia_final}
-                />
-                <Estadisticas />
-                <button
-                  //on click cambiar el estado de activo
-                  onClick={() => {
-                    handleEstadoActivo(
-                      element.PK_evento_contenedor,
-                      element.activo
-                    );
-                  }}
-                  className="btn btn-primary"
+              see more
+            </button>
+          </Link>
+          {user && rol === 1 && (
+            <>
+              {
+                <Link
+                  href={`${urlSimposio}/${JSON.stringify(
+                    element.PK_evento_contenedor
+                  )}/listaUsuarios`}
                   style={{ marginRight: "5px" }}
                 >
-                  {element.activo ? "Ocultar" : "Mostrar"}
-                </button>
-              </>
-            )}
-            {suscripcion !== null && (
-              <div>
-                <button
-                  className={`btn btn-primary ${
-                    suscripcion[element.PK_evento_contenedor]
-                      ? "btn-custom-suscrito"
-                      : "btn-custom-noSuscrito"
-                  }`}
-                  disabled
-                >
-                  {suscripcion[element.PK_evento_contenedor]
-                    ? "Suscrito"
-                    : "No suscrito"}
-                </button>
-              </div>
-            )}
-          </div>
+                  <button className="btn btn-primary">Lista de usuarios</button>
+                </Link>
+              }
+              <EditModal
+                pk={element.PK_evento_contenedor}
+                nombre={element.nombre}
+                descripcion={element.descripcion}
+                lugar={element.lugar}
+                dia_inicio={element.dia_inicio}
+                dia_final={element.dia_final}
+              />
+              <Estadisticas />
+
+              <AsistenciaActividades pk={element.PK_evento_contenedor}/>
+
+              <button
+                //on click cambiar el estado de activo
+                onClick={() => {
+                  handleEstadoActivo(
+                    element.PK_evento_contenedor,
+                    element.activo
+                  );
+                }}
+                className="btn btn-primary"
+                style={{ marginRight: "5px" }}
+              >
+                {element.activo ? "Ocultar" : "Mostrar"}
+              </button>
+            </>
+          )}
+          {suscripcion !== null && (
+            <div>
+              <button
+                className={`btn btn-primary ${
+                  suscripcion[element.PK_evento_contenedor]
+                    ? "btn-custom-suscrito"
+                    : "btn-custom-noSuscrito"
+                }`}
+                disabled
+              >
+                {suscripcion[element.PK_evento_contenedor]
+                  ? "Subscribed"
+                  : "Not subscribed"}
+              </button>
+            </div>
+          )}
         </div>
-      </Link>
+      </div>
     </div>
   );
 }

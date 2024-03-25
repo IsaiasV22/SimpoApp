@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "@/app/css/Heart.css";
 import { urlServer } from "@/app/Utiles.jsx";
+import Floater from "react-floater";
 
 export default function Heart(actividad) {
   //estatus state hook
@@ -39,7 +40,7 @@ export default function Heart(actividad) {
       }
 
       const data = await response.json();
-      console.log("data -> ", data);
+      //console.log("data -> ", data);
       setIsChecked(data.estatus);
       //return data.estatus;
       //toast.success(data.success);
@@ -47,7 +48,7 @@ export default function Heart(actividad) {
       //console.log("error -> ",error);
       console.error(error.message);
     }
-    console.log("Heart checking state");
+    //console.log("Heart checking state");
   }
   const handleCheckboxChange = (event) => {
     // Esta función se ejecutará cuando el estado del checkbox cambie
@@ -68,7 +69,15 @@ export default function Heart(actividad) {
           checked={isChecked}
         />
         <label htmlFor="checkbox">
+          <Floater
+           title='Add to my calendar' 
+           event='hover'
+           placement='top'
+           eventDelay={2}
+           hideArrow={false}  
+           >
           <button className="btn btn-primary">Me interesa</button>
+          </Floater>
         </label>
       </div>
     </div>

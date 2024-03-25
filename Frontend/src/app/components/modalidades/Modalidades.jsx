@@ -1,20 +1,23 @@
 import { Link } from "next/link";
 import { useState } from "react";
-import Actividades from "../actividades/Actividades";
+import ActividadesFilter from "../actividades/Actividades";
 export default function Modalidades({ talleres, elementId }) {
   const [talleresEstado, setTalleresEstado] = useState({});
-
+  console.log("Talleres: ",talleres);
   const toggleActividades = (tallerId) => {
     setTalleresEstado((prevTalleresEstado) => ({
       ...prevTalleresEstado,
       [tallerId]: !prevTalleresEstado[tallerId],
     }));
   };
+  const filterActividades = (actividad,taller) => {
+    return actividad.PK_taller === taller ;
+  }
 
   return (
     <div className="main-content">
       <div className="container my-5">
-        <h1 className="mb-4">Modalidades</h1>
+        <h1 className="mb-4">Modalities</h1>
         <div className="row">
           <div>
             {talleres ? (
@@ -36,7 +39,7 @@ export default function Modalidades({ talleres, elementId }) {
                       </div>
                     </div>
                     {talleresEstado[element.PK_taller] && (
-                      <Actividades elementId={elementId} PK_taller={element.PK_taller}/>
+                      <ActividadesFilter elementId={elementId} filterFunction={(actividad)=>actividad.FK_taller == element.PK_taller}/>
                     )}
                   </div>
                 </div>
