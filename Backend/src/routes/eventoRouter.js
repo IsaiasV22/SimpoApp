@@ -3,8 +3,24 @@ const router = express.Router();
 const path = require("path");
 const eventoController = require("../controllers/eventoController.js");
 const tallerController = require("../controllers/tallerController.js");
+const fs = require("fs");
+const multer = require("multer");
 
 router.use(express.json());
+
+// Configuración de Multer para guardar imagenes
+const storage = multer.diskStorage({
+  filename: (req, file, cb) => {
+    console.log("Filename:", `${req.params.PK_evento_contenedor}.png`);
+    cb(null, `${req.params.PK_evento_contenedor}.png`);
+  },
+  destination: (req, file, cb) => {
+    console.log("Destination:", path.join(__dirname, "../../public/images"));
+    cb(null, path.join(__dirname, "../../public/images"));
+  },
+});
+
+const upload = multer({ storage: storage });
 
 router.get("/evento", (req, res) => {
   console.log("¡Hola, mundo!");
@@ -60,7 +76,7 @@ router.get("/:id", (req, res) => {
 router.put("/updateEventById", (req, res) => {
   const eventId = req.body.id;
   const newEvent = req.body; // Los datos del evento editado
-  console.log("entró al API " + eventId);
+  console.log("entró al API UPDATE" + eventId);
 
   eventoController.updateEvent(eventId, newEvent, (err) => {
     if (err) {
@@ -90,6 +106,28 @@ router.put("/ocultarEvento", (req, res) => {
     }
     res.status(200).json({ message: "Evento ocultado" });
   });
+});
+
+router.get("/imagen/:id", (req, res) => {
+  const eventId = req.params.id;
+
+  //Obtener imagen del public/images
+  const imagePath = path.join(__dirname, "../../public/images");
+  const defaultImage = "evento.png";
+  const image = `${imagePath}/${eventId}.png`;
+
+  //Verificar si existe la imagen
+  if (fs.existsSync(image)) {
+    res.sendFile(image);
+  } else {
+    res.sendFile(`${imagePath}/${defaultImage}`);
+  }
+});
+
+// Ruta para subir imágenes
+router.post("/upload/:PK_evento_contenedor", upload.single("file"), (req, res) => {
+  console.log("Entró a Multer: ", req.params.PK_evento_contenedor);
+  res.status(200).json({ message: "Imagen subida correctamente" });
 });
 
 //ALL TALLERES BY EVENTO

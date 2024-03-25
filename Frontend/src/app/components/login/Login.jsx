@@ -4,7 +4,7 @@ import "./Login.css";
 import { urlServer } from "@/app/Utiles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import useGlobalState from "../globalState/GlobalState"; 
+import useGlobalState from "../globalState/GlobalState";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
@@ -25,7 +25,10 @@ export default function Login() {
     try {
       const response = await fetch(`${urlServer}usuarios/login`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
         body: JSON.stringify(dataForm),
         credentials: "include",
       });
@@ -39,7 +42,7 @@ export default function Login() {
       const data = await response.json();
 
       if (data !== "") {
-        localStorage.removeItem('user');
+        localStorage.removeItem("user");
         setUserState(true); // Cambia el estado del usuario a true
         setRolState(data.user[0].FK_rol); // Guarda el rol del usuario
 
@@ -67,8 +70,11 @@ export default function Login() {
         {loading && <div className="spinner"></div>}
         <div className="wrapper fadeInDown">
           <div id="formContent">
-            <div className="fadeIn first" style={{ marginBottom: "2rem", marginTop: "2rem" }}>
-              <h2 style={{fontSize: "16px"}}>Inicio de Sesion</h2>
+            <div
+              className="fadeIn first"
+              style={{ marginBottom: "2rem", marginTop: "2rem" }}
+            >
+              <h2 style={{ fontSize: "16px" }}>Log in</h2>
             </div>
 
             <form onSubmit={handleSubmit}>

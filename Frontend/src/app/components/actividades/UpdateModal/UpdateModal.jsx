@@ -28,7 +28,10 @@ function UpdateModal(element) {
     moment(element.hora_final, "HH:mm:ss").toDate()
   );
   const [ubicacion, setUbicacion] = useState(element.ubicacion);
+
   const [estatus, setEstatus] = useState(element.estatus);
+  const isChecked = (value) => value == estatus;
+  const onSelect = ({ target:{ value}}) => setEstatus(value);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -123,26 +126,28 @@ function UpdateModal(element) {
               />
             </InputGroup>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="estatus">Estatus</InputGroup.Text>
-              <Form.Control
-                placeholder=""
-                aria-label=""
-                aria-describedby="estatus"
-                value={estatus}
-                onChange={(e) => {
-                  const inputValue = e.target.value;
-                  // Verificar si el valor es 1 o 2
-
-                  if (e.target.value !== "1" && e.target.value !== "2") {
-                    toast.error("El estatus debe ser 1 o 2");
-                    console.log("El estatus debe ser 1 o 2");
-                  } else {
-                    setEstatus(e.target.value);
-                  }
-                }}
+              <InputGroup.Radio
+                name="estatus"
+                id="showRadio"
+                value={1}
+                checked={isChecked(1)}
+                onChange={onSelect}
               />
+              <InputGroup.Text id="mostrar">Mostrar</InputGroup.Text>
+
+              <InputGroup.Radio
+                name="estatus"
+                id="hideRadio"
+                value={0}
+                checked={isChecked(0)}
+                onChange={onSelect}
+              />
+              <InputGroup.Text id="ocultar">Ocultar</InputGroup.Text>
             </InputGroup>
 
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="dia_evento">Dia evento</InputGroup.Text>
+            </InputGroup>
             <div>
               <DatePicker
                 showIcon
@@ -153,50 +158,52 @@ function UpdateModal(element) {
               />
             </div>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="hora_inicio">Hora de inicio</InputGroup.Text>
-              <div>
-                <DatePicker
-                  selected={hora_inicio}
-                  onChange={(date) => {
-                    console.log("Entrando al DatePicker de hora_inicio:");
-                    console.log(
-                      "Aplicamos formate al date: " + format(date, "HH:mm:ss")
-                    );
-
-                    console.log("dia_evento: " + dia_evento);
-                    console.log("hora_inicio: " + hora_inicio);
-                    console.log("date: " + date);
-
-                    setHoraInicio(date);
-                  }}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={30}
-                  timeCaption="Time"
-                  dateFormat="h:mm: aa"
-                />
-              </div>
+              <InputGroup.Text id="hora_inicio">Hora inicio</InputGroup.Text>
             </InputGroup>
+            <div>
+              <DatePicker
+                showIcon
+                selected={hora_inicio}
+                onChange={(date) => {
+                  console.log("Entrando al DatePicker de hora_inicio:");
+                  console.log(
+                    "Aplicamos formate al date: " + format(date, "HH:mm:ss")
+                  );
+
+                  console.log("dia_evento: " + dia_evento);
+                  console.log("hora_inicio: " + hora_inicio);
+                  console.log("date: " + date);
+
+                  setHoraInicio(date);
+                }}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={30}
+                timeCaption="Time"
+                dateFormat="h:mm aa"
+              />
+            </div>
             <InputGroup className="mb-3">
               <InputGroup.Text id="hora_final">Hora final</InputGroup.Text>
-              <div>
-                <DatePicker
-                  selected={hora_final}
-                  onChange={(date) => {
-                    console.log("Entrando al DatePicker de hora_final:");
-                    console.log(
-                      "Aplicamos formate al date: " + format(date, "HH:mm:ss")
-                    );
-                    setHoraFinal(date);
-                  }}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={30}
-                  timeCaption="Time"
-                  dateFormat="h:mm: aa"
-                />
-              </div>
             </InputGroup>
+            <div>
+              <DatePicker
+                showIcon
+                selected={hora_final}
+                onChange={(date) => {
+                  console.log("Entrando al DatePicker de hora_final:");
+                  console.log(
+                    "Aplicamos formate al date: " + format(date, "HH:mm:ss")
+                  );
+                  setHoraFinal(date);
+                }}
+                showTimeSelect
+                showTimeSelectOnly
+                timeIntervals={30}
+                timeCaption="Time"
+                dateFormat="h:mm aa"
+              />
+            </div>
           </Form>
         </Modal.Body>
         <Modal.Footer>

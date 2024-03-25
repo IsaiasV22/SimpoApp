@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require("path");
 const actividadController = require("../controllers/actividadController.js");
 const usuarioController = require("../controllers/usuarioController.js");
+const pwaController = require("../controllers/pwaController.js");
 
 router.use(express.json());
 
@@ -31,6 +32,19 @@ router.post("/porEvento", (req, res) => {
   });
 });
 
+//Obtener solo las actividades con estatus=1 por evento
+router.post("/activasPorEvento", (req, res) => {
+  const evento = req.body.evento;
+
+  actividadController.obtenerActividadesActivasPorEvento(evento, (err, results) => {
+      if (err) {
+        return res.status(404).json({ error: "Error al obtener las actividades" });
+      }
+      res.json(results);
+    }
+  );
+});
+
 //porId
 router.post("/porId", (req, res) => {
   const id = req.body.id;
@@ -48,7 +62,7 @@ router.post("/cambiaEstadoActividad", (req, res) => {
   console.log("entró al API cambiaEstadoActividad");
   //Imprimir lo que hay en la sesión
   //console.log("Esto hay en la sesión: ", req);
-  if (req.session.user && req.session.user.PK_nombre_usuario) {
+  if (req.session.user && req.session.user.PK_nombre_usuario ) {
     console.log("entró al if " + req.session.user.PK_nombre_usuario);
     const username = req.session.user.PK_nombre_usuario;
     const actividad = req.body.actividad;
@@ -130,12 +144,18 @@ router.post("/checkEstadoActividad", (req, res) => {
 router.put("/updateActivity", (req, res) => {
   const activityId = req.body.id;
   const newActivity = req.body; // Los datos de la actividad editada
-  console.log("entró al API updateActivity: " + activityId);
+/*   console.log("entró al API updateActivity: " + activityId);
+  console.log("Actividad ->  " + JSON.stringify(newActivity)); */
 
   actividadController.updateActivity(newActivity, (err) => {
     if (err) {
       return res.status(500).json({ error: "Error al editar la actividad" });
     }
+
+    //get suscribers of the activity
+
+    //notifify suscribers of the activity update
+    pwaController.notifyActivityUpdate(newActivity);
     res.status(204).send(); // Envía una respuesta sin contenido en caso de éxito
   });
 });
@@ -151,6 +171,11 @@ router.post("/usuariosActividad", (req, res) => {
         .status(404)
         .json({ error: "Error al obtener los usuarios de la actividad" });
     }
+
+    if (results === "No users found") {
+      return res.status(200).json({ warning: "No hay usuarios" });
+    }
+
     res.json(results);
   });
 });

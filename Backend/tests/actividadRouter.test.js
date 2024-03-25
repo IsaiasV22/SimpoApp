@@ -93,4 +93,26 @@ describe("Pruebas para el enrutador de actividades", () => {
     expect(response.status).toBe(200);
     expect(response.text).toBe("Actividad añadida correctamente");
   }); */
+
+  /* it('debería responder correctamente a una solicitud POST /cambiaEstadoActividad', async () => {
+    // Simular una sesión de usuario
+    const userSession = { PK_nombre_usuario: 'Andres21sb' };
+
+    const response = await supertest(app)
+      .post('/actividades/cambiaEstadoActividad')
+      .set('Cookie', [`user=${JSON.stringify(userSession)}`]) // Establece la sesión del usuario
+      .send({ actividad: 1 });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ success: 'Actividad añadida a tu calendario' });
+  }); */
+
+  /* it("debería ocultar la actividad y devolver un código de estado 200", async () => {
+    const response = await supertest(app)
+      .put("/actividades/ocultarActividad")
+      .send({ id: 1 }); // Reemplaza 1 con el ID de la actividad que deseas ocultar
+
+    expect(response.status).toBe(200); // Espera una respuesta HTTP 200 (éxito)
+    expect(response.body).toEqual({ message: "Actividad ocultada" }); // Espera el cuerpo de la respuesta esperado
+  }); */
 });

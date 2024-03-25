@@ -73,7 +73,7 @@ function Estadisticas() {
         Cargar Información Estadistica
       </button>
 
-      {loading ? <div>Loading...</div> : data ? <div>Loaded</div> : null}
+      {/*loading ? <div>Loading...</div> : data ? <div>Loaded</div> : null*/}
       <ToastContainer />
     </>
   );

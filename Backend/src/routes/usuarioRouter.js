@@ -67,13 +67,13 @@ router.post("/logout", (req, res) => {
 });
 
 router.post("/evento", (req, res) => {
-  //console.log("Inside /evento");
+  console.log("Inside /evento");
   //console.log("req headers -> "+JSON.stringify(req.headers));
   // Verifica si req.session.user está definido antes de acceder a sus propiedades
   if (req.session.user && req.session.user.PK_nombre_usuario) {
     const username = req.session.user.PK_nombre_usuario;
     const evento = req.body.evento;
-    //console.log("User in session -> " + username + " " + evento);
+    console.log("User in session -> " + username + " " + evento);
 
     usuarioController.estaSuscritoA(evento, username, (err, estaSuscrito) => {
       if (err) {
@@ -91,21 +91,104 @@ router.post("/evento", (req, res) => {
   }
 });
 
-//API para las actividades del calendario del usuario logueado
+router.post("/qrInfo", (req, res) => {
+  console.log("Inside /qrInfo");
 
-router.get("/calendarioUsuario", (req, res) => {
-  console.log("Inside /calendario");
-  //console.log("req headers -> "+JSON.stringify(req.headers));
   // Verifica si req.session.user está definido antes de acceder a sus propiedades
   if (req.session.user && req.session.user.PK_nombre_usuario) {
     const username = req.session.user.PK_nombre_usuario;
+
     console.log("User in session -> " + username);
+    res.status(200).json({ username: username }); // Responder con un objeto JSON que contiene el nombre de usuario
+  } else {
+    res.status(404).send("No se encontró el usuario en la sesión");
+  }
+});
+
+//API para las actividades del calendario del usuario logueado
+
+router.get("/calendarioUsuario", (req, res) => {
+  if (req.session.user && req.session.user.PK_nombre_usuario) {
+    const username = req.session.user.PK_nombre_usuario;
 
     usuarioController.obtenerActividadesCalendario(username, (err, results) => {
       if (err) {
         return res.status(404).json({ error: err.message });
       } else {
         res.status(200).json(results);
+      }
+    });
+  } else {
+    res.status(404).send("No se encontró el usuario en la sesión");
+  }
+});
+
+router.post("/listaUsuarios", (req, res) => {
+  const evento = req.body.evento;
+  if (req.session.user && req.session.user.PK_nombre_usuario && req.session.user.FK_rol === 1) {
+    usuarioController.obtenerListaUsuarios(evento, (err, results) => {
+      if (err) {
+        return res.status(404).json({ error: err.message });
+      } else {
+        res.status(200).json(results);
+      }
+    });
+  } else {
+    res.status(404).send("Rol no aceptado");
+  }
+});
+
+router.post("/cambiaSuscripcionEvento", (req, res) => {
+  if (req.session.user && req.session.user.PK_nombre_usuario && req.session.user.FK_rol === 1) {
+    const evento = req.body.evento;
+    const username = req.body.username;
+
+    //registroExiste?
+    usuarioController.participacionExiste(evento, username, (err, results) => {
+      if (err) {
+        return res.status(404).json({ error: err.message });
+      }
+
+      if (results === false) {
+        //añadir
+        usuarioController.participacionAdd(evento, username, (err, results) => {
+            if (err) {
+              return res.status(404).json({ error: err.message });
+            }
+            res.status(200).json({ success: "Cambio a Suscrito!" });
+          }
+        );
+      } else {
+        //eliminar
+        usuarioController.participacionDelete(evento, username, (err, results) => {
+            if (err) {
+              return res.status(404).json({ error: err.message });
+            }
+            res.status(200).json({ success: "Cambio a No suscrito!" });
+          }
+        );
+      }
+    });
+  }
+});
+
+//API for assisting users at an event
+router.post("/asistirEvento", (req, res) => {
+
+  console.log("Inside /asistirEvento");
+  // Verifica si req.session.user está definido antes de acceder a sus propiedades
+  if (req.session.user && req.session.user.PK_nombre_usuario) {
+
+    const username = req.body.username;
+    const activityId = req.body.activityId;
+
+    usuarioController.attendanceList(activityId, username, (err, message) => {
+      if (err) {
+        // Si hay un error, devolvemos el mensaje de error
+        return res.status(404).json({ error: err });
+      } else {
+        // Si no hay un error, devolvemos el mensaje de éxito
+        res.status(200).json({ message: message });
       }
     });
   } else {

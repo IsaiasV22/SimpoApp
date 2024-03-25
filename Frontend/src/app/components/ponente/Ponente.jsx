@@ -47,10 +47,8 @@ export default function Ponente({ actividadIdP }) {
                   <p className="card-text">{"Nombre: " + ponente.nombre}</p>
                   <p className="card-text">{"Apellidos: " + ponente.apellidos}</p>
                   <p className="card-text">{"Afiliación: " + ponente.afiliacion}</p>
-                  <p className="card-text">{"Correo: " + ponente.correo}</p>
                   <p className="card-text">{"País: " + ponente.pais}</p>
                   <p className="card-text">{"Ciudad: " + ponente.ciudad}</p>
-                  <p className="card-text">{"Teléfono: " + ponente.telefono}</p>
                 </div>
               </div>
             </div>

@@ -4,10 +4,12 @@ import Link from "next/link";
 import LogoutButton from "./logout/Logout";
 import { toast } from "react-toastify";
 import useGlobalState from "./globalState/GlobalState";
+import "../css/header.css";
 
 const Header = () => {
   const [isMenuCollapsed, setMenuCollapsed] = useState(true);
-  const [user] = useGlobalState((state) => [state.user]);
+  //const [user] = useGlobalState((state) => [state.user]);
+  const [user, rol] = useGlobalState((state) => [state.user, state.rol]);
 
   const toggleMenu = () => {
     setMenuCollapsed(!isMenuCollapsed);
@@ -19,15 +21,15 @@ const Header = () => {
         <div className="d-flex justify-content-between align-items-center w-100">
           {/* Logo */}
           <a className="navbar-brand" href="#">
-          <img
-              className="logo-img img-fluid w-75 w-md-100"
-              src="/images/LogoUCR.png"
+            <img
+              className="logo-img img-fluid w-75 w-md-100 mobile-image"
+              src="/Images/LogoUCR.png"
               alt="Cimpa"
               style={{ maxWidth: "170px" }}
             ></img>
             <img
-              className="logo-img img-fluid w-75 w-md-100"
-              src="/images/LogoCimpaHorizontal.png"
+              className="logo-img img-fluid w-75 w-md-100 mobile-image"
+              src="/Images/LogoCimpaHorizontal.png"
               alt="Cimpa"
               style={{ maxWidth: "400px" }}
             ></img>
@@ -60,25 +62,80 @@ const Header = () => {
         >
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link href={user ? "/simposios" : "/"}
-                
+              {user ? (
+                <Link
+                  href={user ? "/simposios" : "/"}
                   className="nav-link"
                   aria-current="page"
-                  style={{ color: "#ffffff" }}>
-                
-                  Home
-              </Link>
-            </li>
-            {user && (
-              <li className="nav-item">
-                <Link href='/calendario' className="nav-link" style={{color: "#ffffff"}}>
-                  <div style={{display:"flex"}}>
-                    <i className="bi bi-calendar" style={{marginRight:"5px"}}></i>
-                    <p>Calendario</p>
-                  </div>
+                  style={{ color: "#ffffff" }}
+                >
+                  <li className="nav-item">
+                    <div style={{ display: "flex" }}>
+                      <i
+                        className="bi bi-house-door-fill"
+                        style={{
+                          marginRight: "5px",
+                          transform: "scale(1.2)",
+                        }}
+                      ></i>
+                      <p>Home</p>
+                    </div>
+                  </li>
                 </Link>
-              </li>
+              ) : (
+                <></>
+              )}
+            </li>
+
+            {user && rol === 1 && (
+              <Link
+                href="/qrScanner"
+                className="nav-link"
+                style={{ color: "#ffffff" }}
+              >
+                <li className="nav-item">
+                  <div style={{ display: "flex" }}>
+                    <i
+                      className="bi bi-qr-code-scan"
+                      style={{ marginRight: "5px", transform: "scale(1.2)" }}
+                    ></i>
+                    <p>Scanner</p>
+                  </div>
+                </li>
+              </Link>
             )}
+            {user && (
+              <Link
+                href="/calendario"
+                className="nav-link"
+                style={{ color: "#ffffff" }}
+              >
+                <li className="nav-item">
+                  <div style={{ display: "flex" }}>
+                    <i
+                      className="bi bi-calendar"
+                      style={{ marginRight: "5px" }}
+                    ></i>
+                    <p>Calendar</p>
+                  </div>
+                </li>
+              </Link>
+            )}
+            <Link
+              href="/calendario"
+              className="nav-link"
+              style={{ color: "#ffffff" }}
+            >
+              <li className="nav-item">
+                <div style={{ display: "flex" }}>
+                  <i
+                    style={{ marginRight: "5px" }}
+                    class="bi bi-universal-access-circle"
+                  ></i>
+                  <p>Accessibility</p>
+                </div>
+              </li>
+            </Link>
             {user && (
               <li className="nav-item">
                 <LogoutButton />

@@ -2,20 +2,39 @@ const db = require("../../config/database.js");
 const { use } = require("../routes/usuarioRouter.js");
 
 const actividadesAll = (callback) => {
-  db.query("SELECT * FROM actividad", (err, results) => {
-    if (err) {
-      console.error("Error al realizar la consulta:", err);
-      callback(err, null);
-      return;
+  db.query(
+    "SELECT actividad.*, CONCAT(usuario.nombre, ' ', usuario.segundo_nombre, ' ', usuario.apellidos) AS PonenteNombre FROM actividad INNER JOIN usuario ON actividad.FK_usuario_remitente = usuario.PK_nombre_usuario",
+    (err, results) => {
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        callback(err, null);
+        return;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
     }
-    // Devuelve los resultados de la consulta
-    callback(null, results);
-  });
+  );
 };
 
 const obtenerActividadesPorEvento = (evento, callback) => {
   db.query(
-    `SELECT * FROM actividad WHERE FK_evento_contenedor=${evento}`,
+    `SELECT actividad.*, CONCAT(usuario.nombre, ' ', usuario.segundo_nombre, ' ', usuario.apellidos) AS PonenteNombre FROM actividad INNER JOIN usuario ON actividad.FK_usuario_remitente = usuario.PK_nombre_usuario WHERE actividad.FK_evento_contenedor=${evento}`,
+    (err, results) => {
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        callback(err, null);
+        return;
+      }
+      // Devuelve los resultados de la consulta
+      callback(null, results);
+    }
+  );
+};
+
+//Obtener solo las actividades con estatus=1 por evento
+const obtenerActividadesActivasPorEvento = (evento, callback) => {
+  db.query(
+    `SELECT actividad.*, CONCAT(usuario.nombre, ' ', usuario.segundo_nombre, ' ', usuario.apellidos) AS PonenteNombre FROM actividad INNER JOIN usuario ON actividad.FK_usuario_remitente = usuario.PK_nombre_usuario WHERE actividad.FK_evento_contenedor=${evento} AND actividad.estatus=1`,
     (err, results) => {
       if (err) {
         console.error("Error al realizar la consulta:", err);
@@ -31,7 +50,7 @@ const obtenerActividadesPorEvento = (evento, callback) => {
 //obtenerActividadPorId
 const obtenerActividadPorId = (id, callback) => {
   db.query(
-    `SELECT * FROM actividad WHERE PK_actividad=${id}`,
+    `SELECT actividad.*, CONCAT(usuario.nombre, ' ', usuario.segundo_nombre, ' ', usuario.apellidos) AS PonenteNombre FROM actividad INNER JOIN usuario ON actividad.FK_usuario_remitente = usuario.PK_nombre_usuario WHERE actividad.PK_actividad=${id}`,
     (err, results) => {
       if (err) {
         console.error("Error al realizar la consulta:", err);
@@ -162,6 +181,14 @@ const registroExiste = (id, username, callback) => {
         callback(err, null);
         throw err;
       }
+      console.log("results -> " + results);
+      if (results.length === 0) {
+        console.log("No existe el registro");
+        callback(null, false);
+      } else {
+        console.log("Ya existe el registro");
+        callback(null, true);
+      }
     }
   );
 };
@@ -181,12 +208,15 @@ const obtenerUsuariosActividad = (PK_actividad, callback) => {
       //Revisar si el results esta vacio
       if (results.length == 0) {
         console.warn("No users found");
-        callback(new Error("No users found"), null);
+        callback(null, "No users found");
         return;
       }
-      console.log(results);
+      //console.log(results.reduce((acc, curr) => [...acc,curr.FK_usuario], []));
       // Devuelve los resultados de la consulta
-      callback(null, results);
+      callback(
+        null,
+        results.reduce((acc, curr) => [...acc, curr.FK_usuario], [])
+      );
     }
   );
 };
@@ -194,6 +224,7 @@ const obtenerUsuariosActividad = (PK_actividad, callback) => {
 module.exports = {
   actividadesAll,
   obtenerActividadesPorEvento,
+  obtenerActividadesActivasPorEvento,
   obtenerActividadPorId,
   actividadAdd,
   registroExiste,

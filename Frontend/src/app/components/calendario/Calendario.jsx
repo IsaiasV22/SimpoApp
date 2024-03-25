@@ -93,6 +93,7 @@ function App() {
 
   return (
     <div className="m-3 ">
+      <h1>Calendario</h1>
       <Scheduler
         locale="en"
         events={actividades}
