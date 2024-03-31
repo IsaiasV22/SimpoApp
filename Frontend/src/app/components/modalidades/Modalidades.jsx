@@ -39,7 +39,7 @@ export default function Modalidades({ talleres, elementId }) {
                       </div>
                     </div>
                     {talleresEstado[element.PK_taller] && (
-                      <ActividadesFilter elementId={elementId} filterFunction={(actividad)=>actividad.FK_taller == element.PK_taller}/>
+                      <ActividadesFilter elementId={elementId} filterFunctions={[(actividad)=>actividad.FK_taller == element.PK_taller]}/>
                     )}
                   </div>
                 </div>

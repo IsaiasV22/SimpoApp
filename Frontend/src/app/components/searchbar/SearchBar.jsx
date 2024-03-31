@@ -21,9 +21,9 @@ export default function SearchBar({ dispatch, dia_inicio }) {
     console.log("Selected:", selectedOption, " value:", event.target.value);
     //dispatch the action
     dispatch({
-      type: "UpdateModeAndValue",
+      type: "JustOneFilter",
       mode: selectedOption,
-      value: event.target.value,
+      filterFun: filterFunction(selectedOption,event.target.value),
     });
   };
 
@@ -32,24 +32,49 @@ export default function SearchBar({ dispatch, dia_inicio }) {
     // You can handle the selection here
     console.log("Selected:", eventKey, " value:", searchText);
     // Add your custom logic based on the selected item
-    dispatch({ type: "UpdateModeAndValue", mode: eventKey, value: searchText });
+    dispatch({
+      type: "JustOneFilterAndMode",
+      mode: eventKey,
+      filterFun: filterFunction(eventKey,searchText),
+    });
   };
 
   const handleSearch = () => {
     // Add your custom logic here
     console.log("Selected:", selectedOption, " value:", searchText);
     dispatch({
-      type: "UpdateModeAndValue",
+      type: "JustOneFilter",
       mode: selectedOption,
-      value: searchText,
+      filterFun: filterFunction(selectedOption,searchText),
     });
+  };
+
+  const filterFunction = (option,searchParameter) => {
+    switch (option) {
+      case "Title":
+        return (actividad) =>
+          actividad.descripcion
+            .toLowerCase()
+            .includes(searchParameter.toLowerCase());
+      case "Author":
+        return (actividad) =>
+          actividad.PonenteNombre.toLowerCase().includes(
+            searchParameter.toLowerCase()
+          );
+      /*       case "Date":
+        return actividad.dia_evento.includes(searchText);
+      case "Modalities":
+        return actividad.modalidades.includes(searchText); */
+      default:
+        true;
+    }
   };
 
   return (
     <div className="container">
       <div style={{ marginLeft: "10px" }}>
         <div className="dropdown-buttons-container">
-          <div className='flex-column '>
+          <div className="flex-column ">
             <DropdownButton
               id="dropdown-basic-button"
               title="Search by"
@@ -103,9 +128,10 @@ export default function SearchBar({ dispatch, dia_inicio }) {
               console.log("date to be dispatched -> ", date.toISOString());
               setSelectedDate(date);
               dispatch({
-                type: "UpdateModeAndValue",
+                type: "JustOneFilter",
                 mode: selectedOption,
-                value: date.toISOString(),
+                filterFun: (actividad) =>
+                  actividad.dia_evento.includes(date.toISOString()),
               });
             }}
             startDate={searchText}

@@ -11,20 +11,27 @@ import ActividadesFilter from "../actividades/Actividades";
 import { ca } from "date-fns/locale";
 
 function reducer(state, action) {
+  console.log("Action -> ", action.mode);
   switch (action.type) {
-    case "UpdateMode":
-      return { ...state, mode: action.mode };
-    case "UpdateValue":
-      return { ...state, value: action.value };
-    case "UpdateModeAndValue":
-      return { ...state, mode: action.mode, value: action.value };
+    case "JustOneFilter":
+      return { ...state, filters: [action.filterFun] };
+    case "JustOneFilterAndMode":
+      return { ...state, mode: action.mode, filters: [action.filterFun] };
+    case "AddFilter":
+      return { ...state, filters: [...state.filters, action.filterFun] };
     default:
       return state;
   }
 }
 
+//initial state for useReducer
+const initialState = {
+  mode: "Title",
+  filters: [],
+};
+
 export default function Simposio({ element, talleres }) {
-  const [state, dispatch] = useReducer(reducer, { mode: "Title", value: "" });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   //console.log("Talleres -> ", talleres);
   //hook simposio
@@ -69,22 +76,6 @@ export default function Simposio({ element, talleres }) {
     }
   }
 
-  const filterActividades = (actividad) => {
-    if (state.value === "") return true;
-    if (state.mode === "Title")
-      return actividad.descripcion
-        .toLowerCase()
-        .includes(state.value.toLowerCase());
-    if (state.mode === "Author")
-      return actividad.PonenteNombre.toLowerCase().includes(
-        state.value.toLowerCase()
-      );
-    if (state.mode === "Date")
-      return actividad.dia_evento.includes(state.value);
-  };
-
-  const formatDiaInicio = (dia) => {};
-
   return (
     <div>
       {simposio ? (
@@ -101,7 +92,7 @@ export default function Simposio({ element, talleres }) {
           ) : (
             <ActividadesFilter
               elementId={element}
-              filterFunction={filterActividades}
+              filterFunctions={state.filters}
             />
           )}
         </div>
