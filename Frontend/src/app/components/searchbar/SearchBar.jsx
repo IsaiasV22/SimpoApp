@@ -21,35 +21,33 @@ export default function SearchBar({ dispatch, dia_inicio }) {
     console.log("Selected:", selectedOption, " value:", event.target.value);
     //dispatch the action
     dispatch({
-      type: "JustOneFilter",
+      type: "Update search filter",
       mode: selectedOption,
-      filterFun: filterFunction(selectedOption,event.target.value),
+      filterFun: filterFunction(selectedOption, event.target.value),
     });
   };
 
   const handleSelect = (eventKey) => {
     setSelectedOption(eventKey);
-    // You can handle the selection here
-    console.log("Selected:", eventKey, " value:", searchText);
-    // Add your custom logic based on the selected item
+    //console.log("Selected:", eventKey, " value:", searchText);\
+    //dispatch the selected mode and filter function
     dispatch({
-      type: "JustOneFilterAndMode",
+      type: "Update mode and search filter",
       mode: eventKey,
-      filterFun: filterFunction(eventKey,searchText),
+      filterFun: filterFunction(eventKey, searchText),
     });
   };
 
   const handleSearch = () => {
-    // Add your custom logic here
     console.log("Selected:", selectedOption, " value:", searchText);
     dispatch({
-      type: "JustOneFilter",
+      type: "Update search filter",
       mode: selectedOption,
-      filterFun: filterFunction(selectedOption,searchText),
+      filterFun: filterFunction(selectedOption, searchText),
     });
   };
 
-  const filterFunction = (option,searchParameter) => {
+  const filterFunction = (option, searchParameter) => {
     switch (option) {
       case "Title":
         return (actividad) =>
@@ -61,12 +59,9 @@ export default function SearchBar({ dispatch, dia_inicio }) {
           actividad.PonenteNombre.toLowerCase().includes(
             searchParameter.toLowerCase()
           );
-      /*       case "Date":
-        return actividad.dia_evento.includes(searchText);
-      case "Modalities":
-        return actividad.modalidades.includes(searchText); */
+
       default:
-        true;
+        return () => true;
     }
   };
 
@@ -87,7 +82,7 @@ export default function SearchBar({ dispatch, dia_inicio }) {
             </DropdownButton>
             <Badge bg="success">{selectedOption}</Badge>
           </div>
-          <StatusBar />
+          <StatusBar dispatch={dispatch} />
         </div>
       </div>
       {["Title", "Author"].includes(selectedOption) ? (
@@ -128,13 +123,14 @@ export default function SearchBar({ dispatch, dia_inicio }) {
               console.log("date to be dispatched -> ", date.toISOString());
               setSelectedDate(date);
               dispatch({
-                type: "JustOneFilter",
+                type: "Update search filter",
                 mode: selectedOption,
                 filterFun: (actividad) =>
                   actividad.dia_evento.includes(date.toISOString()),
               });
             }}
             startDate={searchText}
+            closeOnScroll={true}
           />
         </div>
       ) : null}

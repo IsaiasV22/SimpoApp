@@ -11,14 +11,16 @@ import ActividadesFilter from "../actividades/Actividades";
 import { ca } from "date-fns/locale";
 
 function reducer(state, action) {
-  console.log("Action -> ", action.mode);
+  console.log("Action func -> ", action);
   switch (action.type) {
-    case "JustOneFilter":
-      return { ...state, filters: [action.filterFun] };
-    case "JustOneFilterAndMode":
-      return { ...state, mode: action.mode, filters: [action.filterFun] };
-    case "AddFilter":
-      return { ...state, filters: [...state.filters, action.filterFun] };
+    case "Update search filter":
+      return { ...state, search_filter: action.filterFun };
+    case "Update mode and search filter":
+      return { ...state, mode: action.mode, search_filter: action.filterFun };
+    case "Update status filter":
+      return { ...state, status_filter: action.filterFun };
+    case "Update mode and status filter":
+      return { ...state, mode: action.mode, status_filter: action.filterFun };
     default:
       return state;
   }
@@ -27,7 +29,8 @@ function reducer(state, action) {
 //initial state for useReducer
 const initialState = {
   mode: "Title",
-  filters: [],
+  search_filter: ()=>true,
+  status_filter: ()=>true,
 };
 
 export default function Simposio({ element, talleres }) {
@@ -92,7 +95,7 @@ export default function Simposio({ element, talleres }) {
           ) : (
             <ActividadesFilter
               elementId={element}
-              filterFunctions={state.filters}
+              filterFunctions={[state.search_filter, state.status_filter]}
             />
           )}
         </div>

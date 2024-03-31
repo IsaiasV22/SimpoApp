@@ -70,6 +70,13 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
       console.log("Data: ", data);
       //check if there are filters and apply them
       console.log("Filter functions: ", filterFunctions);
+      //sort data by dia_evento and hora_inicio
+      data.sort((a, b) => {
+        if (a.dia_evento === b.dia_evento) {
+          return a.hora_inicio < b.hora_inicio ? -1 : 1;
+        }
+        return a.dia_evento < b.dia_evento ? -1 : 1;
+      });
       setActividades(
         filterFunctions && filterFunctions.length > 0
           ? filterFunctions.reduce((acc, filter) => acc.filter(filter), data)
