@@ -112,14 +112,13 @@ function CardInfo({ element }) {
             </p>
           </div>
         </section>
-
-        <div className="card-footer d-flex footer-simposio">
-          {user && rol === 1 && (
+        {user && rol === 1 && (
+          <div className="card-footer d-flex footer-simposio">
             <div>
-              <button className={`btn btn-primary`} >Edit Croquis</button>
+              <button className={`btn btn-primary`}>Edit Croquis</button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
