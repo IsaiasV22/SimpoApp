@@ -34,6 +34,10 @@
   max-width: 800px;
 }
 
+.card-simposioSpecific{
+  max-width: auto;
+}
+
 .header-simposio {
   background: linear-gradient(
     to right,
@@ -62,4 +66,8 @@
 
 .icon{
   font-size: 20px;
+}
+
+.cardInfo{
+  padding: 3%;
 }
