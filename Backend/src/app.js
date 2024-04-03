@@ -21,13 +21,13 @@ app.use(
 );
 
 const corsOptions = {
-  credentials: true,
-/*   origin: [
+/*  credentials: true,
+   origin: [
     "http://localhost:3000",
     "https://b08d-177-93-10-187.ngrok-free.app",
     "https://65ca-177-93-10-187.ngrok-free.app"
-  ], // URL del cliente */
-  origin:true
+  ], // URL del cliente 
+  origin:true*/
 };
 
 // Configura CORS para permitir todas las solicitudes
