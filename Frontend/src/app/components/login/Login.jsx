@@ -55,6 +55,7 @@ export default function Login() {
       toast.error(error.message, {
         className: "toastify-custom-error", // Usa la clase de estilo personalizada
       });
+      console.error("Error en la petición fetch: ", error);
     } finally {
       setLoading(false);
     }
