@@ -2,4 +2,4 @@
 //export const urlServer="http://localhost:3001/";
 
 //EC2 BACKEND ADDRESS
-export const urlServer="http://ec2-18-118-153-206.us-east-2.compute.amazonaws.com:3001/";
+export const urlServer="https://ec2-18-118-153-206.us-east-2.compute.amazonaws.com:3001/";
