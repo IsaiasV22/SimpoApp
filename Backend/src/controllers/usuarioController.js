@@ -14,7 +14,8 @@ const usuariosAll = (callback) => {
 };
 
 const obtenerUsuarioPorCedula = (cedula, callback) => {
-  db.query(`SELECT * FROM usuario WHERE cedula=${cedula}`, (err, results) => {
+  const sql = `SELECT * FROM usuario WHERE cedula=?`;
+  db.query(sql, [cedula], (err, results) => {
     if (err) {
       console.error("Error al realizar la consulta:", err);
       callback(err, null);
@@ -26,64 +27,59 @@ const obtenerUsuarioPorCedula = (cedula, callback) => {
       callback(new Error("No se encontro el usuario"), null);
       return;
     }
-    //console.log(results);
     // Devuelve los resultados de la consulta
     callback(null, results);
   });
 };
 
 const obtenerUsuarioPorUsername = (username, callback) => {
-  db.query(
-    `SELECT * FROM usuario WHERE PK_nombre_usuario="${username}"`,
-    (err, results) => {
-      if (err) {
-        console.error("Error al realizar la consulta:", err);
-        callback(err, null);
-        return;
-      }
-      //Revisar si el results esta vacio
-      if (results.length == 0) {
-        console.warn("No se encontro el usuario");
-        return callback(
-          new Error(
-            "Nombre de usuario invalido \n" +
-              "1-Por favor, verifique que el nombre de usuario sea correcto \n" +
-              "2-Si no tiene una cuenta, por favor, cree una dando click en el boton de 'Register' \n" +
-              "este lo redireccionara a la pagina de registro, \n" +
-              "donde podra crear una cuenta siguiento las instrucciones de dicha pagina\n" +
-              "3-Si ya tiene una cuenta y no recuerda su nombre de usuario, \n" +
-              "por favor, contacte al administrador del sistema en la seccion de 'Soporte' \n"
-          ),
-          null
-        );
-      }
-
-      // Verifica que el campo PK_nombre_usuario sea igual al username
-      //assert.strictEqual(results[0].PK_nombre_usuario, username, 'El nombre de usuario no coincide');
-
-      // Devuelve los resultados de la consulta
-      callback(null, results);
+  const sql = `SELECT * FROM usuario WHERE PK_nombre_usuario=?`;
+  db.query(sql, [username], (err, results) => {
+    if (err) {
+      console.error("Error al realizar la consulta:", err);
+      callback(err, null);
+      return;
     }
-  );
+    //Revisar si el results esta vacio
+    if (results.length == 0) {
+      console.warn("No se encontro el usuario");
+      return callback(
+        new Error(
+          "Nombre de usuario invalido \n" +
+            "1-Por favor, verifique que el nombre de usuario sea correcto \n" +
+            "2-Si no tiene una cuenta, por favor, cree una dando click en el boton de 'Register' \n" +
+            "este lo redireccionara a la pagina de registro, \n" +
+            "donde podra crear una cuenta siguiento las instrucciones de dicha pagina\n" +
+            "3-Si ya tiene una cuenta y no recuerda su nombre de usuario, \n" +
+            "por favor, contacte al administrador del sistema en la seccion de 'Soporte' \n"
+        ),
+        null
+      );
+    }
+
+    // Verifica que el campo PK_nombre_usuario sea igual al username
+    //assert.strictEqual(results[0].PK_nombre_usuario, username, 'El nombre de usuario no coincide');
+
+    // Devuelve los resultados de la consulta
+    callback(null, results);
+  });
 };
 
 const estaSuscritoA = (evento, username, callback) => {
-  db.query(
-    `SELECT * FROM participacion_usuario WHERE FK_evento_contenedor=${evento} AND FK_usuario="${username}"`,
-    (err, results) => {
-      if (err) {
-        console.error("Error al realizar la consulta:", err);
-        callback(err, null);
-        return;
-      }
-
-      // Revisar si hay resultados
-      const estaSuscrito = results.length > 0;
-
-      // Devuelve true si está suscrito, false si no está suscrito
-      callback(null, estaSuscrito);
+  const sql = `SELECT * FROM participacion_usuario WHERE FK_evento_contenedor=? AND FK_usuario=?`;
+  db.query(sql, [evento, username], (err, results) => {
+    if (err) {
+      console.error("Error al realizar la consulta:", err);
+      callback(err, null);
+      return;
     }
-  );
+
+    // Revisar si hay resultados
+    const estaSuscrito = results.length > 0;
+
+    // Devuelve true si está suscrito, false si no está suscrito
+    callback(null, estaSuscrito);
+  });
 };
 
 // Función para verificar el login correctamente
@@ -129,28 +125,23 @@ function login(userName, userPassword, callback) {
   } catch (error) {
     callback(error, null);
   }
-}
-
-//Funcion para recuperar las actividades del calendario del usuario logueado
-const obtenerActividadesCalendario = (username, callback) => {
-  db.query(
-    `SELECT * FROM actividad INNER JOIN calendario_u ON actividad.PK_actividad = calendario_u.F_actividad WHERE calendario_u.FK_usuario="${username}"`,
-    (err, results) => {
-      if (err) {
-        console.error("Error al realizar la consulta:", err);
-        callback(err, null);
-        return;
-      }
-      // Devuelve los resultados de la consulta
-      callback(null, results);
-    }
-  );
 };
 
-//Funcion para recuperar la lista total de usuarios del sistema
+const obtenerActividadesCalendario = (username, callback) => {
+  const sql = `SELECT * FROM actividad INNER JOIN calendario_u ON actividad.PK_actividad = calendario_u.F_actividad WHERE calendario_u.FK_usuario=?`;
+  db.query(sql, [username], (err, results) => {
+    if (err) {
+      console.error("Error al realizar la consulta:", err);
+      callback(err, null);
+      return;
+    }
+    // Devuelve los resultados de la consulta
+    callback(null, results);
+  });
+};
+
 const obtenerListaUsuarios = (evento, callback) => {
-  db.query(
-    `SELECT u.*, 
+  const sql = `SELECT u.*, 
       CASE 
           WHEN pu.FK_evento_contenedor IS NOT NULL THEN 'Suscrito'
           ELSE 'No Suscrito'
@@ -158,112 +149,99 @@ const obtenerListaUsuarios = (evento, callback) => {
     FROM usuario u
     LEFT JOIN participacion_usuario pu
     ON u.PK_nombre_usuario = pu.FK_usuario
-      AND pu.FK_evento_contenedor = ${evento}
-      WHERE u.FK_rol <> 1;`,
-    (err, results) => {
-      if (err) {
-        console.error(
-          "Error al realizar la consulta(obtenerListaUsuarios):",
-          err
-        );
-        callback(err, null);
-        return;
-      }
-      // Devuelve los resultados de la consulta
-      callback(null, results);
+      AND pu.FK_evento_contenedor = ?
+      WHERE u.FK_rol <> 1;`;
+  db.query(sql, [evento], (err, results) => {
+    if (err) {
+      console.error(
+        "Error al realizar la consulta(obtenerListaUsuarios):",
+        err
+      );
+      callback(err, null);
+      return;
     }
-  );
+    // Devuelve los resultados de la consulta
+    callback(null, results);
+  });
 };
 
 const participacionExiste = (FK_evento_contenedor, FK_usuario, callback) => {
-  db.query(
-    `SELECT * FROM participacion_usuario WHERE FK_evento_contenedor=${FK_evento_contenedor} AND FK_usuario="${FK_usuario}"`,
-    (err, results) => {
-      if (err) {
-        console.error("Error al buscar el registro:", err);
-        callback(err, null);
-        throw err;
-      }
-      if (results.length === 0) {
-        callback(null, false);
-      } else {
-        callback(null, true);
-      }
+  const sql = `SELECT * FROM participacion_usuario WHERE FK_evento_contenedor=? AND FK_usuario=?`;
+  db.query(sql, [FK_evento_contenedor, FK_usuario], (err, results) => {
+    if (err) {
+      console.error("Error al buscar el registro:", err);
+      callback(err, null);
+      throw err;
     }
-  );
+    if (results.length === 0) {
+      callback(null, false);
+    } else {
+      callback(null, true);
+    }
+  });
 };
 
 const participacionAdd = (FK_evento_contenedor, FK_usuario, callback) => {
-  db.query(
-    `INSERT INTO participacion_usuario (FK_evento_contenedor, FK_usuario, tipo_participante, pagina, departamento, becado, comentarios) 
-    VALUES (${FK_evento_contenedor},"${FK_usuario}", "Oyente", "N/A", "N/A", ${1}, "N/A")`,
-    (err, results) => {
-      if (err) {
-        console.error("Error al añadir participacion:", err);
-        callback(err, null);
-        throw err;
-      }
-      // Devuelve los resultados de la consulta
-      callback(null, results);
+  const sql = `INSERT INTO participacion_usuario (FK_evento_contenedor, FK_usuario, tipo_participante, pagina, departamento, becado, comentarios) 
+    VALUES (?, ?, "Oyente", "N/A", "N/A", 1, "N/A")`;
+  db.query(sql, [FK_evento_contenedor, FK_usuario], (err, results) => {
+    if (err) {
+      console.error("Error al añadir participacion:", err);
+      callback(err, null);
+      throw err;
     }
-  );
+    // Devuelve los resultados de la consulta
+    callback(null, results);
+  });
 };
 
 const participacionDelete = (FK_evento_contenedor, FK_usuario, callback) => {
-  db.query(
-    `DELETE FROM participacion_usuario WHERE FK_evento_contenedor=${FK_evento_contenedor} 
-    AND FK_usuario="${FK_usuario}"`,
-    (err, results) => {
-      if (err) {
-        console.error("Error al eliminar participacion:", err);
-        callback(err, null);
-        throw err;
-      }
-      // Devuelve los resultados de la consulta
-      callback(null, results);
+  const sql = `DELETE FROM participacion_usuario WHERE FK_evento_contenedor=? AND FK_usuario=?`;
+  db.query(sql, [FK_evento_contenedor, FK_usuario], (err, results) => {
+    if (err) {
+      console.error("Error al eliminar participacion:", err);
+      callback(err, null);
+      throw err;
     }
-  );
+    // Devuelve los resultados de la consulta
+    callback(null, results);
+  });
 };
 
 // TODO: meter la tabla en la BD
 // Función para registrar la asistencia de un usuario a una actividad
 const attendanceList = (activityId, username, callback) => {
-
   console.log("Inside attendanceList");
   console.log("activityId:", activityId);
   console.log("username:", username);
 
-    // Primero, realizamos una consulta para verificar si el usuario ya ha sido registrado en la actividad
-    db.query(
-        `SELECT * FROM asistencia_actividad_evento WHERE FK_actividad = ${activityId} AND FK_usuario = "${username}"`,
-        (err, results) => {
-            // Si hay un error en la consulta, lo registramos y devolvemos un mensaje de error
-            if (err) {
-                console.error("Error al realizar la consulta:", err);
-                callback("Error al scannear QR", null);
-                return;
-            }
-            // Si el usuario ya ha sido registrado en la actividad, devolvemos un mensaje indicando esto
-            if (results.length > 0) {
-                callback("La asistencia del usuario ya fue registrada en esta actividad", null);
-                return;
-            }
-            // Si el usuario no ha sido registrado en la actividad, intentamos insertar el registro
-            db.query(
-                `INSERT INTO asistencia_actividad_evento(FK_actividad, FK_usuario) VALUES (${activityId}, "${username}")`,
-                (err, results) => {
-                    // Si hay un error en la consulta, lo registramos y devolvemos un mensaje de error
-                    if (err) {
-                        console.error("Error al realizar la consulta:", err);
-                        callback("Error al scannear QR", null);
-                        return;
-                    }
-                    // Si la inserción es exitosa, devolvemos un mensaje de éxito
-                    callback(null, "Asistencia del usuario registrada con éxito");
-                }
-            );
-        }
-    );
+  // Primero, realizamos una consulta para verificar si el usuario ya ha sido registrado en la actividad
+  const checkSql = `SELECT * FROM asistencia_actividad_evento WHERE FK_actividad=? AND FK_usuario=?`;
+  db.query(checkSql, [activityId, username], (err, results) => {
+    // Si hay un error en la consulta, lo registramos y devolvemos un mensaje de error
+    if (err) {
+      console.error("Error al realizar la consulta:", err);
+      callback("Error al scannear QR", null);
+      return;
+    }
+    // Si el usuario ya ha sido registrado en la actividad, devolvemos un mensaje indicando esto
+    if (results.length > 0) {
+      callback("La asistencia del usuario ya fue registrada en esta actividad", null);
+      return;
+    }
+    // Si el usuario no ha sido registrado en la actividad, intentamos insertar el registro
+    const insertSql = `INSERT INTO asistencia_actividad_evento(FK_actividad, FK_usuario) VALUES (?, ?)`;
+    db.query(insertSql, [activityId, username], (err, results) => {
+      // Si hay un error en la consulta, lo registramos y devolvemos un mensaje de error
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        callback("Error al scannear QR", null);
+        return;
+      }
+      // Si la inserción es exitosa, devolvemos un mensaje de éxito
+      callback(null, "Asistencia del usuario registrada con éxito");
+    });
+  });
 };
 
 module.exports = {
