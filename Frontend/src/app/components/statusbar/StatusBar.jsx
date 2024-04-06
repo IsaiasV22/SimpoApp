@@ -46,7 +46,7 @@ export default function StatusBar({ dispatch }) {
           actividad.hora_inicio < actual_hour &&
           actividad.hora_final > actual_hour && actividad.dia_evento.split("T")[0] === actual_day;
       case "Completed":
-        return (actividad) => actividad.hora_final < actual_hour && actividad.dia_evento.split("T")[0] >= actual_day;
+        return (actividad) => actividad.dia_evento.split("T")[0] < actual_day || actividad.dia_evento.split("T")[0] == actual_day && actividad.hora_final < actual_hour;
       default:
         return () => true;
     }
