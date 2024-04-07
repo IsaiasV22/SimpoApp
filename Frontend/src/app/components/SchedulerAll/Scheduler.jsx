@@ -62,7 +62,7 @@ function Scheduler(props) {
   const [searchResult, setSearchResult] = useState();
   const [selectedDay, setSelectedDay] = useState(today);
   const [alertState, setAlertState] = useState(alertProps);
-  const [mode, setMode] = useState(options?.defaultMode || "month");
+  const [mode, setMode] = useState("timeline");
   const [daysInMonth, setDaysInMonth] = useState(getDaysInMonth(today));
   const [startWeekOn, setStartWeekOn] = useState(options?.startWeekOn || "mon");
   const [selectedDate, setSelectedDate] = useState(format(today, "MMMM-yyyy"));
