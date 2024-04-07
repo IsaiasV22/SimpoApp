@@ -204,16 +204,8 @@ function WeekModeView(props) {
   const renderTask = (tasks, rowLabel, rowIndex, dayIndex) => {
     // Obtener la fecha y hora actual del dispositivo
     const currentDate = new Date();
-    // Dar formato a la fecha actual Fri Apr 05 2024 10:00:00 GMT-0600
-    console.log("currentDate", currentDate);
 
     return tasks?.map((task, itemIndex) => {
-      // Obtener fecha y hora de inicio y fin del evento
-      const eventStart = parse(task.startHour, "HH:mm", new Date(task.date));
-      console.log("eventStart", eventStart);
-      const eventEnd = parse(task.endHour, "HH:mm", new Date(task.date));
-      console.log("eventEnd", eventEnd);
-
       //Fecha y hora formateadas para comparar
       const eventStartFormat = parse(
         task.date + " " + task.startHour,
@@ -231,13 +223,8 @@ function WeekModeView(props) {
         isSameDay(eventStartFormat, currentDate) &&
         isAfter(currentDate, eventStartFormat) &&
         isBefore(currentDate, eventEndFormat);
-      console.log("isEventInProgress", isEventInProgress);
-
       const isEventPassed = isAfter(currentDate, eventEndFormat);
-      console.log("isEventPassed", isEventPassed);
-
       const isEventUpcoming = isBefore(currentDate, eventStartFormat);
-      console.log("isEventUpcoming", isEventUpcoming);
 
       const duration = getEventDuration(task.startHour, task.endHour);
       const eventHeight = (duration / 60) * 60; // Suponiendo que cada hora es 60px
@@ -269,10 +256,10 @@ function WeekModeView(props) {
             sx={{
               // Estilos de los bordes
               border: isEventInProgress
-                ? "2px solid green"
+                ? "4px solid #00FF00"
                 : isEventPassed
-                ? "2px solid red"
-                : "2px solid yellow",
+                ? "4px solid red"
+                : "4px solid yellow",
 
               py: 0,
               mb: 0.5,
