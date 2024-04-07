@@ -11,20 +11,30 @@ import ActividadesFilter from "../actividades/Actividades";
 import { ca } from "date-fns/locale";
 
 function reducer(state, action) {
+  console.log("Action func -> ", action);
   switch (action.type) {
-    case "UpdateMode":
-      return { ...state, mode: action.mode };
-    case "UpdateValue":
-      return { ...state, value: action.value };
-    case "UpdateModeAndValue":
-      return { ...state, mode: action.mode, value: action.value };
+    case "Update search filter":
+      return { ...state, search_filter: action.filterFun };
+    case "Update mode and search filter":
+      return { ...state, mode: action.mode, search_filter: action.filterFun };
+    case "Update status filter":
+      return { ...state, status_filter: action.filterFun };
+    case "Update mode and status filter":
+      return { ...state, mode: action.mode, status_filter: action.filterFun };
     default:
       return state;
   }
 }
 
+//initial state for useReducer
+const initialState = {
+  mode: "Title",
+  search_filter: ()=>true,
+  status_filter: ()=>true,
+};
+
 export default function Simposio({ element, talleres }) {
-  const [state, dispatch] = useReducer(reducer, { mode: "Title", value: "" });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   //console.log("Talleres -> ", talleres);
   //hook simposio
@@ -69,20 +79,6 @@ export default function Simposio({ element, talleres }) {
     }
   }
 
-  const filterActividades = (actividad) => {
-    if (state.value === "") return true;
-    if (state.mode === "Title")
-      return actividad.descripcion.toLowerCase().includes(state.value.toLowerCase());
-    if (state.mode === "Author")
-      return actividad.PonenteNombre.toLowerCase().includes(
-        state.value.toLowerCase()
-      );
-    if (state.mode === "Date")
-      return actividad.dia_evento.includes(state.value);
-  };
-
-  const formatDiaInicio = (dia) => {};
-
   return (
     <div>
       {simposio ? (
@@ -104,7 +100,7 @@ export default function Simposio({ element, talleres }) {
           ) : (
             <ActividadesFilter
               elementId={element}
-              filterFunction={filterActividades}
+              filterFunctions={[state.search_filter, state.status_filter]}
             />
           )}
         </div>
