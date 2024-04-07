@@ -14,7 +14,16 @@ import {
   TableRow,
   tableCellClasses,
 } from "@mui/material";
-import { format, parse, add, differenceInMinutes, isValid } from "date-fns";
+import {
+  format,
+  parse,
+  add,
+  differenceInMinutes,
+  isValid,
+  isSameDay,
+  isAfter,
+  isBefore,
+} from "date-fns";
 import EventItem from "./EventItem.jsx";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -193,7 +202,43 @@ function WeekModeView(props) {
    * @return {unknown[] | undefined}
    */
   const renderTask = (tasks, rowLabel, rowIndex, dayIndex) => {
+    // Obtener la fecha y hora actual del dispositivo
+    const currentDate = new Date();
+    // Dar formato a la fecha actual Fri Apr 05 2024 10:00:00 GMT-0600
+    console.log("currentDate", currentDate);
+
     return tasks?.map((task, itemIndex) => {
+      // Obtener fecha y hora de inicio y fin del evento
+      const eventStart = parse(task.startHour, "HH:mm", new Date(task.date));
+      console.log("eventStart", eventStart);
+      const eventEnd = parse(task.endHour, "HH:mm", new Date(task.date));
+      console.log("eventEnd", eventEnd);
+
+      //Fecha y hora formateadas para comparar
+      const eventStartFormat = parse(
+        task.date + " " + task.startHour,
+        "yyyy-MM-dd HH:mm",
+        new Date()
+      );
+      const eventEndFormat = parse(
+        task.date + " " + task.endHour,
+        "yyyy-MM-dd HH:mm",
+        new Date()
+      );
+
+      // Comparar con la fecha y hora actual del dispositivo
+      const isEventInProgress =
+        isSameDay(eventStartFormat, currentDate) &&
+        isAfter(currentDate, eventStartFormat) &&
+        isBefore(currentDate, eventEndFormat);
+      console.log("isEventInProgress", isEventInProgress);
+
+      const isEventPassed = isAfter(currentDate, eventEndFormat);
+      console.log("isEventPassed", isEventPassed);
+
+      const isEventUpcoming = isBefore(currentDate, eventStartFormat);
+      console.log("isEventUpcoming", isEventUpcoming);
+
       const duration = getEventDuration(task.startHour, task.endHour);
       const eventHeight = (duration / 60) * 60; // Suponiendo que cada hora es 60px
       const eventOffset = getEventOffset(task.startHour, rowLabel) * 1; // Convertir minutos a px
@@ -222,6 +267,13 @@ function WeekModeView(props) {
               )
             }*/
             sx={{
+              // Estilos de los bordes
+              border: isEventInProgress
+                ? "2px solid green"
+                : isEventPassed
+                ? "2px solid red"
+                : "2px solid yellow",
+
               py: 0,
               mb: 0.5,
               color: "#fff",
