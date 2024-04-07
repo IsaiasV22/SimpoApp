@@ -89,7 +89,12 @@ export default function Simposio({ element, talleres }) {
         <div>
           <div className="simposio-container">{simposio.nombre}</div>
           <div className="simposio-container">{simposio.descripcion}</div>
-          <div className="simposio-container">{simposio.fecha}</div>
+          <div className="simposio-container">{simposio.lugar}</div>
+          <div className="simposio-container">
+            <Link href="">
+              <button className="btn btn-primary">Ubicación</button>
+            </Link>
+          </div>
           <SearchBar
             dispatch={dispatch}
             dia_inicio={simposio.dia_inicio.slice(0, 10)}
