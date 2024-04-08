@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
 import "@/app/css/Heart-wrapper.css";
 import Heart from "@/app/components/Heart like/Heart";
 import "@/app/css/Colors.css";
+import "@/app/App.css";
 import UpdateModal from "./UpdateModal/UpdateModal";
 import PonenteActividadesCard from "../ponente/PonenteActividadesCard";
 import Pagination from "./Pagination";
@@ -33,6 +34,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
   );
   const user = useGlobalState((state) => state.user);
   const rol = useGlobalState((state) => state.rol);
+  const high_contrast = useGlobalState((state) => state.high_contrast);
   const pathname = usePathname();
   const urlActividad = `${pathname}/actividades/actividad`;
 
@@ -216,7 +218,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
   };
 
   return (
-    <div className="">
+    <div className={high_contrast?"high-contrast":""}>
       <div className="container my-5">
         <h3>Total results: {actividades.length}</h3>
         <h3>Total activities per page: {currentActividades.length}</h3>
@@ -270,7 +272,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                           )}`}
                           style={{ marginRight: "1px" }}
                         >
-                          <button className="btn btn-primary">Ver más</button>
+                          <button className="btn btnn-primary">Ver más</button>
                         </Link>
 
                         {user && rol === 1 && (
@@ -293,7 +295,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                                   element.estatus
                                 );
                               }}
-                              className="btn btn-primary"
+                              className="btn btnn-primary"
                               style={{ marginLeft: "1px" }}
                             >
                               {element.estatus ? "Ocultar" : "Mostrar"}

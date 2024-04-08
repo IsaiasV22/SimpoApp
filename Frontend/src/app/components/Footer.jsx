@@ -51,6 +51,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/emalca"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -60,6 +61,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/ifcs"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -69,6 +71,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/jornadas"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -78,6 +81,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/seminarios-de-investigacion"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -87,6 +91,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/cafes-matematicos"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -96,6 +101,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/calendario-2"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -113,6 +119,7 @@ const Footer = () => {
               <br />
               <p>
                 <a
+                  className="link-footer"
                   href="https://vinv.ucr.ac.cr/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -122,6 +129,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="http://www.emate.ucr.ac.cr/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -131,6 +139,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="http://www.estadistica.ucr.ac.cr/index.php/es/"
                   target="_blank"
                   rel="noopener noreferrer"

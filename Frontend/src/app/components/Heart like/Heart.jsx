@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import "@/app/css/Heart.css";
+import "@/app/App.css";
 import { urlServer } from "@/app/Utiles.jsx";
 import Floater from "react-floater";
 
@@ -76,7 +77,7 @@ export default function Heart(actividad) {
            eventDelay={2}
            hideArrow={false}  
            >
-          <button className="btn btn-primary">Me interesa</button>
+          <button className="btn btnn-primary">Me interesa</button>
           </Floater>
         </label>
       </div>

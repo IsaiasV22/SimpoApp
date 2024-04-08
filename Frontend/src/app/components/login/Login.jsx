@@ -13,6 +13,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const setUserState = useGlobalState((state) => state.setUser);
   const setRolState = useGlobalState((state) => state.setRol);
+  const high_contrast = useGlobalState((state) => state.high_contrast);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -65,7 +66,7 @@ export default function Login() {
   }
 
   return (
-    <div className="main-content">
+    <div className={`main-content ${high_contrast ? "high-contrast" : ""}`}>
       <div className="main-content-login">
         {loading && <div className="spinner"></div>}
         <div className="wrapper fadeInDown">

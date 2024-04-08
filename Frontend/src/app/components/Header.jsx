@@ -12,7 +12,7 @@ const Header = () => {
   const [isAccessibilityDropdownOpen, setAccessibilityDropdownOpen] =
     useState(false);
   //const [user] = useGlobalState((state) => [state.user]);
-  const [user, rol] = useGlobalState((state) => [state.user, state.rol]);
+  const [user, rol, high_contrast] = useGlobalState((state) => [state.user, state.rol, state.high_contrast]);
 
   const toggleMenu = () => {
     setMenuCollapsed(!isMenuCollapsed);
@@ -21,9 +21,9 @@ const Header = () => {
   const toggleAccessibilityDropdown = () => {
     setAccessibilityDropdownOpen(!isAccessibilityDropdownOpen);
   };
-
+``
   return (
-    <nav className="navbar navbar-expand-lg navbar-light navbar-custom">
+    <nav className={`navbar navbar-expand-lg navbar-light navbar-custom ${high_contrast ? "high-contrast" : ""}`}>
       <div className="container-fluid">
         <div className="d-flex justify-content-between align-items-center w-100">
           {/* Logo */}
