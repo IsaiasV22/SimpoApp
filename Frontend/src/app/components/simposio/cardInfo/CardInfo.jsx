@@ -117,6 +117,13 @@ function CardInfo({ element }) {
           <div className="card-footer d-flex footer-simposio">
             <div>
               <EditCroquis imageName={element.PK_evento_contenedor}/>
+              <button
+                style={{marginLeft: "10px"}}
+                className="btn btn-primary"
+                onClick={() => window.open(`${element.direccion? element.direccion:"https://www.google.com/maps"}`)}
+              >
+                Ubicación
+              </button>
             </div>
           </div>
         )}
