@@ -236,7 +236,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                         element.hora_final,
                         element.dia_evento
                       )
-                        ? "border-success"
+                        ? 'border-success border-5'
                         : ""
                     }`}
                   >
