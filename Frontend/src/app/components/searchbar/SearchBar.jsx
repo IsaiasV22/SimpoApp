@@ -80,7 +80,7 @@ export default function SearchBar({ dispatch, dia_inicio }) {
               <Dropdown.Item eventKey="Date">Date</Dropdown.Item>
               <Dropdown.Item eventKey="Modalities">Modalities</Dropdown.Item>
             </DropdownButton>
-            <Badge bg="success">{selectedOption}</Badge>
+            <Badge bg="success" className='fs-6 mt-2'>{selectedOption}</Badge>
           </div>
           <StatusBar dispatch={dispatch} />
         </div>
