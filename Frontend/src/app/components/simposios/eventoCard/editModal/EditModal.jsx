@@ -14,7 +14,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { set } from "date-fns";
 
 function EditSimposio(element) {
-  //console.log("Elemento a editar: ", element);
   const [show, setShow] = useState(false);
 
   const PK_evento_contenedor = element.pk;
@@ -24,9 +23,9 @@ function EditSimposio(element) {
   const [lugar, setLugar] = useState(element.lugar);
   const [dia_inicio, setDiaInicio] = useState(new Date(element.dia_inicio));
   const [dia_final, setDiaFinal] = useState(new Date(element.dia_final));
+  const high_contrast = useGlobalState((state) => state.high_contrast);
 
-  //Estado de la imagen
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null);  //Estado de la imagen
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -42,7 +41,6 @@ function EditSimposio(element) {
       dia_inicio,
       dia_final,
     };
-    //console.log(newEvento);
 
     //Si se sube una imagen se guarda en el server
     if (file) {
@@ -73,8 +71,7 @@ function EditSimposio(element) {
     }
   }
 
-  //fetch para subir la imagen al server
-  const uploadImage = async () => {
+  const uploadImage = async () => { //fetch para subir la imagen al server
     const formData = new FormData();
     formData.append('file', file);
 
@@ -99,38 +96,19 @@ function EditSimposio(element) {
     }
   };
 
-  //Guardar la imagen que se sube
-  const handleFileChange = async (event) => {
+  const handleFileChange = async (event) => { //Guardar la imagen que se sube
     const file = event.target.files[0];
 
     if (file) {
-      //console.log("imagen name: ", element.pk);
       const formData = new FormData();
       formData.append("file", file);
       setFile(file);
-
-      /*try {
-            const response = await fetch(`${urlServer}eventos/upload/${PK_evento_contenedor}`, {
-                method: 'POST',
-                body: formData,
-            });
-            
-            if (!response.ok) {
-                throw new Error('Error al subir la imagen');
-            }
-
-            const responseData = await response.json();
-            console.log(responseData.message);  // Imprimir mensaje de éxito
-        } catch (error) {
-            console.error(error.message);
-        */
     }
-    //}
   };
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button className="btn btnn-primary" onClick={handleShow}>
         Editar
       </Button>
 
@@ -209,9 +187,11 @@ function EditSimposio(element) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button form="editSimposio" type="submit" variant="primary">
-            Aplicar cambios
-          </Button>
+          <div className={high_contrast?"high-contrast":""}>
+            <Button form="editSimposio" type="submit" className="btnn-primary">
+              Aplicar cambios
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </>

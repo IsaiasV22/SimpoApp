@@ -1,4 +1,3 @@
-
 import Pagination from "react-bootstrap/Pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import "./Pagination.css";
