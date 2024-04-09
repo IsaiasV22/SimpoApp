@@ -113,7 +113,7 @@ function CardInfo({ element }) {
             </p>
           </div>
         </section>
-        {user && rol === 1 && (
+        {user && rol === 1 ? (
           <div className="card-footer d-flex footer-simposio">
             <div>
               <EditCroquis imageName={element.PK_evento_contenedor}/>
@@ -122,11 +122,22 @@ function CardInfo({ element }) {
                 className="btn btn-primary"
                 onClick={() => window.open(`${element.direccion? element.direccion:"https://www.google.com/maps"}`)}
               >
-                Ubicación
+                Location
               </button>
             </div>
           </div>
-        )}
+        ) :
+        (
+          <div className="card-footer d-flex footer-simposio">
+            <button
+              className="btn btn-primary"
+              onClick={() => window.open(`${element.direccion? element.direccion:"https://www.google.com/maps"}`)}
+            >
+              Location
+            </button>
+          </div>
+        )
+        }
       </div>
     </div>
   );
