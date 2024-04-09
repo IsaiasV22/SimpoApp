@@ -6,6 +6,7 @@ import "@/app/components/simposios/Simposios.css";
 import { ToastContainer, toast } from "react-toastify";
 //router from next/navigation
 import { useRouter } from "next/navigation";
+import EditCroquis from "./editCroquis/EditCroquis";
 
 function CardInfo({ element }) {
   const [imageUrl, setImageUrl] = useState("");
@@ -115,7 +116,7 @@ function CardInfo({ element }) {
         {user && rol === 1 && (
           <div className="card-footer d-flex footer-simposio">
             <div>
-              <button className={`btn btn-primary`}>Edit Croquis</button>
+              <EditCroquis imageName={element.PK_evento_contenedor}/>
             </div>
           </div>
         )}
