@@ -22,8 +22,6 @@ function generateCSV(data) {
   document.body.removeChild(link);
 }
 
-//TODO: Agregar que se pase el id del simposio para que se cargue la información de ese simposio
-
 function Estadisticas() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -61,19 +59,13 @@ function Estadisticas() {
 
   return (
     <>
-      {
-        //<h1>Estadisticas</h1>
-      }
-
       <button
-        className="btn btn-primary"
+        className="btn btnn-primary"
         style={{ margin: "0.5%" }}
         onClick={fetchData}
       >
         Cargar Información Estadistica
       </button>
-
-      {/*loading ? <div>Loading...</div> : data ? <div>Loaded</div> : null*/}
       <ToastContainer />
     </>
   );

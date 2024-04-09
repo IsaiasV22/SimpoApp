@@ -1,30 +1,29 @@
 "use client";
-import React, {useState, useEffect, useContext} from 'react'
-import PropTypes from 'prop-types'
-import { useTranslation } from 'react-i18next'
-import { format, add, sub, getDaysInMonth, parse } from 'date-fns'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import React, { useContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
+import { format, add, sub, getDaysInMonth, parse } from 'date-fns';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import {
   Typography, Toolbar, IconButton, Button, ToggleButton,
   TextField, Hidden, Alert, Collapse, ToggleButtonGroup,
   Divider, ListItemIcon, Menu, MenuItem, Grid, Stack
-} from "@mui/material"
-import { useTheme } from "@mui/material/styles"
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import StaticDatePicker from '@mui/lab/StaticDatePicker'
-import CloseIcon from '@mui/icons-material/Close'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-//import MoreVertIcon from '@mui/icons-material/MoreVert'
-import TodayIcon from '@mui/icons-material/Today'
-import SettingsIcon from '@mui/icons-material/Settings'
-import ArchiveIcon from '@mui/icons-material/Archive'
-import AutorenewIcon from '@mui/icons-material/Autorenew'
-import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop'
-import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline'
-import GridViewIcon from '@mui/icons-material/GridView'
-import ToolbarSearchbar from "./ToolbarSeachBar.jsx"
-import DateFnsLocaleContext from "@/app/locales/dateFnsContext.js"
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import StaticDatePicker from '@mui/lab/StaticDatePicker';
+import CloseIcon from '@mui/icons-material/Close';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import TodayIcon from '@mui/icons-material/Today';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import GridViewIcon from '@mui/icons-material/GridView';
+import ToolbarSearchbar from "./ToolbarSeachBar.jsx";
+import DateFnsLocaleContext from "@/app/locales/dateFnsContext.js";
 
 
 function SchedulerToolbar (props) {
@@ -39,30 +38,32 @@ function SchedulerToolbar (props) {
     onDateChange,
     onSearchResult,
     onAlertCloseButtonClicked
-  } = props
+  } = props;
 
-  const theme = useTheme()
-  const { t } = useTranslation(['common'])
-  const [mode, setMode] = useState(switchMode)
-  const [searchResult, setSearchResult] = useState()
-  const [anchorMenuEl, setAnchorMenuEl] = useState(null)
-  const [anchorDateEl, setAnchorDateEl] = useState(null)
-  const [selectedDate, setSelectedDate] = useState(today || new Date())
-  const [daysInMonth, setDaysInMonth] = useState(getDaysInMonth(selectedDate))
+  const theme = useTheme();
+  const { t } = useTranslation(['common']);
+  const [mode, setMode] = useState(switchMode);
+  const [searchResult, setSearchResult] = useState();
+  const [anchorMenuEl, setAnchorMenuEl] = useState(null);
+  const [anchorDateEl, setAnchorDateEl] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(today || new Date());
+  const [daysInMonth, setDaysInMonth] = useState(getDaysInMonth(selectedDate));
   
-  const openMenu = Boolean(anchorMenuEl)
-  const openDateSelector = Boolean(anchorDateEl)
-  const dateFnsLocale = useContext(DateFnsLocaleContext)
-  const isDayMode = mode.toLowerCase() === 'day'
-  const isWeekMode = mode.toLowerCase() === 'week'
-  const isMonthMode = mode.toLowerCase() === 'month'
+  const openMenu = Boolean(anchorMenuEl);
+  const openDateSelector = Boolean(anchorDateEl);
+  const dateFnsLocale = useContext(DateFnsLocaleContext);
+
+  // Verificar que mode no sea null antes de realizar operaciones en él
+  const isDayMode = mode && mode.toLowerCase() === 'day';
+  const isWeekMode = mode && mode.toLowerCase() === 'week';
+  const isMonthMode = mode && mode.toLowerCase() === 'month';
 
   const commonIconButtonProps = {
     size: "medium",
     edge: "start",
     color: "inherit",
     "aria-label":"menu"
-  }
+  };
   const menus = [
     {
       label: "Read events",
@@ -80,19 +81,19 @@ function SchedulerToolbar (props) {
       label: "Print",
       icon: <LocalPrintshopIcon fontSize="small" />
     },
-  ]
+  ];
 
   const handleCloseMenu = () => {
-    setAnchorMenuEl(null)
-  }
+    setAnchorMenuEl(null);
+  };
 
   const handleOpenDateSelector = (event) => {
-    setAnchorDateEl(event.currentTarget)
-  }
+    setAnchorDateEl(event.currentTarget);
+  };
 
   const handleCloseDateSelector = () => {
-    setAnchorDateEl(null)
-  }
+    setAnchorDateEl(null);
+  };
   
   /**
    * @name handleChangeDate
@@ -102,44 +103,44 @@ function SchedulerToolbar (props) {
    */
   const handleChangeDate = (method) => {
     if (typeof method !== 'function') {
-      return
+      return;
     }
-    let options = { months: 1 }
+    let options = { months: 1 };
     if (isWeekMode) { 
-      options = { weeks: 1 } 
+      options = { weeks: 1 }; 
     }
     if (isDayMode) { 
-      options = { days: 1 }  
+      options = { days: 1 };  
     }
-    let newDate = method(selectedDate, options)
-    setDaysInMonth(getDaysInMonth(newDate))
-    setSelectedDate(newDate)
-  }
+    let newDate = method(selectedDate, options);
+    setDaysInMonth(getDaysInMonth(newDate));
+    setSelectedDate(newDate);
+  };
   
   const handleCloseAlert = (e) => {
-    onAlertCloseButtonClicked && onAlertCloseButtonClicked(e)
-  }
+    onAlertCloseButtonClicked && onAlertCloseButtonClicked(e);
+  };
   
   useEffect(() => {
-    if (mode && onModeChange) { onModeChange(mode) }
+    if (mode && onModeChange) { onModeChange(mode); }
     // eslint-disable-next-line
-  }, [mode])
+  }, [mode]);
   
   useEffect(() => {
-    onDateChange && onDateChange(daysInMonth, selectedDate)
+    onDateChange && onDateChange(daysInMonth, selectedDate);
     // eslint-disable-next-line
-  }, [daysInMonth, selectedDate])
+  }, [daysInMonth, selectedDate]);
   
   useEffect(() => {
-    onSearchResult && onSearchResult(searchResult)
+    onSearchResult && onSearchResult(searchResult);
     // eslint-disable-next-line
-  }, [searchResult])
+  }, [searchResult]);
 
   useEffect(() => {
     if (switchMode !== mode) {
-      setMode(switchMode)
+      setMode(switchMode);
     }
-  }, [switchMode])
+  }, [switchMode]);
   
   return (
     <Toolbar 
@@ -216,9 +217,9 @@ function SchedulerToolbar (props) {
                   displayStaticWrapperAs="desktop"
                   value={selectedDate}
                   onChange={(newValue) => {
-                    setDaysInMonth(getDaysInMonth(newValue))
-                    setSelectedDate(newValue)
-                    handleCloseDateSelector()
+                    setDaysInMonth(getDaysInMonth(newValue));
+                    setSelectedDate(newValue);
+                    handleCloseDateSelector();
                   }}
                   renderInput={(params) => <TextField {...params} />}
                 />
@@ -238,13 +239,13 @@ function SchedulerToolbar (props) {
             <ToolbarSearchbar
               events={events}
               onInputChange={(newValue) => {
-                let newDate = new Date()
+                let newDate = new Date();
                 if (newValue?.date) {
-                  newDate = parse(newValue.date, 'yyyy-MM-dd', today)
+                  newDate = parse(newValue.date, 'yyyy-MM-dd', today);
                 }
-                setDaysInMonth(getDaysInMonth(newDate))
-                setSelectedDate(newDate)
-                setSearchResult(newValue)
+                setDaysInMonth(getDaysInMonth(newDate));
+                setSelectedDate(newDate);
+                setSearchResult(newValue);
               }}
             />}
             <Hidden mdUp>
@@ -267,7 +268,7 @@ function SchedulerToolbar (props) {
                 aria-label="text button group"
                 sx={{ mt: .2, mr: 1.3, display: 'contents' }}
                 onChange={(e, newMode) => {
-                  setMode(newMode)
+                  setMode(newMode);
                 }}
               >
                 {[
@@ -335,7 +336,7 @@ function SchedulerToolbar (props) {
         </Grid>
       </Grid>
     </Toolbar>
-  )
+  );
 }
 
 SchedulerToolbar.propTypes = {
@@ -348,7 +349,7 @@ SchedulerToolbar.propTypes = {
   onModeChange: PropTypes.func.isRequired,
   onSearchResult: PropTypes.func.isRequired,
   onAlertCloseButtonClicked: PropTypes.func.isRequired,
-}
+};
 
 SchedulerToolbar.defaultProps = {
   alertProps: {
@@ -364,6 +365,6 @@ SchedulerToolbar.defaultProps = {
     showDatePicker: true,
     showOptions: false
   }
-}
+};
 
-export default SchedulerToolbar
+export default SchedulerToolbar;

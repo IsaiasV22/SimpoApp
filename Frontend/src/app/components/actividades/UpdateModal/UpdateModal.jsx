@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import moment from "moment";
+import "@/app/App.css";
 
 function UpdateModal(element) {
   const [show, setShow] = useState(false);
@@ -28,10 +29,10 @@ function UpdateModal(element) {
     moment(element.hora_final, "HH:mm:ss").toDate()
   );
   const [ubicacion, setUbicacion] = useState(element.ubicacion);
-
   const [estatus, setEstatus] = useState(element.estatus);
   const isChecked = (value) => value == estatus;
   const onSelect = ({ target:{ value}}) => setEstatus(value);
+  const high_contrast = useGlobalState((state) => state.high_contrast);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -79,7 +80,7 @@ function UpdateModal(element) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button className="btnn-primary" onClick={handleShow}>
         Editar
       </Button>
 
@@ -210,9 +211,11 @@ function UpdateModal(element) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button form="editActividad" type="submit" variant="primary">
-            Editar
-          </Button>
+          <div className={high_contrast?"high-contrast":""}>
+            <Button form="editActividad" type="submit" className="btnn-primary">
+              Editar
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </>

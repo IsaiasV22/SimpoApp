@@ -9,6 +9,7 @@ import Modalidades from "../modalidades/Modalidades";
 import SearchBar from "../searchbar/SearchBar";
 import ActividadesFilter from "../actividades/Actividades";
 import { ca } from "date-fns/locale";
+import CardInfo from "./cardInfo/CardInfo";
 
 function reducer(state, action) {
   console.log("Action func -> ", action);
@@ -29,8 +30,8 @@ function reducer(state, action) {
 //initial state for useReducer
 const initialState = {
   mode: "Title",
-  search_filter: ()=>true,
-  status_filter: ()=>true,
+  search_filter: () => true,
+  status_filter: () => true,
 };
 
 export default function Simposio({ element, talleres }) {
@@ -83,9 +84,8 @@ export default function Simposio({ element, talleres }) {
     <div>
       {simposio ? (
         <div>
-          <div className="simposio-container">{simposio.nombre}</div>
-          <div className="simposio-container">{simposio.descripcion}</div>
-          <div className="simposio-container">{simposio.fecha}</div>
+          <CardInfo element={simposio}/>
+
           <SearchBar
             dispatch={dispatch}
             dia_inicio={simposio.dia_inicio.slice(0, 10)}

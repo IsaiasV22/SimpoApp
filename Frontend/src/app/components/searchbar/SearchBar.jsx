@@ -120,7 +120,7 @@ export default function SearchBar({ dispatch, dia_inicio }) {
             toggleCalendarOnIconClick
             dateFormat={"MM / dd / yyyy"}
             onChange={(date) => {
-              console.log("date to be dispatched -> ", date.toISOString());
+              /* console.log("date to be dispatched -> ", date.toISOString()); */
               setSelectedDate(date);
               dispatch({
                 type: "Update search filter",

@@ -6,10 +6,11 @@ import { urlServer } from "@/app/Utiles.jsx";
 import Link from "next/link";
 import EditModal from "./editModal/EditModal";
 import Estadisticas from "../../estadisticas/Estadisticas";
-import AsistenciaActividades from "../../asistenciaActividades/AsistenciaActividades";
+import AsistenciaActividades from "../../asistenciaActividades/asistenciaActividades";
 import { ToastContainer, toast } from "react-toastify";
 //router from next/navigation
 import { useRouter } from "next/navigation";
+import "@/app/App.css";
 
 function EventoCard({
   element,
@@ -182,7 +183,7 @@ function EventoCard({
             style={{ marginRight: "5px" }}
           >
             <button
-              className="btn btn-primary"
+              className="btn btnn-primary"
               disabled={
                 rol === 1
                   ? false
@@ -201,7 +202,7 @@ function EventoCard({
                   )}/listaUsuarios`}
                   style={{ marginRight: "5px" }}
                 >
-                  <button className="btn btn-primary">Lista de usuarios</button>
+                  <button className="btn btnn-primary">Lista de usuarios</button>
                 </Link>
               }
               <EditModal
@@ -224,8 +225,8 @@ function EventoCard({
                     element.activo
                   );
                 }}
-                className="btn btn-primary"
-                style={{ marginRight: "5px" }}
+                className="btn btnn-primary"
+                style={{ margin: "3px" }}
               >
                 {element.activo ? "Ocultar" : "Mostrar"}
               </button>

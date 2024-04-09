@@ -14,7 +14,16 @@ import {
   TableRow,
   tableCellClasses,
 } from "@mui/material";
-import { format, parse, add, differenceInMinutes, isValid } from "date-fns";
+import {
+  format,
+  parse,
+  add,
+  differenceInMinutes,
+  isValid,
+  isSameDay,
+  isAfter,
+  isBefore,
+} from "date-fns";
 import EventItem from "./EventItem.jsx";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -193,7 +202,30 @@ function WeekModeView(props) {
    * @return {unknown[] | undefined}
    */
   const renderTask = (tasks, rowLabel, rowIndex, dayIndex) => {
+    // Obtener la fecha y hora actual del dispositivo
+    const currentDate = new Date();
+
     return tasks?.map((task, itemIndex) => {
+      //Fecha y hora formateadas para comparar
+      const eventStartFormat = parse(
+        task.date + " " + task.startHour,
+        "yyyy-MM-dd HH:mm",
+        new Date()
+      );
+      const eventEndFormat = parse(
+        task.date + " " + task.endHour,
+        "yyyy-MM-dd HH:mm",
+        new Date()
+      );
+
+      // Comparar con la fecha y hora actual del dispositivo
+      const isEventInProgress =
+        isSameDay(eventStartFormat, currentDate) &&
+        isAfter(currentDate, eventStartFormat) &&
+        isBefore(currentDate, eventEndFormat);
+      const isEventPassed = isAfter(currentDate, eventEndFormat);
+      const isEventUpcoming = isBefore(currentDate, eventStartFormat);
+
       const duration = getEventDuration(task.startHour, task.endHour);
       const eventHeight = (duration / 60) * 60; // Suponiendo que cada hora es 60px
       const eventOffset = getEventOffset(task.startHour, rowLabel) * 1; // Convertir minutos a px
@@ -222,6 +254,13 @@ function WeekModeView(props) {
               )
             }*/
             sx={{
+              // Estilos de los bordes
+              border: isEventInProgress
+                ? "4px solid #00FF00"
+                : isEventPassed
+                ? "4px solid red"
+                : "4px solid yellow",
+
               py: 0,
               mb: 0.5,
               color: "#fff",

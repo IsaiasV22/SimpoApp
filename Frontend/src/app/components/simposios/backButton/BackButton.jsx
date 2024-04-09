@@ -41,7 +41,7 @@ function BackButton() {
   return (
     <>
       <button
-        className="btn btn-primary mb-3"
+        className="btn mb-3 btnn-primary"
         onClick={handleBackClick}
       >
         ATRAS
