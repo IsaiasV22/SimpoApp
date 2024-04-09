@@ -1,6 +1,6 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
 @import "bootstrap/dist/css/bootstrap.min.css";
-@import "@/app/components/login/Login.css";
+/*@import "@/app/components/login/Login.css";*/
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 .main-content {
@@ -16,19 +16,19 @@
 
 /* Estilo base para los enlaces */
 a.link-footer {
-  color: white;
+  color: var(--light-color);
   text-decoration: none; /* Esto quita el subrayado */
 }
 
 /* Estilo el enlace con clase register */
 a.register {
-  color: #00c0f3;
+  color: var(--dark-color);
 }
 
 /* Estilo para el hover (cuando el mouse está encima) */
-a:hover {
-  color: #00c0f3;
-}
+/* a:hover {
+  color: var(--dark-color);
+} */
 
 /* En tu archivo Login.css */
 .spinner {
@@ -68,5 +68,28 @@ h2 {
 }
 
 .navbar-custom {
-  background-color: #00c0f3;
+  background-color: var(--dark-color);
+}
+
+:root {
+  --dark-color: #00c0f3;
+  --light-color: #ffffff;
+
+  --foreground: var(--light-color);
+  --background: var(--dark-color);
+}
+
+.high-contrast {
+  --dark-color: #00212a;
+  --light-color: #ffffff;
+
+  --foreground: var(--dark-color);
+  --background: var(--light-color);
+}
+
+/* buttons color */
+.btnn-primary {
+  background-color: var(--dark-color) !important;
+  color: var(--light-color) !important;
+  border-color: var(--dark-color) !important;
 }

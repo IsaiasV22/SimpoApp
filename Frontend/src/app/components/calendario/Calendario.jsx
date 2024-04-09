@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Scheduler from "@/app/components/SchedulerAll/Scheduler";
 import { urlServer } from "@/app/Utiles";
+import styles from "@/app/App.css";
 
 function App() {
   const [actividades, setActividades] = useState([]);
@@ -29,7 +30,7 @@ function App() {
         label: item.descripcion,
         groupLabel: item.FK_usuario,
         user: item.FK_usuario,
-        color: "#00c0f3", // Puedes asignar un color dinámicamente si lo deseas
+        color: "#00212a", // Puedes asignar un color dinámicamente si lo deseas
         startHour: convertTo12HourFormat(item.hora_inicio),
         endHour: convertTo12HourFormat(item.hora_final),
         date: new Date(item.dia_evento).toISOString().split("T")[0],

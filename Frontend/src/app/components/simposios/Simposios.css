@@ -1,4 +1,5 @@
 /* Simposios.css */
+@import "@/app/App.css";
 
 /* Estilos para el contenedor principal */
 .simposios-container {
@@ -14,7 +15,7 @@
 .btn-custom-suscrito:disabled {
   background-color: #8dc63f !important;
   border-color: #8dc63f !important;
-  color: white !important; /* Cambia esto según tus necesidades */
+  color: var(--light-color) !important; /* Cambia esto según tus necesidades */
   opacity: 1 !important; /* Sobrescribe la opacidad para el estado deshabilitado */
   cursor: not-allowed !important; /* Cambia el cursor para indicar que el botón está deshabilitado */
 }
@@ -23,7 +24,7 @@
 .btn-custom-noSuscrito:disabled {
   background-color: #670000 !important;
   border-color: #670000 !important;
-  color: white !important; /* Cambia esto según tus necesidades */
+  color: var(--light-color) !important; /* Cambia esto según tus necesidades */
   opacity: 1 !important; /* Sobrescribe la opacidad para el estado deshabilitado */
   cursor: not-allowed !important; /* Cambia el cursor para indicar que el botón está deshabilitado */
 }
@@ -38,17 +39,17 @@
   background: linear-gradient(
     to right,
     transparent 0%,
-    #00c0f3 25%,
-    #00c0f3 75%,
+    var(--dark-color) 5%,
+    var(--dark-color) 95%,
     transparent 100%
   );
   margin-bottom: 2%;
-  color: white;
+  color: var(--light-color);
 }
 
 .footer-simposio{
   background: transparent;
-  color: white;
+  color: var(--light-color);
   justify-content: center;
   flex-wrap: wrap;
 }

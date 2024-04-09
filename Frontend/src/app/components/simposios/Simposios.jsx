@@ -17,6 +17,7 @@ export default function Simposios() {
   const [suscripcion, setSuscripcion] = useState(null);
   const user = useGlobalState((state) => state.user);
   const rol = useGlobalState((state) => state.rol);
+  const high_contrast = useGlobalState((state) => state.high_contrast);
   const pathname = usePathname();
   const urlSimposio = `${pathname}/simposio`;
 
@@ -88,7 +89,7 @@ export default function Simposios() {
   }
 
   return (
-    <div className="main-content">
+    <div className={`main-content ${high_contrast ? "high-contrast" : ""}`}>
       <Notificacion />
       <div className="container my-5">
         <BackButton />

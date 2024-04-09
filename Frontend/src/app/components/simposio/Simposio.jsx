@@ -29,8 +29,8 @@ function reducer(state, action) {
 //initial state for useReducer
 const initialState = {
   mode: "Title",
-  search_filter: ()=>true,
-  status_filter: ()=>true,
+  search_filter: () => true,
+  status_filter: () => true,
 };
 
 export default function Simposio({ element, talleres }) {
@@ -85,7 +85,17 @@ export default function Simposio({ element, talleres }) {
         <div>
           <div className="simposio-container">{simposio.nombre}</div>
           <div className="simposio-container">{simposio.descripcion}</div>
-          <div className="simposio-container">{simposio.fecha}</div>
+          <div className="simposio-container">{simposio.lugar}</div>
+          <div className="simposio-container">
+            
+              <button
+                className="btn btn-primary"
+                onClick={() => window.open(`${simposio.direccion? simposio.direccion:"https://www.google.com/maps"}`)}
+              >
+                Ubicación
+              </button>
+            
+          </div>
           <SearchBar
             dispatch={dispatch}
             dia_inicio={simposio.dia_inicio.slice(0, 10)}

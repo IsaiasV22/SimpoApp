@@ -8,20 +8,18 @@ import "react-toastify/dist/ReactToastify.css";
 import { urlServer } from "@/app/Utiles.jsx";
 import { usePathname } from "next/navigation";
 import QrCode from '../qrCode/QrCode';
+import useGlobalState from "../globalState/GlobalState";
 
 export default function Actividad({ actividadId }) {
   const pathname = usePathname();
 
   const urlPonente = `${pathname}/ponente`;
   const urlCoautor = `${pathname}/coauthor`;
-  //hook actividad
-  const [actividad, setActividad] = useState(null);
-  //state exponente
-  const [ponente, setPonente] = useState(null);
-  //state coautores
-  const [coautores, setCoautores] = useState([]);
-  //useEffect
-  useEffect(() => {
+  const [actividad, setActividad] = useState(null); //hook actividad
+  const [ponente, setPonente] = useState(null); //state exponente
+  const [coautores, setCoautores] = useState([]); //state coautores
+  const high_contrast = useGlobalState((state) => state.high_contrast);
+  useEffect(() => { //useEffect
     handleActividad();
     handlePonente();
     handleCoautores();
@@ -106,7 +104,7 @@ export default function Actividad({ actividadId }) {
   //fetch actividad por id
 
   return (
-    <div className="main-content">
+    <div className={`main-content ${high_contrast?"high-contrast":""}`}>
       <div className="container my-5">
         {actividad ? ( // Verifica si actividad tiene datos
           <>
@@ -149,7 +147,7 @@ export default function Actividad({ actividadId }) {
                           {ponente.nombre + " " + ponente.apellidos}
                         </p>
                         <Link href={`${urlPonente}/${actividadId}`}>
-                          <button className="btn btn-primary">
+                          <button className="btn btnn-primary">
                             Ver Información del ponente
                           </button>
                         </Link>
@@ -165,7 +163,7 @@ export default function Actividad({ actividadId }) {
                             <li key={coautor[0].PK_nombre_usuario}>
                               {coautor[0].nombre + " " + coautor[0].apellidos}
                               <Link href={`${urlCoautor}/${coautor[0].cedula}`}>
-                                <button className="btn btn-primary" style={{'margin': '10px'}}>
+                                <button className="btn btnn-primary" style={{'margin': '10px'}}>
                                   Ver Información del coautor
                                 </button>
                               </Link>

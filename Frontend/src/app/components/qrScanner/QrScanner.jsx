@@ -1,6 +1,7 @@
 "use client";
 import { urlServer } from "@/app/Utiles";
 import styles from "./QRScanner.module.css"; // Importa los estilos específicos para este componente
+import useGlobalState from "../globalState/GlobalState";
 
 // Importación de dependencias necesarias para el componente
 import React, { useEffect, useRef, useState } from "react";
@@ -18,6 +19,8 @@ const QRScanner = () => {
   const [isScanning, setIsScanning] = useState(false);
 
   const streamActive = useRef(null); // Crea una referencia para el stream
+
+  const high_contrast = useGlobalState((state) => state.high_contrast);
 
   // Efecto que se ejecuta al montar el componente. Configura el acceso a la cámara.
   useEffect(() => {
@@ -55,9 +58,9 @@ const QRScanner = () => {
   const registerAttendace = (code) => {
     const { username, activityId } = code; // Extrae los datos necesarios del código QR
 
-    console.log(
+    /* console.log(
       `Registrando asistencia de ${username} al evento ${activityId}`
-    );
+    ); */
 
     // Hace una petición POST al servidor para registrar la asistencia
     fetch(`${urlServer}usuarios/asistirEvento`, {
@@ -142,7 +145,7 @@ const QRScanner = () => {
 
   // Renderiza el componente UI
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${high_contrast?"high-contrast":""}`}>
       <Card className={`${styles.cardContainer}`}>
         <Card.Body>
           {/* Elementos ocultos de video y canvas para el escaneo */}
@@ -153,17 +156,15 @@ const QRScanner = () => {
           {/* Botones para controlar el escaneo */}
           {!isScanning ? (
             <Button
-              variant="primary"
               onClick={restartScanning}
-              className="w-100"
+              className="w-100 btnn-primary"
             >
               Scan Again
             </Button>
           ) : (
             <Button
-              variant="primary"
               disabled
-              className={`w-100 ${styles.loadingText}`}
+              className={`w-100 btnn-primary ${styles.loadingText}`}
             >
               Scanning...
             </Button>

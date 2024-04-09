@@ -100,7 +100,7 @@ export default function AsistenciaActividades({ pk }) {
   return (
     <div>
       <button
-        className="btn btn-primary"
+        className="btn btnn-primary"
         style={{ margin: "0.5%" }}
         onClick={generateXLSX}
       >
