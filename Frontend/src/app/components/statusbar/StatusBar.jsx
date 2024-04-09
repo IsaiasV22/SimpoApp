@@ -65,7 +65,7 @@ export default function StatusBar({ dispatch }) {
           <Dropdown.Item eventKey="In progress">In progress</Dropdown.Item>
           <Dropdown.Item eventKey="Completed">Completed</Dropdown.Item>
         </DropdownButton>
-        <Badge bg="success">{selectedOption}</Badge>
+        <Badge bg="success" className='fs-6 mt-2 '>{selectedOption}</Badge>
       </div>
     </div>
   );
