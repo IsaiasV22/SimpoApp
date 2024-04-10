@@ -25,7 +25,7 @@ function EditSimposio(element) {
   const [dia_final, setDiaFinal] = useState(new Date(element.dia_final));
   const high_contrast = useGlobalState((state) => state.high_contrast);
 
-  const [file, setFile] = useState(null);  //Estado de la imagen
+  const [file, setFile] = useState(null); //Estado de la imagen
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -71,9 +71,10 @@ function EditSimposio(element) {
     }
   }
 
-  const uploadImage = async () => { //fetch para subir la imagen al server
+  const uploadImage = async () => {
+    //fetch para subir la imagen al server
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
 
     try {
       const response = await fetch(
@@ -89,16 +90,15 @@ function EditSimposio(element) {
       }
 
       const responseData = await response.json();
-      console.log(responseData.message); // Imprimir mensaje de éxito
+      //console.log(responseData.message); // Imprimir mensaje de éxito
     } catch (error) {
       toast.error("Error al subir la imagen");
       console.error(error.message);
     }
   };
 
-  const handleFileChange = async (event) => { //Guardar la imagen que se sube
-    const file = event.target.files[0];
-
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0]; //Guardar la imagen que se sube
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
@@ -157,28 +157,30 @@ function EditSimposio(element) {
               <Form.Control type="file" onChange={handleFileChange} />
             </InputGroup>
             <div>
-            <InputGroup className="mb-3">
-            <InputGroup.Text id="diaInicio">Dia de inicio</InputGroup.Text>
-              <DatePicker
-                showIcon
-                selectsStart
-                selected={dia_inicio}
-                onChange={(date) => setDiaInicio(date)}
-                startDate={dia_inicio}
-              />
+              <InputGroup className="mb-3">
+                <InputGroup.Text id="diaInicio">Dia de inicio</InputGroup.Text>
+                <DatePicker
+                  showIcon
+                  selectsStart
+                  selected={dia_inicio}
+                  onChange={(date) => setDiaInicio(date)}
+                  startDate={dia_inicio}
+                />
               </InputGroup>
 
               <InputGroup className="mb-3">
-              <InputGroup.Text id="diaFinal">Dia de finalizacion</InputGroup.Text>
-              <DatePicker
-                showIcon
-                selectsEnd
-                selected={dia_final}
-                onChange={(date) => setDiaFinal(date)}
-                endDate={dia_final}
-                startDate={dia_inicio}
-                minDate={dia_inicio}
-              />
+                <InputGroup.Text id="diaFinal">
+                  Dia de finalizacion
+                </InputGroup.Text>
+                <DatePicker
+                  showIcon
+                  selectsEnd
+                  selected={dia_final}
+                  onChange={(date) => setDiaFinal(date)}
+                  endDate={dia_final}
+                  startDate={dia_inicio}
+                  minDate={dia_inicio}
+                />
               </InputGroup>
             </div>
           </Form>
@@ -187,7 +189,7 @@ function EditSimposio(element) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <div className={high_contrast?"high-contrast":""}>
+          <div className={high_contrast ? "high-contrast" : ""}>
             <Button form="editSimposio" type="submit" className="btnn-primary">
               Aplicar cambios
             </Button>

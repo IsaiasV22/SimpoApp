@@ -7,7 +7,7 @@ import { urlServer } from "@/app/Utiles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function EditCroquis({imageName}) {
+function EditCroquis({ imageName, high_contrast }) {
   const [show, setShow] = useState(false);
   const [file, setFile] = useState(null);
 
@@ -18,33 +18,36 @@ function EditCroquis({imageName}) {
     const file = event.target.files[0];
 
     if (file) {
-        const formData = new FormData();
-        formData.append("file", file);
-        setFile(file);
-      }
+      const formData = new FormData();
+      formData.append("file", file);
+      setFile(file);
+    }
   };
 
   const uploadImage = async () => {
     const formData = new FormData();
     formData.append("file", file);
 
-    console.log("Image name: ", imageName);
+    //console.log("Image name: ", imageName);
 
     try {
-      const response = await fetch(`${urlServer}eventos/upload/${imageName}_croquis`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `${urlServer}eventos/upload/${imageName}_croquis`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Error al subir la imagen");
       }
 
       const responseData = await response.json();
-      console.log(responseData.message); // Imprimir mensaje de éxito
+      //console.log(responseData.message); // Imprimir mensaje de éxito
     } catch (error) {
       toast.error("Error al subir la imagen");
-      console.error(error.message);
+      //console.error(error.message);
     }
   };
 
@@ -56,17 +59,17 @@ function EditCroquis({imageName}) {
     }
 
     toast.success("Editado correctamente");
-      setTimeout(() => {
-        handleClose();
-        window.location.reload();
-      }, 1500);
+    setTimeout(() => {
+      handleClose();
+      window.location.reload();
+    }, 1500);
 
     handleClose();
   };
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button className="btnn-primary" onClick={handleShow}>
         Editar
       </Button>
 
@@ -86,9 +89,11 @@ function EditCroquis({imageName}) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Save Changes
-          </Button>
+          <div className={high_contrast ? "high-contrast" : ""}>
+            <Button className="btnn-primary" onClick={handleSubmit}>
+              Save Changes
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </>

@@ -80,7 +80,7 @@ h2 {
 }
 
 .high-contrast {
-  --dark-color: #00212a;
+  --dark-color: #005da4;
   --light-color: #ffffff;
 
   --foreground: var(--dark-color);
