@@ -12,6 +12,7 @@ function CardInfo({ element }) {
   const [imageUrl, setImageUrl] = useState("");
   const user = useGlobalState((state) => state.user);
   const rol = useGlobalState((state) => state.rol);
+  const high_contrast = useGlobalState((state) => state.high_contrast);
   //router to change the url
   const router = useRouter();
 
@@ -71,7 +72,11 @@ function CardInfo({ element }) {
         alignItems: "center",
       }}
     >
-      <div className="card card-simposioSpecific">
+      <div
+        className={`card card-simposioSpecific ${
+          high_contrast ? "high-contrast" : ""
+        }`}
+      >
         <section
           id="divForUrlPush"
           onClick={(e) => handleUrlPush()}
@@ -116,28 +121,45 @@ function CardInfo({ element }) {
         {user && rol === 1 ? (
           <div className="card-footer d-flex footer-simposio">
             <div>
-              <EditCroquis imageName={element.PK_evento_contenedor}/>
+              <EditCroquis
+                imageName={element.PK_evento_contenedor}
+                high_contrast={high_contrast}
+              />
               <button
-                style={{marginLeft: "10px"}}
-                className="btn btn-primary"
-                onClick={() => window.open(`${element.direccion? element.direccion:"https://www.google.com/maps"}`)}
+                style={{ marginLeft: "10px" }}
+                className="btn btnn-primary"
+                onClick={() =>
+                  window.open(
+                    `${
+                      element.direccion
+                        ? element.direccion
+                        : "https://www.google.com/maps"
+                    }`
+                  )
+                }
               >
                 Location
               </button>
             </div>
           </div>
-        ) :
-        (
+        ) : (
           <div className="card-footer d-flex footer-simposio">
             <button
-              className="btn btn-primary"
-              onClick={() => window.open(`${element.direccion? element.direccion:"https://www.google.com/maps"}`)}
+              className="btn btnn-primary"
+              onClick={() =>
+                window.open(
+                  `${
+                    element.direccion
+                      ? element.direccion
+                      : "https://www.google.com/maps"
+                  }`
+                )
+              }
             >
               Location
             </button>
           </div>
-        )
-        }
+        )}
       </div>
     </div>
   );
