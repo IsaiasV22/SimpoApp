@@ -90,6 +90,7 @@ export default function Simposios() {
 
   return (
     <div className={`main-content ${high_contrast ? "high-contrast" : ""}`}>
+      {/* ask for notification permission*/}
       <Notificacion />
       <div className="container my-5">
         <BackButton />
