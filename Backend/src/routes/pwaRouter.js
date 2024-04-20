@@ -29,7 +29,12 @@ router.post("/suscribe", (req, res) => {
   }
 
   //save subscription in file
-  pwaController.saveSubscriptionToFile(subscription);
+  //pwaController.saveSubscriptionToFile(subscription);
+
+  //save subscription in db
+  pwaController.saveSubscriptionToDB(subscription, subscription.user);
+
+  // test notification
 
   // Create payload
   const payload = JSON.stringify({ title: "Push Test" });
@@ -43,10 +48,10 @@ router.post("/suscribe", (req, res) => {
 });
 
 //notify all suscribers
-router.get("/notify", (req, res) => {
+router.get("/notifyAll", (req, res) => {
   // Get payload from query
   const payload = JSON.stringify({
-    title: "Push Test",
+    title: "Push Test from /notify",
     body: "Notified by SW!",
     icon: "https://image.flaticon.com/icons/svg/139/139899.svg",
   });

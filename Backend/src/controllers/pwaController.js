@@ -1,6 +1,7 @@
 const path = require("path");
 const webpush = require("web-push");
 const fs = require("fs");
+const db = require("../../config/database.js");
 
 const actividadController = require("./actividadController.js");
 
@@ -51,6 +52,80 @@ const notifySomeSuscribers = (suscribers, payload) => {
           .catch((err) => console.error(err));
       }
     });
+};
+
+//save suscription to db
+const saveSubscriptionToDB = async (subscription, username) => {
+  // Promesa para el primer query
+  const insertIntoSimpoAppNotificacion = () => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "INSERT INTO simpo_app_notificacion (PK_p256dh, endpoint, tiempo_expiracion, autenticador) VALUES (?, ?, ?, ?)",
+        [subscription.keys.p256dh, subscription.endpoint, subscription.expirationTime, subscription.keys.auth],
+        (err, results) => {
+          if (err) {
+            console.error("Error al realizar la consulta:", err);
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        }
+      );
+    });
+  };
+
+  try {
+    // Esperar a que se complete el primer query
+    await insertIntoSimpoAppNotificacion();
+
+    // Una vez que se complete el primer query, realizar el segundo
+    await new Promise((resolve, reject) => {
+      db.query(
+        "INSERT INTO usuario_notificacion_simpo_app (FK_usuario, FK_simpo_app_notificacion) VALUES (?, ?)",
+        [username, subscription.keys.p256dh],
+        (err, results) => {
+          if (err) {
+            console.error("Error al realizar la consulta:", err);
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        }
+      );
+    });
+  } catch (error) {
+    // Manejar cualquier error aquí
+    return new Error(error.message);
+  }
+};
+
+
+//notify some suscribers using db
+const notifySomeSuscribersDB = (suscribers, payload) => {
+  // Get current subscriptions
+  let subscriptions = [];
+  db.query(
+    "SELECT * FROM suscripciones",
+    (err, results) => {
+      if (err) {
+        console.error("Error al realizar la consulta:", err);
+        return new Error(err.message);
+      }
+      subscriptions = results;
+      // Send notifications to all subscribers
+      subscriptions
+        .filter((s) => {
+          suscribers.includes(s);
+        })
+        .forEach((subscription) => {
+          if (suscribers.includes(subscription.user)) {
+            webpush
+              .sendNotification(subscription, payload)
+              .catch((err) => console.error(err));
+          }
+        });
+    }
+  );
 };
 
 //get subscriptions
@@ -110,4 +185,5 @@ module.exports = {
   notifySomeSuscribers,
   getSubscriptions,
   notifyActivityUpdate,
+  saveSubscriptionToDB,
 };
