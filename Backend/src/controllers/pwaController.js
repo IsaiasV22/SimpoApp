@@ -129,11 +129,15 @@ const notifySomeSuscribersDB = (suscribers, payload) => {
 };
 
 //get subscriptions
-const getSubscriptions = () => {
+const getSubscriptions = async () => {
   // Get current subscriptions
   let subscriptions = [];
   try {
-    subscriptions = JSON.parse(fs.readFileSync(SUBSCRIPTIONS_FILE_PATH));
+    //subscriptions = JSON.parse(fs.readFileSync(SUBSCRIPTIONS_FILE_PATH));
+    //get from db
+    //get subscriptions using the async function
+    subscriptions = await getAllSuscribers();
+
   } catch (error) {
     // If file does not exist or is empty, there are no previous subscriptions
     subscriptions = [];
@@ -176,9 +180,51 @@ const notifyActivityUpdate = (activity) => {
               .sendNotification(subscription, payload)
               .catch((err) => console.error(err));
           });
+
+  
     }
   );
 };
+
+const getUserSubscriptions = (username) => {
+  return new Promise((resolve, reject) => {
+    // Inicia la consulta a la base de datos
+    db.query(
+      "SELECT * FROM simpo_app_notificacion sn JOIN usuario_notificacion_simpo_app unsa ON sn.PK_p256dh = unsa.FK_simpo_app_notificacion JOIN usuario u ON unsa.FK_usuario = u.PK_nombre_usuario WHERE u.PK_nombre_usuario = ?",
+      [username],
+      (err, results) => {
+        if (err) {
+          console.error("Error al realizar la consulta:", err);
+          reject(err);
+        } else {
+          // Resuelve la promesa con los resultados de la consulta
+          resolve(results);
+        }
+      }
+    );
+  });
+};
+
+//all suscribers
+const getAllSuscribers = () => {
+  console.log("getAllSuscribers");
+  return new Promise((resolve, reject) => {
+    
+    // Inicia la consulta a la base de datos
+    db.query(
+      "SELECT JSON_OBJECT('endpoint', sn.endpoint, 'expirationTime', sn.tiempo_expiracion, 'keys', JSON_OBJECT('p256dh', sn.PK_p256dh, 'auth', sn.autenticador), 'user', u.PK_nombre_usuario) AS notification FROM simpo_app_notificacion sn JOIN usuario_notificacion_simpo_app unsa ON sn.PK_p256dh = unsa.FK_simpo_app_notificacion JOIN usuario u ON unsa.FK_usuario = u.PK_nombre_usuario",
+      (err, results) => {
+        if (err) {
+          console.error("Error al realizar la consulta:", err);
+          reject(err);
+        } else {
+          // Resuelve la promesa con los resultados de la consulta
+          resolve(results);
+        }
+      }
+    );
+  });
+}
 
 module.exports = {
   saveSubscriptionToFile,

@@ -40,3 +40,30 @@ INSERT INTO
     usuario_notificacion_simpo_app (FK_usuario, FK_simpo_app_notificacion)
 VALUES
     ('AlbertoAVC', "BBfdSO2ym4jtzFr3ydhvdYgYvKXrZWgd0YjvhZPHKyaGdPufgvu7ri089hdRCKLR8gvZIF_UsPw-vCcb59qslsA")
+
+
+/*-----------------*/
+SELECT sn.PK_p256dh, sn.endpoint, sn.tiempo_expiracion, sn.autenticador
+FROM simpo_app_notificacion sn
+JOIN usuario_notificacion_simpo_app unsa ON sn.PK_p256dh = unsa.FK_simpo_app_notificacion
+JOIN usuario u ON unsa.FK_usuario = u.PK_nombre_usuario
+WHERE u.PK_nombre_usuario = 'AlbertoAVC';
+
+
+/**/
+SELECT
+    JSON_OBJECT(
+        'endpoint', sn.endpoint,
+        'expirationTime', sn.tiempo_expiracion,
+        'keys', JSON_OBJECT(
+            'p256dh', sn.PK_p256dh,
+            'auth', sn.autenticador
+        ),
+        'user', u.PK_nombre_usuario
+    ) AS notification
+FROM 
+    simpo_app_notificacion sn
+JOIN 
+    usuario_notificacion_simpo_app unsa ON sn.PK_p256dh = unsa.FK_simpo_app_notificacion
+JOIN 
+    usuario u ON unsa.FK_usuario = u.PK_nombre_usuario;
