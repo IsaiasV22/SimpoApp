@@ -6,6 +6,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "../globalState/GlobalState";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
+//import the i18n instance
+import '@/app/locales/locale'
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -16,6 +19,8 @@ export default function Login() {
   const high_contrast = useGlobalState((state) => state.high_contrast);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  //i18n translate strategy
+  const { t, i18n } = useTranslation(["common"]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -84,7 +89,7 @@ export default function Login() {
                 id="login"
                 className="fadeIn second"
                 name="login"
-                placeholder="Username"
+                placeholder={t('Username')}
                 onChange={(e) => setUsername(e.target.value)}
               />
               <div className="password-input">
