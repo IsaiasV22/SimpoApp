@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import useGlobalState from "../globalState/GlobalState";
 import "./AccessibilityDropdown.css";
+import LanguageDropdown from "@/app/components/languageDropdown/languageDropdown"
 
 const AccessibilityDropdown = () => {
   //global high contrast state
@@ -56,6 +57,7 @@ const AccessibilityDropdown = () => {
             </div>
           </div>
         </NavDropdown.Item>
+        <LanguageDropdown/>
       </NavDropdown>
     </div>
   );
