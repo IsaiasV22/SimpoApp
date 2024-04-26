@@ -23,7 +23,7 @@ const useGlobalState = create((set) => {
     rol: rolState ? JSON.parse(rolState) : 0,
     suscribed: suscribedState ? JSON.parse(suscribedState) : false,
     high_contrast: high_contrastState ? JSON.parse(high_contrastState) : false,
-    i18nState: i18nState ? i18nState : "es",
+    i18nState: i18nState || "es",
     setUser: (user) => {
       // Update the user state and store it in localStorage
       set({ user });

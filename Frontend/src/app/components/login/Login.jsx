@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { urlServer } from "@/app/Utiles";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 //import the i18n instance
 import '@/app/locales/locale'
+
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -21,6 +22,15 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   //i18n translate strategy
   const { t, i18n } = useTranslation(["common"]);
+  //global i18n state
+  const I18nState = useGlobalState((state) => state.i18nState);
+  // set selected language effect
+  useEffect(() => {
+    console.log("Language selected: ", I18nState);
+    console.log('i18n', i18n)
+    i18n.changeLanguage(I18nState);
+  }, []);
+
 
   async function handleSubmit(e) {
     e.preventDefault();
