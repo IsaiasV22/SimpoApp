@@ -9,7 +9,8 @@ import { useTranslation } from "react-i18next";
 
 export default function languageDropdown() {
   const [selectedLanguage, setSelectedLanguage] = useState("es"); // Estado para almacenar la opción seleccionada
-  
+  //global i18n state
+  const setI18nState = useGlobalState((state) => state.setI18nState);
   //i18n translate strategy
   const { t, i18n } = useTranslation(["common"]);
   // set selected language
@@ -17,6 +18,7 @@ export default function languageDropdown() {
     const lng = language;
     console.log("Language selected: ", lng);
     setSelectedLanguage(lng);
+    setI18nState(lng);
     i18n.changeLanguage(lng);
     
   };
