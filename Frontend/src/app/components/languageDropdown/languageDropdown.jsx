@@ -16,17 +16,17 @@ export default function languageDropdown() {
         ></i>
         Language
         <div style={{ display: "flex", marginLeft: "auto" }}>
-          {/* Bandera 1 */}
+          {/* Engish en 1 */}
           <img
-            src="ruta_a_la_imagen_de_la_bandera_1"
-            onClick={() => setSelectedLanguage("bandera1")}
-            style={{ width: "30px", cursor: "pointer" }}
+            src="https://cdn.gtranslate.net/flags/svg/en.svg"
+            onClick={() => setSelectedLanguage("en")}
+            style={{ width: "30px", cursor: "pointer", marginRight: "10px",}}
           />
-          {/* Bandera 2 */}
+          {/* Spanish es */}
           <img
-            src="ruta_a_la_imagen_de_la_bandera_2"
-            onClick={() => setSelectedLanguage("bandera2")}
-            style={{ width: "30px", cursor: "pointer" }}
+            src="https://cdn.gtranslate.net/flags/svg/es.svg"
+            onClick={() => setSelectedLanguage("es")}
+            style={{ width: "30px", cursor: "pointer" ,marginRight: "10px",}}
           />
         </div>
       </div>
