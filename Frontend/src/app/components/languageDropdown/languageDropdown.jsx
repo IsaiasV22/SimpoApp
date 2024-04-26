@@ -7,26 +7,23 @@ import Form from "react-bootstrap/Form";
 import "@/app/locales/locale";
 import { useTranslation } from "react-i18next";
 
-
 export default function languageDropdown() {
   const [selectedLanguage, setSelectedLanguage] = useState("es"); // Estado para almacenar la opción seleccionada
-  //i18n
+  
   //i18n translate strategy
   const { t, i18n } = useTranslation(["common"]);
   // set selected language
-    const handleClick = (language) => {
-        console.log("language", language);
-        setSelectedLanguage(language);
-        i18n.changeLanguage(selectedLanguage);
-    };
+  const handleClick = (language) => {
+    const lng = language;
+    console.log("Language selected: ", lng);
+    setSelectedLanguage(lng);
+    i18n.changeLanguage(lng);
+    
+  };
 
   return (
     <NavDropdown.Item>
       <div style={{ display: "flex", alignItems: "center" }}>
-        <i
-          className="fa-sharp fa-solid fa-circle-half-stroke"
-          style={{ color: "#74C0FC" }}
-        ></i>
         Language
         <div style={{ display: "flex", marginLeft: "auto" }}>
           {/* Engish en 1 */}
