@@ -506,6 +506,20 @@ CREATE INDEX `FK_usuario_idx` ON `srse`.`usuario_notificacion_simpo_app` (`FK_us
 CREATE INDEX `FK_simpo_app_notificacion_idx` ON `srse`.`usuario_notificacion_simpo_app` (`FK_simpo_app_notificacion` ASC) VISIBLE;
 
 
+-- -----------------------------------------------------
+-- Table `srse`.`solicitud_ayuda`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `srse`.`solicitud_ayuda` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre_usuario` VARCHAR(50) NOT NULL,
+  `correo` VARCHAR(200) NOT NULL,
+  `descripcion` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
