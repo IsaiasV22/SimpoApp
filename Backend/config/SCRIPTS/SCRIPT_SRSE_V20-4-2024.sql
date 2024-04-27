@@ -511,10 +511,11 @@ CREATE INDEX `FK_simpo_app_notificacion_idx` ON `srse`.`usuario_notificacion_sim
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `srse`.`solicitud_ayuda` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `PK_solicitud_ayuda` INT NOT NULL AUTO_INCREMENT,
   `nombre_usuario` VARCHAR(50) NOT NULL,
   `correo` VARCHAR(200) NOT NULL,
   `descripcion` VARCHAR(45) NOT NULL,
+  `estado` TINYINT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
