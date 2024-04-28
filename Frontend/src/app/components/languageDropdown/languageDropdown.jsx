@@ -4,7 +4,6 @@ import { useState } from "react";
 import useGlobalState from "../globalState/GlobalState";
 import Form from "react-bootstrap/Form";
 //import the i18n instance
-import "@/app/locales/locale";
 import { useTranslation } from "react-i18next";
 
 export default function languageDropdown() {
@@ -19,7 +18,6 @@ export default function languageDropdown() {
   // set selected language
   const handleClick = (language) => {
     const lng = language;
-    console.log("Language selected: ", lng);
     setSelectedLanguage(lng);
     setI18nState(lng);
     i18n.changeLanguage(lng);

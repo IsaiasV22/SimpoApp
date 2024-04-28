@@ -22,14 +22,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   //i18n translate strategy
   const { t, i18n } = useTranslation(["common"]);
-  //global i18n state
-  const I18nState = useGlobalState((state) => state.i18nState);
-  // set selected language effect
-  useEffect(() => {
-    console.log("Language selected: ", I18nState);
-    console.log('i18n', i18n)
-    i18n.changeLanguage(I18nState);
-  }, []);
+
 
 
   async function handleSubmit(e) {

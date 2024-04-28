@@ -1,10 +1,19 @@
-"use client";
+
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 
 import trEN from "./en/common.json"
 import trES from "./es/common.json"
 
+function getI18nState() {
+  const i18nState = localStorage.getItem("i18nextLng");
+  if (i18nState === '"es"') {
+    console.log('Indeed, the language is Spanish');
+    return 'es';
+  }
+  console.log('Indeed, the language is English');
+  return 'en';
+}
 
 const resources = {
   en: { common: trEN },
@@ -18,7 +27,7 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     resources,
-    lng: typeof window !== 'undefined' && localStorage.getItem('i18nextLng'),
+    lng: getI18nState(),
     ns: ["common"],
     defaultNS: "common",
     fallbackNS: "common",
