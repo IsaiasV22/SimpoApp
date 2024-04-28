@@ -23,7 +23,7 @@ const useGlobalState = create((set) => {
     rol: rolState ? JSON.parse(rolState) : 0,
     suscribed: suscribedState ? JSON.parse(suscribedState) : false,
     high_contrast: high_contrastState ? JSON.parse(high_contrastState) : false,
-    i18nState: i18nState || "es",
+    i18nState: i18nState,
     setUser: (user) => {
       // Update the user state and store it in localStorage
       set({ user });
@@ -53,7 +53,7 @@ const useGlobalState = create((set) => {
       // Update the user state and store it in localStorage
       set({ i18nState });
       typeof window !== "undefined" &&
-        localStorage.setItem("i18nextLng", JSON.stringify(i18nState));
+        localStorage.setItem("i18nextLng",i18nState);
     },
   };
 

@@ -7,7 +7,7 @@ import trES from "./es/common.json"
 
 function getI18nState() {
   const i18nState = localStorage.getItem("i18nextLng");
-  if (i18nState === '"es"') {
+  if (i18nState === 'es') {
     console.log('Indeed, the language is Spanish');
     return 'es';
   }
