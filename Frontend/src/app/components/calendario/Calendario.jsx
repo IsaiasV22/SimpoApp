@@ -3,9 +3,13 @@ import { useState, useEffect } from "react";
 import Scheduler from "@/app/components/SchedulerAll/Scheduler";
 import { urlServer } from "@/app/Utiles";
 import styles from "@/app/App.css";
+//global state
+import useGlobalState from "@/app/components/globalState/GlobalState";
 
 function App() {
   const [actividades, setActividades] = useState([]);
+
+  const i18nState = useGlobalState((state) => state.i18nState);
 
   const convertTo12HourFormat = (time24) => {
     const [hours, minutes] = time24.split(":");
@@ -96,7 +100,7 @@ function App() {
     <div className="m-3 ">
       <h1>Calendario</h1>
       <Scheduler
-        locale="en"
+        locale={i18nState}
         events={actividades}
         legacyStyle={false}
         options={state?.options}

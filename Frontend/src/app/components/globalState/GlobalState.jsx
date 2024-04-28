@@ -14,11 +14,16 @@ const useGlobalState = create((set) => {
   const high_contrastState =
     typeof window !== "undefined" && localStorage.getItem("high_contrast");
 
+  //manage languague i18n
+  const i18nState =
+    typeof window !== "undefined" && localStorage.getItem("i18nextLng");
+
   const initialState = {
     user: userState ? JSON.parse(userState) : false,
     rol: rolState ? JSON.parse(rolState) : 0,
     suscribed: suscribedState ? JSON.parse(suscribedState) : false,
     high_contrast: high_contrastState ? JSON.parse(high_contrastState) : false,
+    i18nState: i18nState || "es",
     setUser: (user) => {
       // Update the user state and store it in localStorage
       set({ user });
@@ -42,6 +47,13 @@ const useGlobalState = create((set) => {
       set({ high_contrast });
       typeof window !== "undefined" &&
         localStorage.setItem("high_contrast", JSON.stringify(high_contrast));
+    },
+
+    setI18nState: (i18nState) => {
+      // Update the user state and store it in localStorage
+      set({ i18nState });
+      typeof window !== "undefined" &&
+        localStorage.setItem("i18nextLng", JSON.stringify(i18nState));
     },
   };
 
