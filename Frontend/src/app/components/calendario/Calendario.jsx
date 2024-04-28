@@ -100,7 +100,7 @@ function App() {
     <div className="m-3 ">
       <h1>Calendario</h1>
       <Scheduler
-        locale={i18nState}
+        locale={i18nState?i18nState:"en"}
         events={actividades}
         legacyStyle={false}
         options={state?.options}

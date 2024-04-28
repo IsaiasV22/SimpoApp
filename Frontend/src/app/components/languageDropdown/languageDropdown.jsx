@@ -10,8 +10,10 @@ export default function languageDropdown() {
     //global i18n state
     const setI18nState = useGlobalState((state) => state.setI18nState);
     const i18nState = useGlobalState((state) => state.i18nState);
+    //high contrast state
+    const high_contrast = useGlobalState((state) => state.high_contrast);
 
-  const [selectedLanguage, setSelectedLanguage] = useState(i18nState); // Estado para almacenar la opción seleccionada
+  const [selectedLanguage, setSelectedLanguage] = useState(i18nState?i18nState:"en"); // Estado para almacenar la opción seleccionada
 
   //i18n translate strategy
   const { t, i18n } = useTranslation(["common"]);
@@ -24,8 +26,17 @@ export default function languageDropdown() {
     
   };
 
+  //color border for selected language
+  const getColor = () => {
+    if (high_contrast) {
+      return "#005DA4";
+    } else {
+      return "#00C0F3";
+    }
+  };
+
   return (
-    <NavDropdown.Item>
+    <NavDropdown.Item onClick={(e)=>e.stopPropagation()}>
       <div style={{ display: "flex", alignItems: "center" }}>
         Language
         <div style={{ display: "flex", marginLeft: "auto" }}>
@@ -33,13 +44,15 @@ export default function languageDropdown() {
           <img
             src="https://cdn.gtranslate.net/flags/svg/en.svg"
             onClick={() => handleClick("en")}
-            style={{ width: "30px", cursor: "pointer", marginRight: "10px" }}
+            style={{ width: "30px", cursor: "pointer", marginRight: "10px",
+                    border: selectedLanguage === "en" ? `2px solid ${getColor()}` : "none"}}
           />
           {/* Spanish es */}
           <img
             src="https://cdn.gtranslate.net/flags/svg/es.svg"
             onClick={() => handleClick("es")}
-            style={{ width: "30px", cursor: "pointer", marginRight: "10px" }}
+            style={{ width: "30px", cursor: "pointer", marginRight: "10px",
+                    border: selectedLanguage === "es" ? `2px solid ${getColor()}` : "none"}}
           />
         </div>
       </div>

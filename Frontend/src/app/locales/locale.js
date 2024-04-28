@@ -12,6 +12,10 @@ function getI18nState() {
     return 'es';
   }
   console.log('Indeed, the language is English');
+  //caso en el que haya que setear el item en el local storage
+  if(!i18nState) {
+    localStorage.setItem("i18nextLng", 'en');
+  }
   return 'en';
 }
 
