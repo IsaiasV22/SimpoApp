@@ -157,7 +157,6 @@ const notifyActivityUpdate = async(activity) => {
 
   // Get subscriptions for the activity
   let subscriptions = await getSubscriptionsByActivity(activity);
-  console.log("subscriptions from byActivity: ", subscriptions);
   // Send notifications to all subscribers
   subscriptions.forEach((subscription) => {
     webpush
