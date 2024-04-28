@@ -182,7 +182,6 @@ export default function Actividad({ actividadId }) {
           <div>Cargando actividad...</div> // Puedes mostrar un mensaje de carga o lo que prefieras
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 }

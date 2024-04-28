@@ -67,6 +67,10 @@ app.use("/talleres", talleresRoutes);
 const pwaRoutes = require("./routes/pwaRouter.js");
 app.use("/pwa", pwaRoutes);
 
+//recordatorios route
+const recordatoriosRoutes = require("./routes/recordatoriosRouter.js");
+app.use("/recordatorios", recordatoriosRoutes);
+
 //configurar puerto
 const PORT = process.env.PORT || 3000;
 
