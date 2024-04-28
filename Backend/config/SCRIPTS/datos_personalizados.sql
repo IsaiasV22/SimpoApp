@@ -34,12 +34,14 @@ VALUES
         "https://fcm.googleapis.com/fcm/send/d9K2kD3H0AE:APA91bEEVdoOqSD7wMjrYgxbAakVT7H-IWhqsExCp5cckRi0LADbkFQIv9vbIUxZB_R5SRuIlb5R2ATvEAuKwxPY2J57s7VKNWqPydoyi-jXh-14Bep6W95BeSXZuE-8mz9E92ez8ipp",
         null,
         "pVJ2FosW2xSBgKbZ3OEXUg"
-    )
+    );
     /*user and notification table insertion*/
 INSERT INTO
     usuario_notificacion_simpo_app (FK_usuario, FK_simpo_app_notificacion)
 VALUES
-    ('AlbertoAVC', "BBfdSO2ym4jtzFr3ydhvdYgYvKXrZWgd0YjvhZPHKyaGdPufgvu7ri089hdRCKLR8gvZIF_UsPw-vCcb59qslsA")
+    ('AlbertoAVC',
+    "BBfdSO2ym4jtzFr3ydhvdYgYvKXrZWgd0YjvhZPHKyaGdPufgvu7ri089hdRCKLR8gvZIF_UsPw-vCcb59qslsA"
+    );
 
 
 /*-----------------*/
