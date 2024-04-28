@@ -147,43 +147,23 @@ const getSubscriptions = async () => {
 };
 
 //notify activity
-const notifyActivityUpdate = (activity) => {
+const notifyActivityUpdate = async(activity) => {
   // Get payload from query
   const payload = JSON.stringify({
-    title: "Actividad actualizada",
+    title: activity.descripcion + " actualizada",
     body: "La actividad " + activity.descripcion + " ha sido actualizada",
     icon: "https://image.flaticon.com/icons/svg/139/139899.svg",
   });
 
-  // Get current subscriptions
-  let subscriptions = getSubscriptions();
-  let suscribers = [];
-
-  //get suscribers of the activity
-  actividadController.obtenerUsuariosActividad(
-    activity.PK_actividad,
-    (err, results) => {
-      if (err) {
-        console.error("Error al realizar la consulta:", err);
-        return new Error(err.message);
-      }
-      suscribers = results;
-      //notify to users
-        subscriptions
-          .reduce(
-            (acum, curr) =>
-              suscribers.includes(curr.user) ? [...acum, curr] : acum,
-            []
-          )
-          .forEach((subscription) => {
-            webpush
-              .sendNotification(subscription, payload)
-              .catch((err) => console.error(err));
-          });
-
-  
-    }
-  );
+  // Get subscriptions for the activity
+  let subscriptions = await getSubscriptionsByActivity(activity);
+  console.log("subscriptions from byActivity: ", subscriptions);
+  // Send notifications to all subscribers
+  subscriptions.forEach((subscription) => {
+    webpush
+      .sendNotification(subscription.subscription, payload)
+      .catch((err) => console.error(err));
+  });
 };
 
 const getUserSubscriptions = (username) => {
@@ -225,6 +205,25 @@ const getAllSuscribers = () => {
     );
   });
 }
+
+const getSubscriptionsByActivity = (activity) => {
+//get subscriptions from database
+  return new Promise((resolve, reject) => {
+    db.query(
+      "SELECT JSON_OBJECT('endpoint', sn.endpoint,'expirationTime', sn.tiempo_expiracion,'keys', JSON_OBJECT('p256dh', sn.PK_p256dh,'auth', sn.autenticador )) AS subscription FROM calendario_u cu JOIN usuario_notificacion_simpo_app unsa ON cu.FK_usuario = unsa.FK_usuario JOIN simpo_app_notificacion sn ON unsa.FK_simpo_app_notificacion = sn.PK_p256dh WHERE cu.F_actividad = ?",
+      [activity.PK_actividad],
+      (err, results) => {
+        if (err) {
+          console.error("Error al realizar la consulta:", err);
+          reject(err);
+        } else {
+          // Resuelve la promesa con los resultados de la consulta
+          resolve(results);
+        }
+      }
+    );
+  });
+};
 
 module.exports = {
   saveSubscriptionToFile,
