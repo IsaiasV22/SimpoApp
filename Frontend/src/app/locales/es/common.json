@@ -10,5 +10,7 @@
   "fri": "Vie",
   "sat": "Sáb",
   "sun": "Dom",
-  "search": "Buscar..."
+  "search": "Buscar...",
+  "help": "Ayuda",
+  "help requests": "Solicitudes de ayuda"
 }

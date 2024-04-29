@@ -10,5 +10,7 @@
   "fri": "Fri",
   "sat": "Sat",
   "sun": "Sun",
-  "search": "Search..."
+  "search": "Search...",
+  "help": "Help",
+  "help requests": "Help Requests"
 }
