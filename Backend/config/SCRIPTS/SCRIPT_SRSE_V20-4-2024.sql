@@ -516,7 +516,7 @@ CREATE TABLE IF NOT EXISTS `srse`.`solicitud_ayuda` (
   `correo` VARCHAR(200) NOT NULL,
   `descripcion` VARCHAR(45) NOT NULL,
   `estado` TINYINT NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`PK_solicitud_ayuda`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 

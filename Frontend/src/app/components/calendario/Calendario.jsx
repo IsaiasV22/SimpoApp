@@ -10,11 +10,12 @@ function App() {
   const convertTo12HourFormat = (time24) => {
     const [hours, minutes] = time24.split(":");
     const hourNumber = parseInt(hours, 10);
-  
+
     if (hourNumber === 0) return `12:${minutes}`;
-    if (hourNumber < 12) return `${hourNumber.toString().padStart(2, "0")}:${minutes}`;
+    if (hourNumber < 12)
+      return `${hourNumber.toString().padStart(2, "0")}:${minutes}`;
     return `${hourNumber}:${minutes}`;
-  };  
+  };
 
   const handlerEvents = async () => {
     try {
