@@ -33,7 +33,7 @@ router.post("/add", (req, res) => {
   );
 });
 
-router.put("/solvedSolicitudAyuda", (req, res) => {
+router.put("/solved", (req, res) => {
   solicitudAyudaController.solvedSolicitudAyuda(
     req.body.solicitudAyudaId,
     (err, results) => {
@@ -45,7 +45,7 @@ router.put("/solvedSolicitudAyuda", (req, res) => {
   );
 });
 
-router.put("/unsolvedSolicitudAyuda", (req, res) => {
+router.put("/unsolved", (req, res) => {
   solicitudAyudaController.unsolvedSolicitudAyuda(
     req.body.solicitudAyudaId,
     (err, results) => {
@@ -57,7 +57,7 @@ router.put("/unsolvedSolicitudAyuda", (req, res) => {
   );
 });
 
-router.delete("/deleteSolicitudAyuda", (req, res) => {
+router.delete("/delete", (req, res) => {
   solicitudAyudaController.deleteSolicitudAyuda(
     req.body.solicitudAyudaId,
     (err, results) => {
@@ -68,3 +68,5 @@ router.delete("/deleteSolicitudAyuda", (req, res) => {
     }
   );
 });
+
+module.exports = router;
