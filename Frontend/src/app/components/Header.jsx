@@ -97,7 +97,7 @@ const Header = () => {
                           transform: "scale(1.2)",
                         }}
                       ></i>
-                      <p>Home</p>
+                      <p>{t("Home")}</p>
                     </div>
                   </li>
                 </Link>
@@ -118,7 +118,7 @@ const Header = () => {
                       className="bi bi-qr-code-scan"
                       style={{ marginRight: "5px", transform: "scale(1.2)" }}
                     ></i>
-                    <p>Scanner</p>
+                    <p>{t("Scanner")}</p>
                   </div>
                 </li>
               </Link>
@@ -135,7 +135,7 @@ const Header = () => {
                       className="bi bi-calendar"
                       style={{ marginRight: "5px" }}
                     ></i>
-                    <p>Calendar</p>
+                    <p>{t("Calendar")}</p>
                   </div>
                 </li>
               </Link>

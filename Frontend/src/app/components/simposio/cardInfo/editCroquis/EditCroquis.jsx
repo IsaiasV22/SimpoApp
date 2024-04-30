@@ -6,10 +6,12 @@ import Form from "react-bootstrap/Form";
 import { urlServer } from "@/app/Utiles";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 function EditCroquis({ imageName, high_contrast }) {
   const [show, setShow] = useState(false);
   const [file, setFile] = useState(null);
+  const { t } = useTranslation(["common"]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -40,13 +42,13 @@ function EditCroquis({ imageName, high_contrast }) {
       );
 
       if (!response.ok) {
-        throw new Error("Error al subir la imagen");
+        throw new Error(t("Error_al_subir_la_imagen"));
       }
 
       const responseData = await response.json();
       //console.log(responseData.message); // Imprimir mensaje de éxito
     } catch (error) {
-      toast.error("Error al subir la imagen");
+      toast.error(t("Error al subir la imagen"));
       //console.error(error.message);
     }
   };
@@ -58,7 +60,7 @@ function EditCroquis({ imageName, high_contrast }) {
       await uploadImage();
     }
 
-    toast.success("Editado correctamente");
+    toast.success(t("Editado_correctamente"));
     setTimeout(() => {
       handleClose();
       window.location.reload();
@@ -70,28 +72,28 @@ function EditCroquis({ imageName, high_contrast }) {
   return (
     <>
       <Button className="btnn-primary" onClick={handleShow}>
-        Editar
+        {t("Edit")}
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Editar Croquis</Modal.Title>
+          <Modal.Title>{t("Editar_Croquis")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Subir Imagen</Form.Label>
+              <Form.Label>{t("Subir_Imagen")}</Form.Label>
               <Form.Control type="file" onChange={handleFileChange} />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t("Close")}
           </Button>
           <div className={high_contrast ? "high-contrast" : ""}>
             <Button className="btnn-primary" onClick={handleSubmit}>
-              Save Changes
+              {t("Save_Changes")}
             </Button>
           </div>
         </Modal.Footer>

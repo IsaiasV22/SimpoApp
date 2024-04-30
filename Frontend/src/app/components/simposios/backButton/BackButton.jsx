@@ -6,11 +6,13 @@ import useGlobalState from "@/app/components/globalState/GlobalState";
 import { urlServer } from "@/app/Utiles";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { useTranslation } from "react-i18next";
 
 function BackButton() {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const setUserState = useGlobalState((state) => state.setUser);
+  const { t } = useTranslation(["common"]);
 
   const handleLogout = async () => {
     try {
@@ -44,22 +46,22 @@ function BackButton() {
         className="btn mb-3 btnn-primary"
         onClick={handleBackClick}
       >
-        ATRAS
+        {t("ATRAS")}
       </button>
 
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Advertencia</Modal.Title>
+          <Modal.Title>{t("Advertencia")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Si regresas, se cerrará la sesión. ¿Deseas continuar?
+          {t("Si_regresas,_se_cerrará_la_sesión._¿Deseas_continuar?")}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancelar
+            {t("Cancelar")}
           </Button>
           <Button variant="primary" onClick={handleLogout}>
-            Aceptar
+            {t("Aceptar")}
           </Button>
         </Modal.Footer>
       </Modal>

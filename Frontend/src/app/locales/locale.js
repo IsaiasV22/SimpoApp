@@ -6,7 +6,7 @@ import trEN from "./en/common.json"
 import trES from "./es/common.json"
 
 function getI18nState() {
-  const i18nState = localStorage.getItem("i18nextLng");
+  const i18nState = typeof window !== 'undefined' ? localStorage.getItem("i18nextLng") : null;
   if (i18nState === 'es') {
     console.log('Indeed, the language is Spanish');
     return 'es';
@@ -14,7 +14,7 @@ function getI18nState() {
   console.log('Indeed, the language is English');
   //caso en el que haya que setear el item en el local storage
   if(!i18nState) {
-    localStorage.setItem("i18nextLng", 'en');
+    typeof window !== 'undefined' && localStorage.setItem("i18nextLng", 'en');
   }
   return 'en';
 }
