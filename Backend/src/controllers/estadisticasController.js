@@ -158,7 +158,7 @@ const AttendanceInfo = async (idEventoContenedor) => {
           u.pais AS 'Pais'
       FROM
           actividad a 
-      LEFT JOIN asistencia_actividad_evento aae ON aae.FK_actividad = a.PK_actividad
+      LEFT JOIN calendario_u aae ON aae.F_actividad = a.PK_actividad
       INNER JOIN evento_contenedor ec ON a.FK_evento_contenedor = ec.PK_evento_contenedor
       LEFT JOIN usuario u ON aae.FK_usuario = u.PK_nombre_usuario
       WHERE ec.PK_evento_contenedor = ?
