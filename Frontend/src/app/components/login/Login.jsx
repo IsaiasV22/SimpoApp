@@ -83,7 +83,7 @@ export default function Login() {
               className="fadeIn first"
               style={{ marginBottom: "2rem", marginTop: "2rem" }}
             >
-              <h2 style={{ fontSize: "16px" }}>Log in</h2>
+              <h2 style={{ fontSize: "16px" }}>{t("log_in")}</h2>
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -101,7 +101,7 @@ export default function Login() {
                   id="password"
                   className="fadeIn third"
                   name="login"
-                  placeholder="Password"
+                  placeholder={t("Password")}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -109,19 +109,14 @@ export default function Login() {
                   onClick={togglePasswordVisibility}
                   className="password-toggle-icon"
                 >
-                  {showPassword ? (
-                    <i className="bi bi-eye-slash"></i>
-                  ) : (
-                    <i className="bi bi-eye"></i>
-                  )}
                 </span>
               </div>
-              <input type="submit" className="fadeIn fourth" value="Log In" />
+              <input type="submit" className="fadeIn fourth" value={t("log_in")} />
             </form>
 
             <div id="formFooter">
               <a className="underlineHover register" href="#">
-                Register
+                {t("Register")}
               </a>
             </div>
           </div>
