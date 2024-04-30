@@ -7,8 +7,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { urlServer } from "@/app/Utiles.jsx";
 import { usePathname } from "next/navigation";
-import QrCode from '../qrCode/QrCode';
+import QrCode from "../qrCode/QrCode";
 import useGlobalState from "../globalState/GlobalState";
+import SeccionRecordatorios from "../recordatorio/seccionRecordatorios";
 
 export default function Actividad({ actividadId }) {
   const pathname = usePathname();
@@ -19,7 +20,8 @@ export default function Actividad({ actividadId }) {
   const [ponente, setPonente] = useState(null); //state exponente
   const [coautores, setCoautores] = useState([]); //state coautores
   const high_contrast = useGlobalState((state) => state.high_contrast);
-  useEffect(() => { //useEffect
+  useEffect(() => {
+    //useEffect
     handleActividad();
     handlePonente();
     handleCoautores();
@@ -90,21 +92,23 @@ export default function Actividad({ actividadId }) {
     });
     const fechaActual = new Date().toISOString().split("T")[0]; // Obtiene la fecha actual en formato 'YYYY-MM-DD'
 
-    console.log('ahora', ahora);
-    console.log('dia_evento', dia_evento.split("T")[0]);
-    console.log('fechaActual', fechaActual);
+    console.log("ahora", ahora);
+    console.log("dia_evento", dia_evento.split("T")[0]);
+    console.log("fechaActual", fechaActual);
     // Compara las fechas y las horas de inicio y finalización con la fecha y hora actual
     const output =
-      dia_evento.split("T")[0] === fechaActual && horaInicio <= ahora && horaFinal >= ahora;
-    
-    console.log("Esta en curso:", output); 
+      dia_evento.split("T")[0] === fechaActual &&
+      horaInicio <= ahora &&
+      horaFinal >= ahora;
+
+    console.log("Esta en curso:", output);
 
     return output;
   }
   //fetch actividad por id
 
   return (
-    <div className={`main-content ${high_contrast?"high-contrast":""}`}>
+    <div className={`main-content ${high_contrast ? "high-contrast" : ""}`}>
       <div className="container my-5">
         {actividad ? ( // Verifica si actividad tiene datos
           <>
@@ -163,7 +167,10 @@ export default function Actividad({ actividadId }) {
                             <li key={coautor[0].PK_nombre_usuario}>
                               {coautor[0].nombre + " " + coautor[0].apellidos}
                               <Link href={`${urlCoautor}/${coautor[0].cedula}`}>
-                                <button className="btn btnn-primary" style={{'margin': '10px'}}>
+                                <button
+                                  className="btn btnn-primary"
+                                  style={{ margin: "10px" }}
+                                >
                                   Ver Información del coautor
                                 </button>
                               </Link>
@@ -172,7 +179,8 @@ export default function Actividad({ actividadId }) {
                         </ul>
                       </div>
                     )}
-                    <QrCode activityId={actividadId}/>
+                    <QrCode activityId={actividadId} />
+                    <SeccionRecordatorios />
                   </div>
                 </div>
               </div>
@@ -182,7 +190,6 @@ export default function Actividad({ actividadId }) {
           <div>Cargando actividad...</div> // Puedes mostrar un mensaje de carga o lo que prefieras
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 }

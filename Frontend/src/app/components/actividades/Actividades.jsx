@@ -17,6 +17,7 @@ import "@/app/App.css";
 import UpdateModal from "./UpdateModal/UpdateModal";
 import PonenteActividadesCard from "../ponente/PonenteActividadesCard";
 import Pagination from "./Pagination";
+import NuevoRecordatorio from "../recordatorio/NuevoRecordatorio";
 
 export default function ActividadesFilter({ elementId, filterFunctions }) {
   //console.log('filterFunction: ', filterFunction.toString())
@@ -276,7 +277,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                         </Link>
 
                         {user && rol === 1 && (
-                          <>
+                          <div style={{display:'flex',gap:'5px','margin-left':'5px'}}>
                             <UpdateModal
                               pk={element.PK_actividad}
                               descripcion={element.descripcion}
@@ -300,7 +301,8 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                             >
                               {element.estatus ? "Ocultar" : "Mostrar"}
                             </button>
-                          </>
+                            <NuevoRecordatorio/>
+                          </div>
                         )}
 
                         <div
