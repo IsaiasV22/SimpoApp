@@ -6,6 +6,7 @@ import { useState } from "react";
 import useGlobalState from "../globalState/GlobalState";
 import "./AccessibilityDropdown.css";
 import LanguageDropdown from "@/app/components/languageDropdown/languageDropdown"
+import { useTranslation } from "react-i18next";
 
 const AccessibilityDropdown = () => {
   //global high contrast state
@@ -14,6 +15,8 @@ const AccessibilityDropdown = () => {
     state.setHighContrast,
   ]);
   const [switchActive, setSwitchActive] = useState(high_contrast);
+  //i18n
+  const { t } = useTranslation(["common"]);
 
   const handleSwitchClick = (e) => {
     // Evita que el evento de clic se propague hacia arriba
@@ -32,7 +35,7 @@ const AccessibilityDropdown = () => {
               className="bi bi-universal-access-circle"
             ></i>
             
-            <span style={{color:"#ffffff"}}>Accesibility </span>
+            <span style={{color:"#ffffff"}}>{t("Accessibility")}</span>
           </>
         }
         onToggle={() => {}} // prettier-ignore
@@ -44,7 +47,7 @@ const AccessibilityDropdown = () => {
               className="fa-sharp fa-solid fa-circle-half-stroke"
               style={{ color: "#74C0FC" }}
             ></i>
-            High contrast mode
+            {t("High_contrast_mode")}
             <div style={{ marginLeft: "20px" }}>
               <Form>
                 <Form.Check // prettier-ignore

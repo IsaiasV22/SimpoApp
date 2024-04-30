@@ -11,6 +11,8 @@ import BackButton from "./backButton/BackButton"; // Asegúrate de que la ruta s
 import Notificacion from "../Notificacion";
 import { usePathname } from "next/navigation";
 import EventoCard from "./eventoCard/EventoCard"; // Importando el componente EventoCard
+//translation hook
+import { useTranslation } from "react-i18next";
 
 export default function Simposios() {
   const [eventos, setEventos] = useState([]);
@@ -20,6 +22,8 @@ export default function Simposios() {
   const high_contrast = useGlobalState((state) => state.high_contrast);
   const pathname = usePathname();
   const urlSimposio = `${pathname}/simposio`;
+
+  const { t } = useTranslation(["common"]);
 
   useEffect(() => {
     handleEventos();
@@ -96,7 +100,7 @@ export default function Simposios() {
         <BackButton />
 
         <h1 className="mb-4" style={{ textAlign: "center" }}>
-          Events
+          {t("Events")}
         </h1>
 
         <div className="row">
@@ -113,7 +117,7 @@ export default function Simposios() {
               />
             ))
           ) : (
-            <div className="col-12">No events to display</div>
+            <div className="col-12">{t("No_events_to_display")}</div>
           )}
         </div>
       </div>

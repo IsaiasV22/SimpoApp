@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import StatusBar from "../statusbar/StatusBar";
 import "./Search.css";
+import { useTranslation } from "react-i18next";
 
 //Searchbar component with dropdown menu for search by options
 export default function SearchBar({ dispatch, dia_inicio }) {
@@ -13,6 +14,7 @@ export default function SearchBar({ dispatch, dia_inicio }) {
   //text hook
   const [searchText, setSearchText] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  const { t } = useTranslation(["common"]);
   //selected option hook
   const [selectedOption, setSelectedOption] = useState("Title");
   //handle input change
@@ -72,27 +74,27 @@ export default function SearchBar({ dispatch, dia_inicio }) {
           <div className="flex-column ">
             <DropdownButton
               id="dropdown-basic-button"
-              title="Search by"
+              title={t("Search_by")}
               onSelect={handleSelect}
             >
-              <Dropdown.Item eventKey="Title">Title</Dropdown.Item>
-              <Dropdown.Item eventKey="Author">Author</Dropdown.Item>
-              <Dropdown.Item eventKey="Date">Date</Dropdown.Item>
-              <Dropdown.Item eventKey="Modalities">Modalities</Dropdown.Item>
+              <Dropdown.Item eventKey="Title">{t("Title")}</Dropdown.Item>
+              <Dropdown.Item eventKey="Author">{t("Author")}</Dropdown.Item>
+              <Dropdown.Item eventKey="Date">{t("Date")}</Dropdown.Item>
+              <Dropdown.Item eventKey="Modalities">{t("Modalities")}</Dropdown.Item>
             </DropdownButton>
-            <Badge bg="success" className='fs-6 mt-2'>{selectedOption}</Badge>
+            <Badge bg="success" className='fs-6 mt-2'>{t(selectedOption)}</Badge>
           </div>
           <StatusBar dispatch={dispatch} />
         </div>
       </div>
       {["Title", "Author"].includes(selectedOption) ? (
-        <div className="row">
+        <div className="row margin-top">
           <div className="col-12">
             <div className="input-group">
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search"
+                placeholder={t("Search")}
                 aria-label="Recipient's username"
                 value={searchText}
                 onChange={handleInputChange}
@@ -104,18 +106,18 @@ export default function SearchBar({ dispatch, dia_inicio }) {
                 id="button-addon2"
                 onClick={handleSearch}
               >
-                Search
+                {t("Search")}
               </button>
             </div>
           </div>
         </div>
       ) : null}
       {selectedOption === "Date" ? (
-        <div>
+        <div style={{'margin-top':'15px'}}>
           <DatePicker
             showIcon
             selected={selectedDate}
-            placeholderText="Click to select a date"
+            placeholderText={t("Click_to_select_a_date")}
             openToDate={new Date(dia_inicio)}
             toggleCalendarOnIconClick
             dateFormat={"MM / dd / yyyy"}
