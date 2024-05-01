@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { urlServer } from "@/app/Utiles";
+import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "../globalState/GlobalState";
@@ -15,6 +16,7 @@ export default function Ayuda() {
   const [correo, setCorreo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [validated, setValidated] = useState(false);
+  const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -51,6 +53,10 @@ export default function Ayuda() {
     }
   }
 
+  async function handleCancel() {
+    router.push("/simposios");
+  }
+
   return (
     <div className={`main-content ${high_contrast ? "high-contrast" : ""}`}>
       <ToastContainer />
@@ -59,8 +65,13 @@ export default function Ayuda() {
           Solicitud de ayuda
         </h1>
         <div className="card" style={{ padding: "3%" }}>
-          <Form id="solicitudAyuda" noValidate validated={validated} onSubmit={handleSubmit}>
-            <InputGroup className="mb-2" has-validation >
+          <Form
+            id="solicitudAyuda"
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit}
+          >
+            <InputGroup className="mb-2" has-validation>
               <Form.Control
                 type="text"
                 required
@@ -72,7 +83,7 @@ export default function Ayuda() {
                 Por favor ingrese su nombre
               </FormControl.Feedback>
             </InputGroup>
-            <InputGroup className="mb-2" has-validation >
+            <InputGroup className="mb-2" has-validation>
               <Form.Control
                 type="email"
                 required
@@ -84,7 +95,7 @@ export default function Ayuda() {
                 Por favor ingrese un correo valido
               </FormControl.Feedback>
             </InputGroup>
-            <InputGroup className="mb-2" has-validation >
+            <InputGroup className="mb-2" has-validation>
               <Form.Control
                 type="text"
                 required
@@ -99,7 +110,7 @@ export default function Ayuda() {
               </FormControl.Feedback>
             </InputGroup>
             <div className="d-flex justify-content-end">
-              <Button variant="secondary" onClick={""}>
+              <Button variant="secondary" onClick={handleCancel}>
                 Cancelar
               </Button>
               <div
