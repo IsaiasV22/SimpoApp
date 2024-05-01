@@ -9,6 +9,67 @@ import { useRouter } from "next/navigation";
 import "@/app/App.css";
 
 function SolicitudAyudaCard({ element, user, rol }) {
+  async function handleEstado(solicitudAyudaId, estado) {
+    console.log(element);
+    let response = null;
+    try {
+      if (estado) {
+        response = await fetch(`${urlServer}solicitudesAyuda/unsolved`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ solicitudAyudaId: solicitudAyudaId }),
+          credentials: "include",
+        });
+      } else {
+        response = await fetch(`${urlServer}solicitudesAyuda/solved`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ solicitudAyudaId: solicitudAyudaId }),
+          credentials: "include",
+        });
+      }
+      if (!response.ok) {
+        console.log("response: ", response);
+        throw new Error(response.statusText);
+      }
+      const data = await response.json();
+      toast.success(data.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (error) {
+      toast.error(error.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    }
+  }
+
+  async function handleDelete(solicitudAyudaId) {
+    try {
+      const response = await fetch(`${urlServer}solicitudesAyuda/delete`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ solicitudAyudaId: solicitudAyudaId }),
+        credentials: "include",
+      });
+      if (!response.ok) {
+        console.log("response: ", response);
+        throw new Error(response.statusText);
+      }
+      const data = await response.json();
+      toast.success(data.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    } catch (error) {
+      toast.error(error.message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+    }
+  }
+
   return (
     <div
       key={element.Pk_solicitud_ayuda}
@@ -19,35 +80,37 @@ function SolicitudAyudaCard({ element, user, rol }) {
         alignItems: "center",
       }}
     >
-      <div className="card">
+      <ToastContainer />
+      <div className="card" style={{ width: "50%" }}>
         <div className="card-header">
           <div className="d-flex">
-            <h3>{element.nombre_usuario}</h3>
-            
-            <h3>{element.correo}</h3>
+            <h5 style={{ width: "25%" }}> {element.nombre_usuario}</h5>
+            <h5>{element.correo}</h5>
           </div>
-
           <div>{element.descripcion}</div>
         </div>
 
-        <div className="card-footer d-flex footer-simposio">
-          {user && rol === 1 && (
-            <>
-              <button
-                //on click cambiar el estado de activo
-                onClick={() => {
-                  handleEstadoActivo(
-                    element.PK_evento_contenedor,
-                    element.activo
-                  );
-                }}
-                className="btn btnn-primary"
-                style={{ margin: "3px" }}
-              >
-                {element.activo ? "Ocultar" : "Mostrar"}
-              </button>
-            </>
-          )}
+        <div className="card-footer d-flex justify-content-end">
+          <button
+            //on click cambiar el estado de activo
+            onClick={() => {
+              handleDelete(element.PK_solicitud_ayuda);
+            }}
+            className="btn btn-secondary"
+            style={{ margin: "3px" }}
+          >
+            Eliminar
+          </button>
+          <button
+            //on click cambiar el estado de activo
+            onClick={() => {
+              handleEstado(element.PK_solicitud_ayuda, element.estado);
+            }}
+            className="btn btnn-primary"
+            style={{ margin: "3px" }}
+          >
+            {element.estado ? "Listo" : "Pendiente"}
+          </button>
         </div>
       </div>
     </div>
