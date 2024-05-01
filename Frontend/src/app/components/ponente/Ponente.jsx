@@ -60,7 +60,7 @@ export default function Ponente({ actividadIdP }) {
         <div>{t("Cargando autor...")}</div>
       )}
     </div>
-    <ToastContainer />
+    <ToastContainer autoClose={false}/>
   </div>
   );
 }

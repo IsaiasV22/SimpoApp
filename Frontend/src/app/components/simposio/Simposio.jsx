@@ -11,6 +11,7 @@ import ActividadesFilter from "../actividades/Actividades";
 import { ca } from "date-fns/locale";
 import CardInfo from "./cardInfo/CardInfo";
 import { useTranslation } from "react-i18next";
+import { toast, ToastContainer } from "react-toastify";
 
 function reducer(state, action) {
   console.log("Action func -> ", action);
@@ -104,6 +105,7 @@ export default function Simposio({ element, talleres }) {
       ) : (
         <div>{t("Cargando evento ...")}</div>
       )}
+      <ToastContainer />
     </div>
   );
 }

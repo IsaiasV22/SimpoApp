@@ -40,6 +40,8 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
   const high_contrast = useGlobalState((state) => state.high_contrast);
   const pathname = usePathname();
   const urlActividad = `${pathname}/actividades/actividad`;
+  const [isProcessing, setIsProcessing] = useState(false);
+
   //button text hook
   const [buttonText, setButtonText] = useState("Agregar a mi calendario");
 
@@ -115,36 +117,6 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
     return output;
   }
 
-  //handleMeInteresa
-  async function handleMeInteresa(PK_actividad) {
-    //console.log("Actividad seleccionada para hacer peticion : ", PK_actividad);
-    //event.stopPropagation();
-    try {
-      const response = await fetch(
-        `${urlServer}actividades/cambiaEstadoActividad`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ actividad: PK_actividad }),
-          credentials: "include",
-        }
-      );
-
-      if (!response.ok) {
-        console.log("response: ", response);
-        throw new Error(response.statusText);
-      }
-
-      const data = await response.json();
-      //console.log("data -> ",data);
-      data.success === "Actividad añadida a tu calendario"
-        ? toast.success(t(data.success))
-        : toast.success(t(data.success));
-    } catch (error) {
-      console.log("error -> ", error);
-      toast.error(error.message);
-    }
-  }
 
   //handleEstadoStatus
   async function handleEstadoEstatus(PK_actividad, estatus) {
@@ -223,11 +195,20 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
   };
 
   return (
-    <div className={high_contrast?"high-contrast":""}>
+    <div className={high_contrast ? "high-contrast" : ""}>
       <div className="container my-5">
-        <h3>{t("Total results: ")}{actividades.length}</h3>
-        <h3>{t("Total activities per page: ")}{currentActividades.length}</h3>
-        <h3>{t("Current page : ")}{currentPage}</h3>
+        <h3>
+          {t("Total results: ")}
+          {actividades.length}
+        </h3>
+        <h3>
+          {t("Total activities per page: ")}
+          {currentActividades.length}
+        </h3>
+        <h3>
+          {t("Current page : ")}
+          {currentPage}
+        </h3>
         <div className="row">
           {currentActividades.length > 0 ? (
             <>
@@ -241,13 +222,14 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                         element.hora_final,
                         element.dia_evento
                       )
-                        ? 'border-success border-5'
+                        ? "border-success border-5"
                         : ""
                     }`}
                   >
                     <div className="card-body position-relative">
                       <h5 className="card-title">
-                        {t("Title: ")}{element.descripcion}
+                        {t("Title: ")}
+                        {element.descripcion}
                       </h5>
                       <p className="card-text">
                         <i className="bi bi-calendar-event icon"> </i>
@@ -277,11 +259,19 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                           )}`}
                           style={{ marginRight: "1px" }}
                         >
-                          <button className="btn btnn-primary">{t("See_more")}</button>
+                          <button className="btn btnn-primary">
+                            {t("See_more")}
+                          </button>
                         </Link>
 
                         {user && rol === 1 && (
-                          <div style={{display:'flex',gap:'5px','margin-left':'5px'}}>
+                          <div
+                            style={{
+                              display: "flex",
+                              gap: "5px",
+                              "margin-left": "5px",
+                            }}
+                          >
                             <UpdateModal
                               pk={element.PK_actividad}
                               descripcion={element.descripcion}
@@ -305,24 +295,24 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                             >
                               {element.estatus ? t("Ocultar") : t("Mostrar")}
                             </button>
-                            <NuevoRecordatorio/>
+                            <NuevoRecordatorio />
                           </div>
                         )}
 
                         <div
-                          onClick={() => {
-                            handleMeInteresa(element.PK_actividad);
-                          }}
                           className="Heart-wrapper"
                         >
-                          <Heart actividad={element.PK_actividad}
-                              onChange={(isChecked) => {
-                                // Aquí puedes cambiar el texto del botón según el nuevo estado del checkbox
-                                const buttonText = isChecked ? "Quitar del calendario" : "Agregar a mi calendario";
-                                // Puedes almacenar el texto del botón en el estado local si es necesario
-                                // y luego usarlo en tu JSX para renderizar el botón con el texto actualizado
-                                setButtonText(buttonText);
-                              }}
+                          <Heart
+                            actividad={element.PK_actividad}
+                            onChange={(isChecked) => {
+                              // Aquí puedes cambiar el texto del botón según el nuevo estado del checkbox
+                              const buttonText = isChecked
+                                ? "Quitar del calendario"
+                                : "Agregar a mi calendario";
+                              // Puedes almacenar el texto del botón en el estado local si es necesario
+                              // y luego usarlo en tu JSX para renderizar el botón con el texto actualizado
+                              setButtonText(buttonText);
+                            }}
                           />
                         </div>
                       </div>

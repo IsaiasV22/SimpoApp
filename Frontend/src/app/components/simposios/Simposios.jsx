@@ -121,7 +121,7 @@ export default function Simposios() {
           )}
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={false}/>
     </div>
   );
 }

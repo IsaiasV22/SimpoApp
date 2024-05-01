@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./Actividad.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
 //import Link
 import Link from "next/link";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { urlServer } from "@/app/Utiles.jsx";
 import { usePathname } from "next/navigation";
