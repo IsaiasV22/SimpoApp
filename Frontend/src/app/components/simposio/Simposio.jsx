@@ -102,7 +102,7 @@ export default function Simposio({ element, talleres }) {
           )}
         </div>
       ) : (
-        <div>Cargando simposio ...</div>
+        <div>{t("Cargando evento ...")}</div>
       )}
     </div>
   );

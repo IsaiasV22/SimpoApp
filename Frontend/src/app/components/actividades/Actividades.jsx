@@ -40,6 +40,8 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
   const high_contrast = useGlobalState((state) => state.high_contrast);
   const pathname = usePathname();
   const urlActividad = `${pathname}/actividades/actividad`;
+  //button text hook
+  const [buttonText, setButtonText] = useState("Agregar a mi calendario");
 
   //console.log("Actividades del simposio: ", elementId);
 
@@ -137,7 +139,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
       //console.log("data -> ",data);
       data.success === "Actividad añadida a tu calendario"
         ? toast.success(t(data.success))
-        : toast.error(t(data.success));
+        : toast.success(t(data.success));
     } catch (error) {
       console.log("error -> ", error);
       toast.error(error.message);
@@ -313,7 +315,15 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                           }}
                           className="Heart-wrapper"
                         >
-                          <Heart actividad={element.PK_actividad} />
+                          <Heart actividad={element.PK_actividad}
+                              onChange={(isChecked) => {
+                                // Aquí puedes cambiar el texto del botón según el nuevo estado del checkbox
+                                const buttonText = isChecked ? "Quitar del calendario" : "Agregar a mi calendario";
+                                // Puedes almacenar el texto del botón en el estado local si es necesario
+                                // y luego usarlo en tu JSX para renderizar el botón con el texto actualizado
+                                setButtonText(buttonText);
+                              }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -329,12 +339,10 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
               />
             </>
           ) : (
-            <div className="col-12">No hay Actividades</div>
+            <div className="col-12">{t("No hay Actividades")}</div>
           )}
         </div>
       </div>
-
-      <ToastContainer />
     </div>
   );
 }

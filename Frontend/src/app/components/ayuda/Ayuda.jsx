@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { FormControl } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 export default function Ayuda() {
   const high_contrast = useGlobalState((state) => state.high_contrast);
@@ -17,6 +18,7 @@ export default function Ayuda() {
   const [descripcion, setDescripcion] = useState("");
   const [validated, setValidated] = useState(false);
   const router = useRouter();
+  const { t } = useTranslation("actividades");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -43,7 +45,7 @@ export default function Ayuda() {
         throw new Error(response.statusText);
       }
 
-      toast.success("Solicitud enviada correctamente");
+      toast.success(t("Solicitud enviada correctamente"));
       setTimeout(() => {
         window.location.reload();
       }, 1500);
@@ -62,7 +64,7 @@ export default function Ayuda() {
       <ToastContainer />
       <div className="container my-5 ">
         <h1 className="mb-4" style={{ textAlign: "center" }}>
-          Solicitud de ayuda
+          {t("Solicitud de ayuda")}
         </h1>
         <div className="card" style={{ padding: "3%" }}>
           <Form
@@ -75,43 +77,43 @@ export default function Ayuda() {
               <Form.Control
                 type="text"
                 required
-                placeholder="Nombre"
+                placeholder={t("Nombre")}
                 value={nombre_usuario}
                 onChange={(e) => setNombreUsuario(e.target.value)}
               />
               <FormControl.Feedback type="invalid">
-                Por favor ingrese su nombre
+                {t("Por favor ingrese su nombre")}
               </FormControl.Feedback>
             </InputGroup>
             <InputGroup className="mb-2" has-validation>
               <Form.Control
                 type="email"
                 required
-                placeholder="Correo"
+                placeholder={t("Correo")}
                 value={correo}
                 onChange={(e) => setCorreo(e.target.value)}
               />
               <FormControl.Feedback type="invalid">
-                Por favor ingrese un correo valido
+                {t("Por favor ingrese un correo valido")}
               </FormControl.Feedback>
             </InputGroup>
             <InputGroup className="mb-2" has-validation>
               <Form.Control
                 type="text"
                 required
-                placeholder="Descripcion"
+                placeholder={t("Descripcion")}
                 as="textarea"
                 style={{ height: "150px" }}
                 value={descripcion}
                 onChange={(e) => setDescripcion(e.target.value)}
               />
               <FormControl.Feedback type="invalid">
-                Por favor ingrese una descripcion de su problema
+                {t("Por favor ingrese una descripcion de su problema")}
               </FormControl.Feedback>
             </InputGroup>
             <div className="d-flex justify-content-end">
               <Button variant="secondary" onClick={handleCancel}>
-                Cancelar
+                {t("Cancelar")}
               </Button>
               <div
                 className={high_contrast ? "high-contrast" : ""}
@@ -122,7 +124,7 @@ export default function Ayuda() {
                   type="submit"
                   className="btnn-primary"
                 >
-                  Enviar
+                  {t("Enviar")}
                 </Button>
               </div>
             </div>

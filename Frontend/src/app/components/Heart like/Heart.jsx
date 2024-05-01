@@ -4,11 +4,13 @@ import "@/app/css/Heart.css";
 import "@/app/App.css";
 import { urlServer } from "@/app/Utiles.jsx";
 import Floater from "react-floater";
+// translate hook
+import { useTranslation } from "react-i18next";
 
 export default function Heart(actividad) {
   //estatus state hook
   const [isChecked, setIsChecked] = useState(false);
-
+  const { t } = useTranslation("actividades");
   //useEffect for checkbox
   useEffect(() => {
     handleCheckbox(actividad);
@@ -41,7 +43,7 @@ export default function Heart(actividad) {
       }
 
       const data = await response.json();
-      //console.log("data -> ", data);
+      console.log("data -> ", data.estatus);
       setIsChecked(data.estatus);
       //return data.estatus;
       //toast.success(data.success);
@@ -65,20 +67,18 @@ export default function Heart(actividad) {
         <input
           type="checkbox"
           id="checkbox" 
-          onClick={handleCheckboxClick}
           onChange={handleCheckboxChange}
+          onClick={handleCheckboxClick}
           checked={isChecked}
         />
         <label htmlFor="checkbox">
-          <Floater
-           title='Add to my calendar' 
-           event='hover'
-           placement='top'
-           eventDelay={2}
-           hideArrow={false}  
-           >
-          <button className="btn btnn-primary">Me interesa</button>
-          </Floater>
+          <button className={`btn ${isChecked ? "btn-danger" : "btn-success"}`}
+            onClick={() =>{setIsChecked(!isChecked)}}
+          >{
+          isChecked?
+          t("Quitar del calendario")
+          :t("Agregar a mi calendario")
+          }</button>
         </label>
       </div>
     </div>

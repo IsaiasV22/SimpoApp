@@ -5,12 +5,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useGlobalState from "../globalState/GlobalState";
 import SolicitudAyudaCard from "./solicitudAyudaCard/SolicitudAyudaCard";
+import { useTranslation } from "react-i18next";
 
 export default function SolicitudesAyuda() {
   const [solicitudes, setSolicitudes] = useState([]);
   const user = useGlobalState((state) => state.user);
   const rol = useGlobalState((state) => state.rol);
   const high_contrast = useGlobalState((state) => state.high_contrast);
+  const { t } = useTranslation();
 
   async function handleSolicitudesAyuda() {
     try {
@@ -35,7 +37,7 @@ export default function SolicitudesAyuda() {
         <ToastContainer />
         <div className="container">
           <h1 className="m-4" style={{ textAlign: "center" }}>
-            Solicitudes de ayuda
+            {t("Solicitudes de ayuda")}
           </h1>
           <div className="row">
             {solicitudes.length > 0 && user ? (
@@ -48,7 +50,7 @@ export default function SolicitudesAyuda() {
                 />
               ))
             ) : (
-              <div className="col-12">No hay solicitudes</div>
+              <div className="col-12">{t("No hay solicitudes")}</div>
             )}
           </div>
         </div>
@@ -57,7 +59,7 @@ export default function SolicitudesAyuda() {
   } else {
     return (
       <div>
-        <h1>Only administrators can access this page</h1>
+        <h1>{t("Only administrators can access this page")}</h1>
       </div>
     );
   }
