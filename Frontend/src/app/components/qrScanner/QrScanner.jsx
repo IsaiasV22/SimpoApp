@@ -2,6 +2,7 @@
 import { urlServer } from "@/app/Utiles";
 import styles from "./QRScanner.module.css"; // Importa los estilos específicos para este componente
 import useGlobalState from "../globalState/GlobalState";
+import { useTranslation } from "react-i18next";
 
 // Importación de dependencias necesarias para el componente
 import React, { useEffect, useRef, useState } from "react";
@@ -14,6 +15,7 @@ const QRScanner = () => {
   // Referencias al video y al canvas HTML donde se mostrará la cámara y se dibujará el QR escaneado
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const { t } = useTranslation("qrScanner");
 
   // Estado para controlar si se está escaneando o no
   const [isScanning, setIsScanning] = useState(false);
@@ -77,14 +79,14 @@ const QRScanner = () => {
       .then((response) => {
         // Maneja la respuesta del servidor
         if (response.ok) {
-          toast.success("¡Asistencia registrada!"); // Notificación de éxito
+          toast.success(t("¡Asistencia registrada!")); // Notificación de éxito
         } else {
-          toast.error("Error al registrar asistencia"); // Notificación de error
+          toast.error(t("Error al registrar asistencia")); // Notificación de error
         }
       })
       .catch((error) => {
         // Captura y loguea errores en la petición
-        toast.error("Error al registrar asistencia: " + error.message);
+        toast.error(t("Error al registrar asistencia")+": " + error.message);
       });
   };
 
@@ -159,20 +161,20 @@ const QRScanner = () => {
               onClick={restartScanning}
               className="w-100 btnn-primary"
             >
-              Scan Again
+              {t("Scan Again")}
             </Button>
           ) : (
             <Button
               disabled
               className={`w-100 btnn-primary ${styles.loadingText}`}
             >
-              Scanning...
+              {t("Scanning...")}
             </Button>
           )}
 
           {!isScanning && (
             <Button className={styles.scanned} disabled>
-              Scanned data
+              {t("Scanned data")}
             </Button>
           )}
         </Card.Footer>

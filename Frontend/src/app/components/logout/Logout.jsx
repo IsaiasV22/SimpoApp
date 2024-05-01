@@ -4,11 +4,16 @@ import { urlServer } from "@/app/Utiles";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import useGlobalState from "@/app/components/globalState/GlobalState";
+//translation hook
+import { useTranslation } from 'react-i18next';
 
 const LogoutButton = () => {
   const router = useRouter();
   const setUserState = useGlobalState((state) => state.setUser);
   const setUserRol = useGlobalState((state) => state.setRol);
+
+  //translation hook
+  const { t } = useTranslation(["common"]);
 
   //handleLogout que realiza un fetch a urlServer + usuarios/logout
   async function handleLogout() {
@@ -39,7 +44,7 @@ const LogoutButton = () => {
         className="nav-link btn btn-link text-danger"
         onClick={handleLogout}
       >
-        Logout
+        {t("Logout")}
       </button>
     </>
   );

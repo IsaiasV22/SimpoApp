@@ -6,10 +6,12 @@ import Link from "next/link";
 import { urlServer } from "@/app/Utiles.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 export default function Ponente({ actividadIdP }) {
   //hook ponente
   const [ponente, setPonente] = useState(null);
+  const { t } = useTranslation("actividades");
   useEffect(() => {
     handlePonente();
   }, []);
@@ -38,27 +40,27 @@ export default function Ponente({ actividadIdP }) {
     <div className="container my-5">
       {ponente ? (
         <>
-          <h1 className="mb-4">Ponente</h1>
+          <h1 className="mb-4">{t("Author")}</h1>
           <div className="row">
             <div className="col-12 mb-4">
               <div className="card">
                 <div className="card-body">
-                  <h5 className="card-title">Información</h5>
-                  <p className="card-text">{"Nombre: " + ponente.nombre}</p>
-                  <p className="card-text">{"Apellidos: " + ponente.apellidos}</p>
-                  <p className="card-text">{"Afiliación: " + ponente.afiliacion}</p>
-                  <p className="card-text">{"País: " + ponente.pais}</p>
-                  <p className="card-text">{"Ciudad: " + ponente.ciudad}</p>
+                  <h5 className="card-title">{t("Información")}</h5>
+                  <p className="card-text">{t("Nombre: ") + ponente.nombre}</p>
+                  <p className="card-text">{t("Apellidos: ") + ponente.apellidos}</p>
+                  <p className="card-text">{t("Afiliación: ") + ponente.afiliacion}</p>
+                  <p className="card-text">{t("País: ") + ponente.pais}</p>
+                  <p className="card-text">{t("Ciudad: ") + ponente.ciudad}</p>
                 </div>
               </div>
             </div>
           </div>
         </>
       ) : (
-        <div>Cargando ponente...</div>
+        <div>{t("Cargando autor...")}</div>
       )}
     </div>
-    <ToastContainer />
+    <ToastContainer autoClose={false}/>
   </div>
   );
 }

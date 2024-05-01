@@ -9,11 +9,14 @@ import useGlobalState from "@/app/components/globalState/GlobalState";
 //toast
 import { ToastContainer, toast } from "react-toastify";
 import { urlServer } from "@/app/Utiles.jsx";
+// translate hook
+import { useTranslation } from "react-i18next";
 
 export default function NuevoRecordatorio() {
   const high_contrast = useGlobalState((state) => state.high_contrast);
   const [show, setShow] = useState(false);
   const [recordatorio, setRecordatorio] = useState("");
+  const { t } = useTranslation("actividades");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -36,18 +39,18 @@ export default function NuevoRecordatorio() {
       //check if response is 204
 
       if (response.status === 204) {
-        toast.success("Recordatorio guardado correctamente");
+        toast.success(t("Recordatorio guardado correctamente"));
       }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Error al guardar recordatorio ", error.code);
+      toast.error(t("Error al guardar recordatorio "), error.code);
     }
     handleClose();
   };
   return (
     <>
       <Button className="btnn-primary" onClick={handleShow}>
-        Nuevo recordatorio
+        {t("Nuevo recordatorio")}
       </Button>
       <Modal
         show={show}
@@ -56,19 +59,18 @@ export default function NuevoRecordatorio() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Nuevo recordatorio</Modal.Title>
+          <Modal.Title>{t("Nuevo recordatorio")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <span style={{ marginBottom: "5px" }}>
-            Los recordatorios llegarán como notificación a los usuarios
-            suscritos a esta actividad
+            {t("Los recordatorios llegarán como notificación a los usuarios suscritos a esta actividad")}
           </span>
           <Form id="nuevoRecordatorio" onSubmit={handleSubmit}>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="recordatorio">Recordatorio</InputGroup.Text>
+              <InputGroup.Text id="recordatorio">{t("Recordatorio")}</InputGroup.Text>
               <Form.Control
                 as="textarea"
-                placeholder="Escribe aquí tu recordatorio"
+                placeholder={t("Escribe aquí tu recordatorio")}
                 aria-label=""
                 aria-describedby="recordatorio"
                 value={recordatorio}
@@ -79,7 +81,7 @@ export default function NuevoRecordatorio() {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t("Close")}
           </Button>
           <div className={high_contrast ? "high-contrast" : ""}>
             <Button
@@ -87,7 +89,7 @@ export default function NuevoRecordatorio() {
               type="submit"
               className="btnn-primary"
             >
-              Guardar recordatorio
+              {t("Guardar recordatorio")}
             </Button>
           </div>
         </Modal.Footer>

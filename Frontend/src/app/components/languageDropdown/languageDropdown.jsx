@@ -38,7 +38,7 @@ export default function languageDropdown() {
   return (
     <NavDropdown.Item onClick={(e)=>e.stopPropagation()}>
       <div style={{ display: "flex", alignItems: "center" }}>
-        Language
+        {t("Language")}
         <div style={{ display: "flex", marginLeft: "auto" }}>
           {/* Engish en 1 */}
           <img

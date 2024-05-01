@@ -1,7 +1,7 @@
 import Pagination from "react-bootstrap/Pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import "./Pagination.css";
-
+import { useTranslation } from "react-i18next";
 const pagination = ({
   Actividades,
   actividadesPerPage,
@@ -9,6 +9,8 @@ const pagination = ({
   currentPage,
   setActividadesPerPage,
 }) => {
+
+  const { t } = useTranslation("actividades");
 
   let pages = [];
   for (
@@ -56,7 +58,7 @@ const pagination = ({
       <div className="centered">
         <br />
         <div style={{ display: "flex", marginBottom: "2px" }}>
-          <span className="m-1 ">Activities per page:</span>
+          <span className="m-1 ">{t("Activities per page:")}</span>
           <select onChange={handleActivitiesPerPage} value={actividadesPerPage}>
             {Array.from({ length: Actividades.length }, (_, i) =>
               i + 1 === actividadesPerPage ||

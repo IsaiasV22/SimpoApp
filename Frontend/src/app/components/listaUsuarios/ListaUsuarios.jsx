@@ -11,6 +11,7 @@ import useGlobalState from "@/app/components/globalState/GlobalState";
 import Notificacion from "../Notificacion";
 import { usePathname } from "next/navigation";
 //import usuarioCard from "./usuarioCard/EventoCard"; // Importando el componente usuarioCard
+import { useTranslation } from "react-i18next";
 
 export default function ListaUsuarios({ idEvento }) {
   const [usuarios, setUsuarios] = useState([]);
@@ -24,6 +25,7 @@ export default function ListaUsuarios({ idEvento }) {
   const evento = useGlobalState((state) => state.evento);
   const rol = useGlobalState((state) => state.rol);
   const urlUsuarios = `${pathname}/listaUsuarios`;
+  const { t } = useTranslation("actividades");
 
   useEffect(() => {
     handleUsuarios();
@@ -103,7 +105,7 @@ export default function ListaUsuarios({ idEvento }) {
       <Notificacion />
       <div className="container my-5">
         <h1 className="mb-4" style={{ textAlign: "center" }}>
-          Usuarios
+          {t("Usuarios")}
         </h1>
         <div className="row">
           <div className="col-12">
@@ -111,7 +113,7 @@ export default function ListaUsuarios({ idEvento }) {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Buscar por nombre"
+                placeholder={t("Buscar por nombre")}
                 aria-label="users id"
                 value={searchText}
                 onChange={handleSearchButtonClick}
@@ -123,7 +125,7 @@ export default function ListaUsuarios({ idEvento }) {
                 id="button-addon2"
                 onClick={handleSearchButtonClick}
               >
-                Buscar
+                {t("Buscar")}
               </button>
             </div>
           </div>
@@ -134,9 +136,9 @@ export default function ListaUsuarios({ idEvento }) {
               <table className="table">
                 <thead>
                   <tr>
-                    <th>Cédula</th>
-                    <th>Nombre</th>
-                    <th>Estado de suscripción</th>
+                    <th>{t("Cédula")}</th>
+                    <th>{t("Nombre")}</th>
+                    <th>{t("Estado de suscripción")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -170,7 +172,7 @@ export default function ListaUsuarios({ idEvento }) {
               </table>
             </div>
           ) : (
-            <div className="col-12">No hay usuarios para mostrar</div>
+            <div className="col-12">{t("No hay usuarios para mostrar")}</div>
           )}
         </div>
       </div>
