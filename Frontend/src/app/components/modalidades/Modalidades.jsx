@@ -1,9 +1,10 @@
 import { Link } from "next/link";
 import { useState } from "react";
 import ActividadesFilter from "../actividades/Actividades";
+import { useTranslation } from "react-i18next";
 export default function Modalidades({ talleres, elementId }) {
   const [talleresEstado, setTalleresEstado] = useState({});
-  console.log("Talleres: ",talleres);
+  const { t } = useTranslation("actividades");
   const toggleActividades = (tallerId) => {
     setTalleresEstado((prevTalleresEstado) => ({
       ...prevTalleresEstado,
@@ -17,7 +18,7 @@ export default function Modalidades({ talleres, elementId }) {
   return (
     <div className="main-content">
       <div className="container my-5">
-        <h1 className="mb-4">Modalities</h1>
+        <h1 className="mb-4">{t("Modalities")}</h1>
         <div className="row">
           <div>
             {talleres ? (
@@ -33,8 +34,8 @@ export default function Modalidades({ talleres, elementId }) {
                           className="btn btn-primary"
                         >
                           {talleresEstado[element.PK_taller]
-                            ? "Ocultar actividades"
-                            : "Ver actividades"}
+                            ? t("Ocultar_actividades")
+                            : t("Ver_actividades")}
                         </button>
                       </div>
                     </div>

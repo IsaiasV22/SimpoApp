@@ -18,12 +18,14 @@ import UpdateModal from "./UpdateModal/UpdateModal";
 import PonenteActividadesCard from "../ponente/PonenteActividadesCard";
 import Pagination from "./Pagination";
 import NuevoRecordatorio from "../recordatorio/NuevoRecordatorio";
+import { useTranslation } from "react-i18next";
 
 export default function ActividadesFilter({ elementId, filterFunctions }) {
   //console.log('filterFunction: ', filterFunction.toString())
   const [actividades, setActividades] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [actividadesPerPage, setActividadesPerPage] = useState(5);
+  const { t } = useTranslation("actividades");
   //last activity index
   const indexOfLastActividad = currentPage * actividadesPerPage;
   //first activity index
@@ -38,6 +40,8 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
   const high_contrast = useGlobalState((state) => state.high_contrast);
   const pathname = usePathname();
   const urlActividad = `${pathname}/actividades/actividad`;
+  //button text hook
+  const [buttonText, setButtonText] = useState("Agregar a mi calendario");
 
   //console.log("Actividades del simposio: ", elementId);
 
@@ -134,8 +138,8 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
       const data = await response.json();
       //console.log("data -> ",data);
       data.success === "Actividad añadida a tu calendario"
-        ? toast.success(data.success)
-        : toast.error(data.success);
+        ? toast.success(t(data.success))
+        : toast.success(t(data.success));
     } catch (error) {
       console.log("error -> ", error);
       toast.error(error.message);
@@ -191,7 +195,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
       console.log("exponente por id: ", data[0]);
       return data[0];
     } catch (error) {
-      toast.error("Error fetching author (Ponente) :", error.message);
+      toast.error(t("Error fetching author (Ponente) :"), error.message);
       //alert(error.message);
     }
   }
@@ -221,9 +225,9 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
   return (
     <div className={high_contrast?"high-contrast":""}>
       <div className="container my-5">
-        <h3>Total results: {actividades.length}</h3>
-        <h3>Total activities per page: {currentActividades.length}</h3>
-        <h3>Current page : {currentPage}</h3>
+        <h3>{t("Total results: ")}{actividades.length}</h3>
+        <h3>{t("Total activities per page: ")}{currentActividades.length}</h3>
+        <h3>{t("Current page : ")}{currentPage}</h3>
         <div className="row">
           {currentActividades.length > 0 ? (
             <>
@@ -243,23 +247,23 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                   >
                     <div className="card-body position-relative">
                       <h5 className="card-title">
-                        Title: {element.descripcion}
+                        {t("Title: ")}{element.descripcion}
                       </h5>
                       <p className="card-text">
                         <i className="bi bi-calendar-event icon"> </i>
-                        {"Date: " + formatDate(element.dia_evento, "es")}
+                        {t("Date: ") + formatDate(element.dia_evento, "es")}
                       </p>
                       <p className="card-text">
                         <i className="bi bi-clock icon"></i>
-                        {" Start time: " + element.hora_inicio}
+                        {t(" Start time: ") + element.hora_inicio}
                       </p>
                       <p className="card-text">
                         <i className="bi bi-clock icon"></i>
-                        {" End time: " + element.hora_final}
+                        {t(" End time: ") + element.hora_final}
                       </p>
                       <p className="card-text">
                         <i className="bi bi-map icon"></i>
-                        {" Location: " + element.ubicacion}
+                        {t(" Location: ") + element.ubicacion}
                       </p>
                       <p className="card-text">
                         <PonenteActividadesCard
@@ -273,7 +277,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                           )}`}
                           style={{ marginRight: "1px" }}
                         >
-                          <button className="btn btnn-primary">Ver más</button>
+                          <button className="btn btnn-primary">{t("See_more")}</button>
                         </Link>
 
                         {user && rol === 1 && (
@@ -299,7 +303,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                               className="btn btnn-primary"
                               style={{ marginLeft: "1px" }}
                             >
-                              {element.estatus ? "Ocultar" : "Mostrar"}
+                              {element.estatus ? t("Ocultar") : t("Mostrar")}
                             </button>
                             <NuevoRecordatorio/>
                           </div>
@@ -311,7 +315,15 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                           }}
                           className="Heart-wrapper"
                         >
-                          <Heart actividad={element.PK_actividad} />
+                          <Heart actividad={element.PK_actividad}
+                              onChange={(isChecked) => {
+                                // Aquí puedes cambiar el texto del botón según el nuevo estado del checkbox
+                                const buttonText = isChecked ? "Quitar del calendario" : "Agregar a mi calendario";
+                                // Puedes almacenar el texto del botón en el estado local si es necesario
+                                // y luego usarlo en tu JSX para renderizar el botón con el texto actualizado
+                                setButtonText(buttonText);
+                              }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -327,12 +339,10 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
               />
             </>
           ) : (
-            <div className="col-12">No hay Actividades</div>
+            <div className="col-12">{t("No hay Actividades")}</div>
           )}
         </div>
       </div>
-
-      <ToastContainer />
     </div>
   );
 }

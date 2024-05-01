@@ -7,8 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 //router from next/navigation
 import { useRouter } from "next/navigation";
 import "@/app/App.css";
+import { useTranslation } from "react-i18next";
 
 function SolicitudAyudaCard({ element, user, rol }) {
+  const { t } = useTranslation();
   async function handleEstado(solicitudAyudaId, estado) {
     console.log(element);
     let response = null;
@@ -99,7 +101,7 @@ function SolicitudAyudaCard({ element, user, rol }) {
             className="btn btn-secondary"
             style={{ margin: "3px" }}
           >
-            Eliminar
+            {t("Eliminar")}
           </button>
           <button
             //on click cambiar el estado de activo
@@ -109,7 +111,7 @@ function SolicitudAyudaCard({ element, user, rol }) {
             className="btn btnn-primary"
             style={{ margin: "3px" }}
           >
-            {element.estado ? "Listo" : "Pendiente"}
+            {element.estado ? t("Listo") : t("Pendiente")}
           </button>
         </div>
       </div>
