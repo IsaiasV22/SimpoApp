@@ -224,10 +224,68 @@ const getSubscriptionsByActivity = (activity) => {
   });
 };
 
+// Delete subscription from db
+const deleteSubscriptionFromDB = (username, subscription) => {
+  console.log('Values from deleteSubscriptionFromDB -> ', username, subscription);
+  return new Promise((resolve, reject) => {
+    // Begin transaction
+    db.beginTransaction(err => {
+      if (err) {
+        console.error("Error al iniciar la transacción:", err);
+        return reject(err);
+      }
+
+      // Delete from usuario_notificacion_simpo_app
+      db.query(
+        "DELETE FROM usuario_notificacion_simpo_app WHERE FK_usuario = ? AND FK_simpo_app_notificacion = ?",
+        [username, subscription],
+        (err, results) => {
+          if (err) {
+            console.error("Error al eliminar el registro de usuario_notificacion_simpo_app:", err);
+            // Rollback transaction
+            return db.rollback(() => {
+              reject(err);
+            });
+          }
+
+          // Delete from simpo_app_notificacion
+          db.query(
+            "DELETE FROM simpo_app_notificacion WHERE PK_p256dh = ?",
+            [subscription],
+            (err, results) => {
+              if (err) {
+                console.error("Error al eliminar la notificación de simpo_app_notificacion:", err);
+                // Rollback transaction
+                return db.rollback(() => {
+                  reject(err);
+                });
+              }
+
+              // Commit transaction
+              db.commit(err => {
+                if (err) {
+                  console.error("Error al confirmar la transacción:", err);
+                  // Rollback transaction
+                  return db.rollback(() => {
+                    reject(err);
+                  });
+                }
+                resolve(results);
+              });
+            }
+          );
+        }
+      );
+    });
+  });
+};
+
+
 module.exports = {
   saveSubscriptionToFile,
   notifySomeSuscribers,
   getSubscriptions,
   notifyActivityUpdate,
   saveSubscriptionToDB,
+  deleteSubscriptionFromDB
 };

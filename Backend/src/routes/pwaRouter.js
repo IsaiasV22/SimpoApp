@@ -27,6 +27,9 @@ router.post("/suscribe", (req, res) => {
   if (req.session.user.PK_nombre_usuario) {
     subscription.user = req.session.user.PK_nombre_usuario;
   }
+  //save subscription in session
+  req.session.subscription = subscription.keys.p256dh;
+  console.log('session -> ', req.session)
 
   //save subscription in file
   //pwaController.saveSubscriptionToFile(subscription);
@@ -45,6 +48,36 @@ router.post("/suscribe", (req, res) => {
     .catch((err) => console.error(err));
   // Send 201 - resource created
   res.status(201).json({});
+});
+
+//unsubscribe
+router.delete("/unsubscribe", async (req, res) => {
+  console.log("Inside /unsubscribe");
+  // user and subscription in session?
+  //get user from session
+  console.log("req.session -> ", req.session);
+  const user = req.session.user.PK_nombre_usuario;
+  //get subscription from session
+  const subscription = req.session.subscription;
+
+  console.log("user -> ", user);
+  console.log("subscription -> ", subscription);
+
+  if (!user || !subscription) {
+    console.log("User or subscription not found");
+    return res.status(404).json({ error: "User or subscription not found" });
+  }
+  try {
+    //delete subscription from db
+    await pwaController.deleteSubscriptionFromDB(user, subscription);
+    // Send 200 - OK
+    res.status(200).json({});
+    //delete subscription from session
+    req.session.subscription = null;
+  } catch (error) {
+    console.error("Error deleting subscription from db -> ", error);
+    res.status(500).json({ error: "Error deleting subscription from db" });
+  }
 });
 
 //notify all suscribers
