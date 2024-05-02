@@ -2,6 +2,8 @@
 import useGlobalState from "./globalState/GlobalState";
 import { useEffect } from "react";
 import { urlServer } from "../Utiles";
+import { el } from "date-fns/locale";
+import { set } from "date-fns";
 
 export default function Notificacion() {
   const suscribed = useGlobalState((state) => state.suscribed);
@@ -15,6 +17,21 @@ export default function Notificacion() {
 async function usePushNotifications(sus, setSus) {
   const suscribed = sus;
   const setSuscribed = setSus;
+
+  //check if user is subscribed
+  const subscription = await navigator.serviceWorker.ready.then(
+    (registration) => {
+      return registration.pushManager.getSubscription();
+    }
+  );
+  if (subscription) {
+    console.log("User is subscribed");
+    setSuscribed(true);
+    return;
+  }else{
+    console.log("User is not subscribed");
+    setSuscribed(false);
+  }
 
   const publicKey =
     "BIKroZH-Tg82nsN44yllJMxG9EC2xcp6J_d6o44Gi9JjMxV1o_glCf_Y3QFiYhg5TosPCfZHPkE1hu859cfQbsg";

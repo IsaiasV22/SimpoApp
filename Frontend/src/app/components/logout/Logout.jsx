@@ -11,12 +11,19 @@ const LogoutButton = () => {
   const router = useRouter();
   const setUserState = useGlobalState((state) => state.setUser);
   const setUserRol = useGlobalState((state) => state.setRol);
+  // global state subscription
+  const setSuscribed = useGlobalState((state) => state.setSuscribed);
+  const suscribeState = useGlobalState((state) => state.suscribed);
 
   //translation hook
   const { t } = useTranslation(["common"]);
 
   //handleLogout que realiza un fetch a urlServer + usuarios/logout
   async function handleLogout() {
+    //delete subscription
+    console.log("trying to delete subscription");
+    await deleteSubscription();
+    console.log("subscription deleted");
     try {
       const response = await fetch(`${urlServer}usuarios/logout`, {
         method: "POST",
@@ -37,6 +44,39 @@ const LogoutButton = () => {
       });
     }
   }
+
+  const deleteSubscription = async () => {
+    //check if user is subscribed
+    const subscription = await navigator.serviceWorker.ready.then((registration) => {
+      return registration.pushManager.getSubscription();
+    });
+
+     if (subscription) {
+      try{
+      //unsubscribe from service worker
+      await subscription.unsubscribe();
+      //set permission to false
+      //Notification.reset();
+      //delete subscription from global state
+      setSuscribed(false);
+      console.log("Unsubscribed from service worker");
+      console.log("trying to delete subscription from db");
+      await fetch(`${urlServer}pwa/unsubscribe`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    });
+    console.log("subscription deleted from db");
+     
+    } catch (error) {
+      console.error("Error unsubscribing from service worker", error);
+      toast.error("Error unsubscribing from service worker");
+    }
+    } 
+  }
+
 
   return (
     <>
