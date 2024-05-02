@@ -295,7 +295,7 @@ export default function ActividadesFilter({ elementId, filterFunctions }) {
                             >
                               {element.estatus ? t("Ocultar") : t("Mostrar")}
                             </button>
-                            <NuevoRecordatorio />
+                            <NuevoRecordatorio activityId={element.PK_actividad} />
                           </div>
                         )}
 

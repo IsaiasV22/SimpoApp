@@ -182,7 +182,7 @@ export default function Actividad({ actividadId }) {
                       </div>
                     )}
                     <QrCode activityId={actividadId} />
-                    <SeccionRecordatorios />
+                    <SeccionRecordatorios activityId={actividadId}/>
                   </div>
                 </div>
               </div>

@@ -7,12 +7,13 @@ import InputGroup from "react-bootstrap/InputGroup";
 //global state
 import useGlobalState from "@/app/components/globalState/GlobalState";
 //toast
-import { ToastContainer, toast } from "react-toastify";
+import toast, { Toaster } from 'react-hot-toast';
 import { urlServer } from "@/app/Utiles.jsx";
 // translate hook
 import { useTranslation } from "react-i18next";
 
-export default function NuevoRecordatorio() {
+export default function NuevoRecordatorio({ activityId }) {
+  console.log("activityId -> ", activityId);
   const high_contrast = useGlobalState((state) => state.high_contrast);
   const [show, setShow] = useState(false);
   const [recordatorio, setRecordatorio] = useState("");
@@ -26,16 +27,13 @@ export default function NuevoRecordatorio() {
     // post recordatorio
     try {
       //mock server
-      const response = await fetch(
-        `${urlServer}recordatorios`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ recordatorio }),
-        }
-      );
+      const response = await fetch(`${urlServer}recordatorios`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ recordatorio, id: activityId})
+      });
       //check if response is 204
 
       if (response.status === 204) {
@@ -63,11 +61,15 @@ export default function NuevoRecordatorio() {
         </Modal.Header>
         <Modal.Body>
           <span style={{ marginBottom: "5px" }}>
-            {t("Los recordatorios llegarán como notificación a los usuarios suscritos a esta actividad")}
+            {t(
+              "Los recordatorios llegarán como notificación a los usuarios suscritos a esta actividad"
+            )}
           </span>
           <Form id="nuevoRecordatorio" onSubmit={handleSubmit}>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="recordatorio">{t("Recordatorio")}</InputGroup.Text>
+              <InputGroup.Text id="recordatorio">
+                {t("Recordatorio")}
+              </InputGroup.Text>
               <Form.Control
                 as="textarea"
                 placeholder={t("Escribe aquí tu recordatorio")}
@@ -94,7 +96,6 @@ export default function NuevoRecordatorio() {
           </div>
         </Modal.Footer>
       </Modal>
-      <ToastContainer />
     </>
   );
 }

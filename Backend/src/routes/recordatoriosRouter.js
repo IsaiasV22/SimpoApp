@@ -7,9 +7,13 @@ router.use(express.json());
 
 // Obtener todos los recordatorios
 
-router.get("/", (req, res) => {
-  console.log("get /recordatorios");
-  recordatoriosController.getRecordatorios(req, res);
+router.get("/:id", (req, res) => {
+  try{
+    console.log("post /recordatorios");
+    recordatoriosController.getRecordatorios(req, res);
+  }catch(e){
+    console.log(e);
+  }
 });
 
 //post nuevo recordatorio

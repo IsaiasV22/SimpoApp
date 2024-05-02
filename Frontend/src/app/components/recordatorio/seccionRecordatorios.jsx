@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { urlServer } from "@/app/Utiles.jsx";
 import { useTranslation } from "react-i18next";
 
-export default function SeccionRecordatorios() {
+export default function SeccionRecordatorios( {activityId}) {
+  console.log("activityId -> ", activityId);
   const [recordatorios, setRecordatorios] = useState([]);
   const { t } = useTranslation("actividades");
     useEffect(() => {
@@ -11,7 +12,8 @@ export default function SeccionRecordatorios() {
 
     const fetchRecordatorios = async () => {
         try {
-            const response = await fetch(`${urlServer}recordatorios`);
+          const id = activityId;
+            const response = await fetch(`${urlServer}recordatorios/${id}`);
             const data = await response.json();
             setRecordatorios(data);
         } catch (error) {

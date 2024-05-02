@@ -69,3 +69,6 @@ JOIN
     usuario_notificacion_simpo_app unsa ON sn.PK_p256dh = unsa.FK_simpo_app_notificacion
 JOIN 
     usuario u ON unsa.FK_usuario = u.PK_nombre_usuario;
+
+
+SELECT * FROM RECORDATORIO WHERE FK_ACTIVIDAD = 1;
