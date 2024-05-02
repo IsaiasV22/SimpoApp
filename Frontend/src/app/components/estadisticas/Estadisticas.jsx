@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Button from "react-bootstrap/Button";
 
 import Papa from "papaparse";
+// translation hook
+import { useTranslation } from "react-i18next";
 
 // ...
 
@@ -25,6 +27,9 @@ function generateCSV(data) {
 function Estadisticas() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // translation hook
+  const { t } = useTranslation(["common"]);
 
   useEffect(() => {
     document.title = "Estadisticas";
@@ -64,9 +69,9 @@ function Estadisticas() {
         style={{ margin: "0.5%" }}
         onClick={fetchData}
       >
-        Cargar Información Estadistica
+        {t("Cargar_Información_Estadistica")}
       </button>
-      <ToastContainer />
+      <ToastContainer/>
     </>
   );
 }

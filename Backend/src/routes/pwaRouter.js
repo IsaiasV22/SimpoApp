@@ -27,39 +27,73 @@ router.post("/suscribe", (req, res) => {
   if (req.session.user.PK_nombre_usuario) {
     subscription.user = req.session.user.PK_nombre_usuario;
   }
+  //save subscription in session
+  req.session.subscription = subscription.keys.p256dh;
+  console.log('session -> ', req.session)
 
   //save subscription in file
-  pwaController.saveSubscriptionToFile(subscription);
+  //pwaController.saveSubscriptionToFile(subscription);
 
-  // Create payload
-  const payload = JSON.stringify({ title: "Push Test" });
+  //save subscription in db
+  pwaController.saveSubscriptionToDB(subscription, subscription.user);
 
-  // Pass object into sendNotification
-  webpush
-    .sendNotification(subscription, payload)
-    .catch((err) => console.error(err));
-  // Send 201 - resource created
-  res.status(201).json({});
+});
+
+//unsubscribe
+router.delete("/unsubscribe", async (req, res) => {
+  console.log("Inside /unsubscribe");
+  // user and subscription in session?
+  //get user from session
+  console.log("req.session -> ", req.session);
+  const user = req.session.user.PK_nombre_usuario;
+  //get subscription from session
+  const subscription = req.session.subscription;
+
+  console.log("user -> ", user);
+  console.log("subscription -> ", subscription);
+
+  if (!user || !subscription) {
+    console.log("User or subscription not found");
+    return res.status(404).json({ error: "User or subscription not found" });
+  }
+  try {
+    //delete subscription from db
+    await pwaController.deleteSubscriptionFromDB(user, subscription);
+    // Send 200 - OK
+    res.status(200).json({});
+    //delete subscription from session
+    req.session.subscription = null;
+  } catch (error) {
+    console.error("Error deleting subscription from db -> ", error);
+    res.status(500).json({ error: "Error deleting subscription from db" });
+  }
 });
 
 //notify all suscribers
-router.get("/notify", (req, res) => {
+router.get("/notifyAll", async (req, res) => {
   // Get payload from query
   const payload = JSON.stringify({
-    title: "Push Test",
+    title: "Push Test from /notify",
     body: "Notified by SW!",
     icon: "https://image.flaticon.com/icons/svg/139/139899.svg",
   });
 
-  // Get current subscriptions
-  let subscriptions = pwaController.getSubscriptions();
-
-  // Send notifications to all subscribers
-  subscriptions.forEach((subscription) => {
-    webpush
-      .sendNotification(subscription, payload)
-      .catch((err) => console.error(err));
-  });
+  // Get subscriptions from pwaController async function
+  let subscriptions = [];
+  try {
+    subscriptions = await pwaController.getSubscriptions();
+    console.log("subscriptions from /notifyAll -> ", subscriptions);
+    //notify all suscribers after getting them asynchronically
+    subscriptions.forEach((subscription) => {
+      webpush
+        .sendNotification(subscription.notification, payload)
+        .catch((err) => console.error(err));
+    });
+  } catch (error) {
+    // If file does not exist or is empty, there are no previous subscriptions
+    subscriptions = [];
+    console.error("Error getting subscriptions from /notifyAll -> ", error);
+  }
 
   // Send 200 - OK
   res.status(200).json({});

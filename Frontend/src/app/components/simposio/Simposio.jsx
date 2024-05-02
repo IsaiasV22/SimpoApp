@@ -9,6 +9,9 @@ import Modalidades from "../modalidades/Modalidades";
 import SearchBar from "../searchbar/SearchBar";
 import ActividadesFilter from "../actividades/Actividades";
 import { ca } from "date-fns/locale";
+import CardInfo from "./cardInfo/CardInfo";
+import { useTranslation } from "react-i18next";
+import { toast, ToastContainer } from "react-toastify";
 
 function reducer(state, action) {
   console.log("Action func -> ", action);
@@ -35,6 +38,7 @@ const initialState = {
 
 export default function Simposio({ element, talleres }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { t } = useTranslation(["common"]);
 
   //console.log("Talleres -> ", talleres);
   //hook simposio
@@ -83,19 +87,8 @@ export default function Simposio({ element, talleres }) {
     <div>
       {simposio ? (
         <div>
-          <div className="simposio-container">{simposio.nombre}</div>
-          <div className="simposio-container">{simposio.descripcion}</div>
-          <div className="simposio-container">{simposio.lugar}</div>
-          <div className="simposio-container">
-            
-              <button
-                className="btn btn-primary"
-                onClick={() => window.open(`${simposio.direccion? simposio.direccion:"https://www.google.com/maps"}`)}
-              >
-                Ubicación
-              </button>
-            
-          </div>
+          <CardInfo element={simposio}/>
+
           <SearchBar
             dispatch={dispatch}
             dia_inicio={simposio.dia_inicio.slice(0, 10)}
@@ -110,8 +103,9 @@ export default function Simposio({ element, talleres }) {
           )}
         </div>
       ) : (
-        <div>Cargando simposio ...</div>
+        <div>{t("Cargando evento ...")}</div>
       )}
+      <ToastContainer />
     </div>
   );
 }

@@ -3,9 +3,12 @@ import React, { useEffect, useState } from "react";
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { urlServer } from "@/app/Utiles";
+// translation hook
+import { useTranslation } from "react-i18next";
 
 export default function AsistenciaActividades({ pk }) {
   const [data, setData] = useState(null);
+  const { t } = useTranslation(["common"]);
 
   useEffect(() => {
     async function fetchData() {
@@ -104,7 +107,7 @@ export default function AsistenciaActividades({ pk }) {
         style={{ margin: "0.5%" }}
         onClick={generateXLSX}
       >
-        Download Attendance List
+        {t("Download_Attendance_List")}
       </button>
     </div>
   );

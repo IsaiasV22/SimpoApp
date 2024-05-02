@@ -12,6 +12,8 @@ import InputGroup from "react-bootstrap/InputGroup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { set } from "date-fns";
+// translation hook
+import { useTranslation } from "react-i18next";
 
 function EditSimposio(element) {
   const [show, setShow] = useState(false);
@@ -24,8 +26,9 @@ function EditSimposio(element) {
   const [dia_inicio, setDiaInicio] = useState(new Date(element.dia_inicio));
   const [dia_final, setDiaFinal] = useState(new Date(element.dia_final));
   const high_contrast = useGlobalState((state) => state.high_contrast);
+  const { t } = useTranslation(["common"]);
 
-  const [file, setFile] = useState(null);  //Estado de la imagen
+  const [file, setFile] = useState(null); //Estado de la imagen
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -60,7 +63,7 @@ function EditSimposio(element) {
         throw new Error(response.statusText);
       }
 
-      toast.success("Editado correctamente");
+      toast.success(t("Editado_correctamente"));
       setTimeout(() => {
         handleClose();
         window.location.reload();
@@ -71,9 +74,10 @@ function EditSimposio(element) {
     }
   }
 
-  const uploadImage = async () => { //fetch para subir la imagen al server
+  const uploadImage = async () => {
+    //fetch para subir la imagen al server
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
 
     try {
       const response = await fetch(
@@ -89,16 +93,15 @@ function EditSimposio(element) {
       }
 
       const responseData = await response.json();
-      console.log(responseData.message); // Imprimir mensaje de éxito
+      //console.log(responseData.message); // Imprimir mensaje de éxito
     } catch (error) {
-      toast.error("Error al subir la imagen");
+      toast.error(t("Error_al_subir_la_imagen"));
       console.error(error.message);
     }
   };
 
-  const handleFileChange = async (event) => { //Guardar la imagen que se sube
-    const file = event.target.files[0];
-
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0]; //Guardar la imagen que se sube
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
@@ -109,7 +112,7 @@ function EditSimposio(element) {
   return (
     <>
       <Button className="btn btnn-primary" onClick={handleShow}>
-        Editar
+        {t("Edit")}
       </Button>
 
       <Modal
@@ -119,12 +122,12 @@ function EditSimposio(element) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Editar Simposio</Modal.Title>
+          <Modal.Title>{t("Edit_event")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form id="editSimposio" onSubmit={handleSubmit}>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="nombre">Nombre</InputGroup.Text>
+              <InputGroup.Text id="nombre">{t("Nombre")}</InputGroup.Text>
               <Form.Control
                 placeholder=""
                 aria-label=""
@@ -134,7 +137,7 @@ function EditSimposio(element) {
               />
             </InputGroup>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="descripcion">Descripcion</InputGroup.Text>
+              <InputGroup.Text id="descripcion">{t("Descripcion")}</InputGroup.Text>
               <Form.Control
                 as="textarea"
                 aria-label=""
@@ -143,7 +146,7 @@ function EditSimposio(element) {
               />
             </InputGroup>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="lugar">Lugar</InputGroup.Text>
+              <InputGroup.Text id="lugar">{t("Lugar")}</InputGroup.Text>
               <Form.Control
                 placeholder=""
                 aria-label=""
@@ -153,43 +156,45 @@ function EditSimposio(element) {
               />
             </InputGroup>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="imagen">Imagen</InputGroup.Text>
+              <InputGroup.Text id="imagen">{t("Imagen")}</InputGroup.Text>
               <Form.Control type="file" onChange={handleFileChange} />
             </InputGroup>
             <div>
-            <InputGroup className="mb-3">
-            <InputGroup.Text id="diaInicio">Dia de inicio</InputGroup.Text>
-              <DatePicker
-                showIcon
-                selectsStart
-                selected={dia_inicio}
-                onChange={(date) => setDiaInicio(date)}
-                startDate={dia_inicio}
-              />
+              <InputGroup className="mb-3">
+                <InputGroup.Text id="diaInicio">{t("Dia_de_inicio")}</InputGroup.Text>
+                <DatePicker
+                  showIcon
+                  selectsStart
+                  selected={dia_inicio}
+                  onChange={(date) => setDiaInicio(date)}
+                  startDate={dia_inicio}
+                />
               </InputGroup>
 
               <InputGroup className="mb-3">
-              <InputGroup.Text id="diaFinal">Dia de finalizacion</InputGroup.Text>
-              <DatePicker
-                showIcon
-                selectsEnd
-                selected={dia_final}
-                onChange={(date) => setDiaFinal(date)}
-                endDate={dia_final}
-                startDate={dia_inicio}
-                minDate={dia_inicio}
-              />
+                <InputGroup.Text id="diaFinal">
+                  {t("Dia_de_finalizacion")}
+                </InputGroup.Text>
+                <DatePicker
+                  showIcon
+                  selectsEnd
+                  selected={dia_final}
+                  onChange={(date) => setDiaFinal(date)}
+                  endDate={dia_final}
+                  startDate={dia_inicio}
+                  minDate={dia_inicio}
+                />
               </InputGroup>
             </div>
           </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t("Close")}
           </Button>
-          <div className={high_contrast?"high-contrast":""}>
+          <div className={high_contrast ? "high-contrast" : ""}>
             <Button form="editSimposio" type="submit" className="btnn-primary">
-              Aplicar cambios
+              {t("Aplicar_cambios")}
             </Button>
           </div>
         </Modal.Footer>
