@@ -37,17 +37,6 @@ router.post("/suscribe", (req, res) => {
   //save subscription in db
   pwaController.saveSubscriptionToDB(subscription, subscription.user);
 
-  // test notification
-
-  // Create payload
-  const payload = JSON.stringify({ title: "Push Test" });
-
-  // Pass object into sendNotification
-  webpush
-    .sendNotification(subscription, payload)
-    .catch((err) => console.error(err));
-  // Send 201 - resource created
-  res.status(201).json({});
 });
 
 //unsubscribe
