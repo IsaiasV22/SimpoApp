@@ -152,17 +152,33 @@ const notifyActivityUpdate = async(activity) => {
   const payload = JSON.stringify({
     title: activity.descripcion + " actualizada",
     body: "La actividad " + activity.descripcion + " ha sido actualizada",
-    icon: "https://image.flaticon.com/icons/svg/139/139899.svg",
+    icon: "https://www.ucr.ac.cr/medios/imagenes/2016/ucr.svg",
   });
 
   // Get subscriptions for the activity
-  let subscriptions = await getSubscriptionsByActivity(activity);
+  let subscriptions = await getSubscriptionsByActivity(activity.PK_actividad);
   // Send notifications to all subscribers
   subscriptions.forEach((subscription) => {
     webpush
       .sendNotification(subscription.subscription, payload)
       .catch((err) => console.error(err));
   });
+};
+
+const notifyActivityReminder = async(activity,payload) => {
+  try{
+    // Get subscriptions for the activity
+    let subscriptions = await getSubscriptionsByActivity(activity);
+    console.log("subscriptions -> ", subscriptions);
+    // Send notifications to all subscribers
+    subscriptions.forEach((subscription) => {
+      webpush
+        .sendNotification(subscription.subscription, payload)
+        .catch((err) => console.error(err));
+    });
+  }catch(error){
+    console.error(error);
+  }
 };
 
 const getUserSubscriptions = (username) => {
@@ -210,7 +226,7 @@ const getSubscriptionsByActivity = (activity) => {
   return new Promise((resolve, reject) => {
     db.query(
       "SELECT JSON_OBJECT('endpoint', sn.endpoint,'expirationTime', sn.tiempo_expiracion,'keys', JSON_OBJECT('p256dh', sn.PK_p256dh,'auth', sn.autenticador )) AS subscription FROM calendario_u cu JOIN usuario_notificacion_simpo_app unsa ON cu.FK_usuario = unsa.FK_usuario JOIN simpo_app_notificacion sn ON unsa.FK_simpo_app_notificacion = sn.PK_p256dh WHERE cu.F_actividad = ?",
-      [activity.PK_actividad],
+      [activity],
       (err, results) => {
         if (err) {
           console.error("Error al realizar la consulta:", err);
@@ -287,5 +303,6 @@ module.exports = {
   getSubscriptions,
   notifyActivityUpdate,
   saveSubscriptionToDB,
-  deleteSubscriptionFromDB
+  deleteSubscriptionFromDB,
+  notifyActivityReminder
 };
