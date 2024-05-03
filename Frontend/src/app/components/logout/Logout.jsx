@@ -22,8 +22,14 @@ const LogoutButton = () => {
   async function handleLogout() {
     //delete subscription
     console.log("trying to delete subscription");
+    try{
     await deleteSubscription();
     console.log("subscription deleted");
+    }catch (error) {
+      console.error("Error deleting subscription", error);
+      toast.error(t("Error deleting subscription"));
+    }
+    
     try {
       const response = await fetch(`${urlServer}usuarios/logout`, {
         method: "POST",
@@ -33,7 +39,7 @@ const LogoutButton = () => {
       if (!response.ok) {
         throw new Error("Error al cerrar sesión");
       }
-
+      console.log("Sesión cerrada");  
       setUserState(false); // Cambia el estado del usuario a false
       setUserRol(0); // Cambia el rol del usuario a 0
       router.push("/login");
@@ -64,7 +70,7 @@ const LogoutButton = () => {
       await fetch(`${urlServer}pwa/unsubscribe`, {
         method: "DELETE",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         credentials: "include",
     });

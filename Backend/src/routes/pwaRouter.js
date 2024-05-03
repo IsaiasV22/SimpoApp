@@ -28,8 +28,10 @@ router.post("/suscribe", (req, res) => {
     subscription.user = req.session.user.PK_nombre_usuario;
   }
   //save subscription in session
-  req.session.subscription = subscription.keys.p256dh;
+  req.session.user.subscription = subscription.keys.p256dh;
+  console.log('saving subscription in session -> ', subscription)
   console.log('session -> ', req.session)
+  req.session.save();
 
   //save subscription in file
   //pwaController.saveSubscriptionToFile(subscription);
@@ -47,7 +49,7 @@ router.delete("/unsubscribe", async (req, res) => {
   console.log("req.session -> ", req.session);
   const user = req.session.user.PK_nombre_usuario;
   //get subscription from session
-  const subscription = req.session.subscription;
+  const subscription = req.session.user.subscription;
 
   console.log("user -> ", user);
   console.log("subscription -> ", subscription);
@@ -62,7 +64,7 @@ router.delete("/unsubscribe", async (req, res) => {
     // Send 200 - OK
     res.status(200).json({});
     //delete subscription from session
-    req.session.subscription = null;
+    //req.session.subscription = null;
   } catch (error) {
     console.error("Error deleting subscription from db -> ", error);
     res.status(500).json({ error: "Error deleting subscription from db" });
