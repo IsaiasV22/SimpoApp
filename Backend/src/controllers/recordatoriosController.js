@@ -18,9 +18,12 @@ exports.getRecordatorios = async (req, res) => {
     const results = await dbQuery(
       `SELECT * FROM recordatorio WHERE FK_ACTIVIDAD = ${id}`
     );
-    if (results.length == 0)
-      res.status(204).json({ message: "No se encontraron recordatorios" });
-    res.status(200).json(results);
+    if (results.length == 0) {
+      return res
+        .status(204)
+        .json({ message: "No se encontraron recordatorios" });
+    }
+    return res.status(200).json(results);
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Error al obtener recordatorios" });
@@ -69,7 +72,7 @@ const recordatorioNotificationPayload = async (activityId, recordatorio) => {
         }
         // Si se obtiene la actividad correctamente, construir el payload
         const payload = JSON.stringify({
-          title: activity[0].descripcion + ' - ' + activity[0].PonenteNombre,
+          title: activity[0].descripcion + " - " + activity[0].PonenteNombre,
           body: "Recordatorio: " + recordatorio,
           icon: "https://www.ucr.ac.cr/medios/imagenes/2016/ucr.svg",
         });
@@ -82,4 +85,3 @@ const recordatorioNotificationPayload = async (activityId, recordatorio) => {
     }
   });
 };
-
