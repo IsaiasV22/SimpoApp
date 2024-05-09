@@ -8,6 +8,7 @@ const solicitudAyudaAll = (callback) => {
       return;
     }
     // Devuelve los resultados de la consulta
+    results.sort((a, b) => (a.PK_solicitud_ayuda > b.PK_solicitud_ayuda ? -1 : 1));    
     callback(null, results);
   });
 };
