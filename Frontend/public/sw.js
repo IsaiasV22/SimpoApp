@@ -1,7 +1,7 @@
 console.log("Service worker loaded");
 
 //cache name
-const cacheName = "simpoapp_cache_v2_Cache_then_Network";
+const cache = "simpoapp_cache_v2_stale_while_revalidate";
 
 //intercept any push notification and show it
 self.addEventListener("push", function (event) {
@@ -19,6 +19,20 @@ self.addEventListener("push", function (event) {
   }
 });
 
+self.addEventListener("activate", function (event) {
+  event.waitUntil(
+    caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.filter(function (name) {
+          return name !== cacheName;
+        }).map(function (name) {
+          return caches.delete(name);
+        })
+      );
+    })
+  );
+});
+
 //intercept any fetch request and console log the url
 self.addEventListener("fetch", function (event) {
   //stale while revalidate
@@ -27,13 +41,15 @@ self.addEventListener("fetch", function (event) {
   Provides both fast response times with cached data and ensures the cache is updated with the latest data.
   */
   event.respondWith(
-    caches.open(cacheName).then(function (cache) {
-      return cache.match(event.request).then(function (response) {
+    caches.open(cache).then(function (cache) {
+      return cache.match(event.request).then(function (cachedResponse) {
         var fetchPromise = fetch(event.request).then(function (networkResponse) {
           cache.put(event.request, networkResponse.clone());
           return networkResponse;
+        }).catch(function () {
+          return cachedResponse;
         });
-        return response || fetchPromise;
+        return cachedResponse || fetchPromise;
       });
     })
   );
