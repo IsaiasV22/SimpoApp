@@ -158,5 +158,6 @@
   "Listo": "Listo",
   "Pendiente": "Pendiente",
   "No hay solicitudes": "No hay solicitudes",
-  "Only administrators can access this page": "Solo los administradores pueden acceder a esta página"
+  "Only administrators can access this page": "Solo los administradores pueden acceder a esta página",
+  "Error deleting subscription": "Error al eliminar la suscripción"
 }

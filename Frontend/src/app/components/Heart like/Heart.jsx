@@ -47,7 +47,7 @@ export default function Heart(actividad) {
       //console.log("data -> ",data);
       //toast with -1 for permanent display
       //console.log("data.success -> ", data.success);
-      toast(t(data.success))
+      toast.success(t(data.success))
       setIsChecked(!isChecked); // Cambiar el estado del checkbox al contrario del estado actual
     } catch (error) {
       console.log("error -> ", error);
