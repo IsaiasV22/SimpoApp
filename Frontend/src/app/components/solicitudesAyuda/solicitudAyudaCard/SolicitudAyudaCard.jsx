@@ -33,7 +33,7 @@ function SolicitudAyudaCard({ element, user, rol }) {
         throw new Error(response.statusText);
       }
       const data = await response.json();
-      toast.success(data.message);
+      toast.info(data.message);
       setTimeout(() => {
         window.location.reload();
       }, 1500);
@@ -58,7 +58,7 @@ function SolicitudAyudaCard({ element, user, rol }) {
         throw new Error(response.statusText);
       }
       const data = await response.json();
-      toast.success(data.message);
+      toast.info(data.message);
       setTimeout(() => {
         window.location.reload();
       }, 1500);

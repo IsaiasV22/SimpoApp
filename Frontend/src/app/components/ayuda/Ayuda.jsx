@@ -25,34 +25,33 @@ export default function Ayuda() {
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.stopPropagation();
+    } else {
+      const newSolicitudAyuda = {
+        nombre_usuario,
+        correo,
+        descripcion,
+      };
+      try {
+        const response = await fetch(`${urlServer}solicitudesAyuda/add`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newSolicitudAyuda),
+          credentials: "include",
+        });
+  
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+  
+        toast.success(t("Solicitud enviada correctamente"));
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      } catch (error) {
+        toast.error(error.message);
+      }
     }
     setValidated(true);
-    const newSolicitudAyuda = {
-      nombre_usuario,
-      correo,
-      descripcion,
-    };
-    try {
-      const response = await fetch(`${urlServer}solicitudesAyuda/add`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newSolicitudAyuda),
-        credentials: "include",
-      });
-
-      if (!response.ok) {
-        console.log("response: ", response);
-        throw new Error(response.statusText);
-      }
-
-      toast.success(t("Solicitud enviada correctamente"));
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    } catch (error) {
-      console.log("error -> ", error);
-      toast.error(error.message);
-    }
   }
 
   async function handleCancel() {
