@@ -159,5 +159,7 @@
   "Pendiente": "Marcar como resuelta",
   "No hay solicitudes": "No hay solicitudes",
   "Only administrators can access this page": "Solo los administradores pueden acceder a esta página",
-  "Error deleting subscription": "Error al eliminar la suscripción"
+  "Error deleting subscription": "Error al eliminar la suscripción",
+  "English": "Inglés",
+  "Spanish": "Español"
 }

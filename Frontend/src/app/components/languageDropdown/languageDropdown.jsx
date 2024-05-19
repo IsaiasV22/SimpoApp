@@ -46,6 +46,7 @@ export default function languageDropdown() {
             onClick={() => handleClick("en")}
             style={{ width: "30px", cursor: "pointer", marginRight: "10px",
                     border: selectedLanguage === "en" ? `2px solid ${getColor()}` : "none"}}
+            title={t('English')}
           />
           {/* Spanish es */}
           <img
@@ -53,6 +54,7 @@ export default function languageDropdown() {
             onClick={() => handleClick("es")}
             style={{ width: "30px", cursor: "pointer", marginRight: "10px",
                     border: selectedLanguage === "es" ? `2px solid ${getColor()}` : "none"}}
+            title={t('Spanish')}
           />
         </div>
       </div>
