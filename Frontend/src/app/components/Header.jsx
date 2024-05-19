@@ -7,7 +7,7 @@ import useGlobalState from "./globalState/GlobalState";
 import "../css/header.css";
 import AccessibilityDropdown from "./accessibilityDropdown/AccessibilityDropdown";
 import "@/app/locales/locale";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const [isMenuCollapsed, setMenuCollapsed] = useState(true);
@@ -28,6 +28,15 @@ const Header = () => {
     setAccessibilityDropdownOpen(!isAccessibilityDropdownOpen);
   };
 
+  const goToURL = (url) => {
+    // alert to confirm the redirection to the specified URL
+    if (confirm(`${t("La app lo va a redirigir a ")}${url}${t(" ¿Desea continuar?")}`)) {
+      window
+        .open(url, "_blank")
+        .focus(); // open the URL in a new tab and focus on it
+  };
+};
+
   const { t, i18n } = useTranslation(["common"]);
 
   return (
@@ -39,20 +48,24 @@ const Header = () => {
       <div className="container-fluid">
         <div className="d-flex justify-content-between align-items-center w-100">
           {/* Logo */}
-          <a className="navbar-brand" href="#">
+          <div className="navbar-brand">
             <img
               className="logo-img img-fluid w-75 w-md-100 mobile-image"
               src="/Images/LogoUCR.png"
               alt="Cimpa"
-              style={{ maxWidth: "170px" }}
+              style={{ maxWidth: "170px", cursor: "pointer"}}
+              onClick={() => {goToURL("https://www.ucr.ac.cr/")}}
+              title={t("Go to UCR website")}
             ></img>
             <img
               className="logo-img img-fluid w-75 w-md-100 mobile-image"
               src="/Images/LogoCimpaHorizontal.png"
               alt="Cimpa"
-              style={{ maxWidth: "400px" }}
+              style={{ maxWidth: "400px", cursor: "pointer"}}
+              onClick={() => {goToURL("https://cimpa.ucr.ac.cr/")}}
+              title={t("Go to CIMPA website")}
             ></img>
-          </a>
+          </div>
 
           {/* Botón hamburguesa */}
           <button
@@ -153,7 +166,11 @@ const Header = () => {
                       className="bi bi-question-circle"
                       style={{ marginRight: "5px" }}
                     ></i>
-                    {rol === 1 ? <p>{t("help requests")}</p> : <p>{t("help")}</p>}
+                    {rol === 1 ? (
+                      <p>{t("help requests")}</p>
+                    ) : (
+                      <p>{t("help")}</p>
+                    )}
                   </div>
                 </li>
               </Link>
