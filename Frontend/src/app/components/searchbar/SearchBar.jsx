@@ -93,7 +93,7 @@ export default function SearchBar({ dispatch, dia_inicio }) {
             <div className="input-group">
               <input
                 type="text"
-                className="form-control"
+                className="form-control border-3"
                 placeholder={t("Search")}
                 aria-label="Recipient's username"
                 value={searchText}
