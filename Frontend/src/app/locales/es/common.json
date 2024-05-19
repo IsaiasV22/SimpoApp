@@ -155,8 +155,8 @@
   "No hay usuarios para mostrar": "No hay usuarios para mostrar",
   "Solicitudes de ayuda": "Solicitudes de ayuda",
   "Eliminar": "Eliminar",
-  "Listo": "Listo",
-  "Pendiente": "Pendiente",
+  "Listo": "Marcar como pendiente",
+  "Pendiente": "Marcar como resuelta",
   "No hay solicitudes": "No hay solicitudes",
   "Only administrators can access this page": "Solo los administradores pueden acceder a esta página",
   "Error deleting subscription": "Error al eliminar la suscripción"
