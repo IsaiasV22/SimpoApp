@@ -12,7 +12,6 @@ import { useTranslation } from "react-i18next";
 function SolicitudAyudaCard({ element, user, rol }) {
   const { t } = useTranslation();
   async function handleEstado(solicitudAyudaId, estado) {
-    console.log(element);
     let response = null;
     try {
       if (estado) {
@@ -31,7 +30,6 @@ function SolicitudAyudaCard({ element, user, rol }) {
         });
       }
       if (!response.ok) {
-        console.log("response: ", response);
         throw new Error(response.statusText);
       }
       const data = await response.json();
