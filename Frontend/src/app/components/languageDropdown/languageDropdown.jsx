@@ -13,7 +13,7 @@ export default function languageDropdown() {
     //high contrast state
     const high_contrast = useGlobalState((state) => state.high_contrast);
 
-  const [selectedLanguage, setSelectedLanguage] = useState(i18nState?i18nState:"en"); // Estado para almacenar la opción seleccionada
+  const [selectedLanguage, setSelectedLanguage] = useState(i18nState?i18nState:"es"); // Estado para almacenar la opción seleccionada
 
   //i18n translate strategy
   const { t, i18n } = useTranslation(["common"]);
