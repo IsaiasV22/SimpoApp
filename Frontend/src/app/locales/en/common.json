@@ -159,5 +159,7 @@
   "Pendiente": "Mark as resolved",
   "No hay solicitudes": "There are no requests",
   "Only administrators can access this page": "Only administrators can access this page",
-  "Error deleting subscription": "Error deleting subscription"
+  "Error deleting subscription": "Error deleting subscription",
+  "English": "English",
+  "Spanish": "Spanish"
 }
