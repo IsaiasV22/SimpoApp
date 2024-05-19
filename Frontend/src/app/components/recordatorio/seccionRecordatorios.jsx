@@ -25,7 +25,7 @@ export default function SeccionRecordatorios( {activityId}) {
     <>
       {recordatorios.length > 0 && (
         <div style={{ "margin-top": "10px" }}>
-          <h5 className="card-title">{t("Recordatorios: ")}</h5>
+          <h5 className="card-title">{t("announcements: ")}</h5>
           <ul>
             {recordatorios.map((r) => (
               <li key={r.id}>
