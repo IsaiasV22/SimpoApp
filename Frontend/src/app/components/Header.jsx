@@ -6,13 +6,19 @@ import { toast } from "react-toastify";
 import useGlobalState from "./globalState/GlobalState";
 import "../css/header.css";
 import AccessibilityDropdown from "./accessibilityDropdown/AccessibilityDropdown";
+import "@/app/locales/locale";
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const [isMenuCollapsed, setMenuCollapsed] = useState(true);
   const [isAccessibilityDropdownOpen, setAccessibilityDropdownOpen] =
     useState(false);
   //const [user] = useGlobalState((state) => [state.user]);
-  const [user, rol, high_contrast] = useGlobalState((state) => [state.user, state.rol, state.high_contrast]);
+  const [user, rol, high_contrast] = useGlobalState((state) => [
+    state.user,
+    state.rol,
+    state.high_contrast,
+  ]);
 
   const toggleMenu = () => {
     setMenuCollapsed(!isMenuCollapsed);
@@ -21,9 +27,15 @@ const Header = () => {
   const toggleAccessibilityDropdown = () => {
     setAccessibilityDropdownOpen(!isAccessibilityDropdownOpen);
   };
-``
+
+  const { t, i18n } = useTranslation(["common"]);
+
   return (
-    <nav className={`navbar navbar-expand-lg navbar-light navbar-custom ${high_contrast ? "high-contrast" : ""}`}>
+    <nav
+      className={`navbar navbar-expand-lg navbar-light navbar-custom ${
+        high_contrast ? "high-contrast" : ""
+      }`}
+    >
       <div className="container-fluid">
         <div className="d-flex justify-content-between align-items-center w-100">
           {/* Logo */}
@@ -85,7 +97,7 @@ const Header = () => {
                           transform: "scale(1.2)",
                         }}
                       ></i>
-                      <p>Home</p>
+                      <p>{t("Home")}</p>
                     </div>
                   </li>
                 </Link>
@@ -106,7 +118,7 @@ const Header = () => {
                       className="bi bi-qr-code-scan"
                       style={{ marginRight: "5px", transform: "scale(1.2)" }}
                     ></i>
-                    <p>Scanner</p>
+                    <p>{t("Scanner")}</p>
                   </div>
                 </li>
               </Link>
@@ -123,15 +135,33 @@ const Header = () => {
                       className="bi bi-calendar"
                       style={{ marginRight: "5px" }}
                     ></i>
-                    <p>Calendar</p>
+                    <p>{t("Calendar")}</p>
                   </div>
                 </li>
               </Link>
             )}
 
-              <li className="nav-item">
-              <AccessibilityDropdown/>
-              </li>
+            {user && (
+              <Link
+                href={rol === 1 ? "/solicitudesAyuda" : "/ayuda"}
+                className="nav-link"
+                style={{ color: "#ffffff" }}
+              >
+                <li className="nav-item">
+                  <div style={{ display: "flex" }}>
+                    <i
+                      className="bi bi-question-circle"
+                      style={{ marginRight: "5px" }}
+                    ></i>
+                    {rol === 1 ? <p>{t("help requests")}</p> : <p>{t("help")}</p>}
+                  </div>
+                </li>
+              </Link>
+            )}
+
+            <li className="nav-item">
+              <AccessibilityDropdown />
+            </li>
 
             {user && (
               <li className="nav-item">

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import QRCode from "qrcode.react";
 import { urlServer } from "@/app/Utiles";
 import useGlobalState from "../globalState/GlobalState";
+import { useTranslation } from "react-i18next";
 
 export default function AttendanceQR({activityId}) {
   const [userQr, setUser] = useState();
   const [rol] = useGlobalState((state) => [state.rol]);
   const [user] = useGlobalState((state) => [state.user]);
+  const { t } = useTranslation("actividades");
 
   useEffect(() => {
     fetchUserData();
@@ -48,7 +50,7 @@ export default function AttendanceQR({activityId}) {
     <>
       {
         user && rol !== 1 &&
-        <h5 className="card-title"> Attendance QR </h5> &&
+        <h5 className="card-title"> {t("Attendance QR")} </h5> &&
         <div>{generateQRText()}</div> && (
         <div className="container my-3">
           <QRCode value={generateQRText()} />

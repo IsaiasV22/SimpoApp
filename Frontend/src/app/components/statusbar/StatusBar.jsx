@@ -2,10 +2,12 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Badge from "react-bootstrap/Badge";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function StatusBar({ dispatch }) {
   //selected option hook
   const [selectedOption, setSelectedOption] = useState("All");
+  const { t } = useTranslation(["common"]);
   //handle input change
   const handleSelect = (eventKey) => {
     setSelectedOption(eventKey);
@@ -57,15 +59,15 @@ export default function StatusBar({ dispatch }) {
       <div style={{ marginLeft: "10px" }}>
         <DropdownButton
           id="dropdown-basic-button"
-          title="Status"
+          title={t("Status")}
           onSelect={handleSelect}
         >
-          <Dropdown.Item eventKey="All">All</Dropdown.Item>
-          <Dropdown.Item eventKey="Upcoming">Upcoming</Dropdown.Item>
-          <Dropdown.Item eventKey="In progress">In progress</Dropdown.Item>
-          <Dropdown.Item eventKey="Completed">Completed</Dropdown.Item>
+          <Dropdown.Item eventKey="All">{t("All")}</Dropdown.Item>
+          <Dropdown.Item eventKey="Upcoming">{t("Upcoming")}</Dropdown.Item>
+          <Dropdown.Item eventKey="In progress">{t("In progress")}</Dropdown.Item>
+          <Dropdown.Item eventKey="Completed">{t("Completed")}</Dropdown.Item>
         </DropdownButton>
-        <Badge bg="success" className='fs-6 mt-2 '>{selectedOption}</Badge>
+        <Badge bg="success" className='fs-6 mt-2 '>{t(selectedOption)}</Badge>
       </div>
     </div>
   );

@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { urlServer } from "@/app/Utiles.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export default function PonenteActividadesCard({ actividadIdP }) {
+  const { t } = useTranslation("actividades");
   //hook ponente
   const [ponente, setPonente] = useState(null);
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function PonenteActividadesCard({ actividadIdP }) {
   return (
     <div>
       <p className="card-text">
-      <i className="bi bi-person-circle icon"></i> Author:{" "}
+      <i className="bi bi-person-circle icon"></i> {t("Author: ")}
       </p>
       {ponente ? (
         <>
@@ -42,7 +44,7 @@ export default function PonenteActividadesCard({ actividadIdP }) {
           </p>
         </>
       ) : (
-        <p className="card-text">Cargando ponente...</p>
+        <p className="card-text">{t("Cargando ponente...")}</p>
       )}
       <ToastContainer />
     </div>
