@@ -4,7 +4,11 @@ console.log("Service worker loaded");
 const cache = "simpoapp_cache_v2_stale_while_revalidate";
 
 // paths to network first
-const pathsToNetworkFirst = ['solicitudesAyuda/all'];
+const pathsToNetworkFirst = [
+  "solicitudesAyuda/all",
+  "eventos/ocultarEvento",
+  "eventos/mostrarEvento",
+];
 
 //intercept any push notification and show it
 self.addEventListener("push", function (event) {
@@ -26,11 +30,13 @@ self.addEventListener("activate", function (event) {
   event.waitUntil(
     caches.keys().then(function (cacheNames) {
       return Promise.all(
-        cacheNames.filter(function (name) {
-          return name !== cacheName;
-        }).map(function (name) {
-          return caches.delete(name);
-        })
+        cacheNames
+          .filter(function (name) {
+            return name !== cacheName;
+          })
+          .map(function (name) {
+            return caches.delete(name);
+          })
       );
     })
   );
@@ -45,15 +51,17 @@ self.addEventListener("fetch", function (event) {
   if (pathsToNetworkFirst.some((path) => event.request.url.includes(path))) {
     console.log("Network first -> ", event.request.url);
     event.respondWith(
-      fetch(event.request).then(function (response) {
-        //update cache
-        caches.open(cache).then(function (cache) {
-          cache.put(event.request, response.clone());
-        });
-        return response;
-      }).catch(function () {
-        return caches.match(event.request);
-      })
+      fetch(event.request)
+        .then(function (response) {
+          //update cache
+          caches.open(cache).then(function (cache) {
+            cache.put(event.request, response.clone());
+          });
+          return response;
+        })
+        .catch(function () {
+          return caches.match(event.request);
+        })
     );
     return;
   }
@@ -66,12 +74,14 @@ self.addEventListener("fetch", function (event) {
   event.respondWith(
     caches.open(cache).then(function (cache) {
       return cache.match(event.request).then(function (cachedResponse) {
-        var fetchPromise = fetch(event.request).then(function (networkResponse) {
-          cache.put(event.request, networkResponse.clone());
-          return networkResponse;
-        }).catch(function () {
-          return cachedResponse;
-        });
+        var fetchPromise = fetch(event.request)
+          .then(function (networkResponse) {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          })
+          .catch(function () {
+            return cachedResponse;
+          });
         return cachedResponse || fetchPromise;
       });
     })

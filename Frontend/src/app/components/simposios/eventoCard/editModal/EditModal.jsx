@@ -110,7 +110,7 @@ function EditSimposio(element) {
   };
 
   return (
-    <>
+    <div>
       <Button className="btn btnn-primary" onClick={handleShow}>
         {t("Edit")}
       </Button>
@@ -199,7 +199,7 @@ function EditSimposio(element) {
           </div>
         </Modal.Footer>
       </Modal>
-    </>
+    </div>
   );
 }
 

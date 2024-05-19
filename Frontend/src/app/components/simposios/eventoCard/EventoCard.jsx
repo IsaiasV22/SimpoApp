@@ -5,6 +5,7 @@ import { es, enUS } from "date-fns/locale";
 import { urlServer } from "@/app/Utiles.jsx";
 import Link from "next/link";
 import EditModal from "./editModal/EditModal";
+import Dropdown from "react-bootstrap/Dropdown";
 import Estadisticas from "../../estadisticas/Estadisticas";
 import AsistenciaActividades from "../../asistenciaActividades/asistenciaActividades";
 import { ToastContainer, toast } from "react-toastify";
@@ -198,41 +199,60 @@ function EventoCard({
           </Link>
           {user && rol === 1 && (
             <>
-              {
-                <Link
-                  href={`${urlSimposio}/${JSON.stringify(
-                    element.PK_evento_contenedor
-                  )}/listaUsuarios`}
-                  style={{ marginRight: "5px" }}
+              <Dropdown>
+                <Dropdown.Toggle
+                  style={{ backgroundColor: "#00c0f3", "border-width": "0px" }}
+                  id="dropdown-basic"
                 >
-                  <button className="btn btnn-primary">{t("Lista_usuarios")}</button>
-                </Link>
-              }
-              <EditModal
-                pk={element.PK_evento_contenedor}
-                nombre={element.nombre}
-                descripcion={element.descripcion}
-                lugar={element.lugar}
-                dia_inicio={element.dia_inicio}
-                dia_final={element.dia_final}
-              />
-              <Estadisticas />
+                  {t("Admin Options")}
+                </Dropdown.Toggle>
 
-              <AsistenciaActividades pk={element.PK_evento_contenedor}/>
-
-              <button
-                //on click cambiar el estado de activo
-                onClick={() => {
-                  handleEstadoActivo(
-                    element.PK_evento_contenedor,
-                    element.activo
-                  );
-                }}
-                className="btn btnn-primary"
-                style={{ margin: "3px" }}
-              >
-                {element.activo ? t("Ocultar") : t("Mostrar")}
-              </button>
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Link
+                      href={`${urlSimposio}/${JSON.stringify(
+                        element.PK_evento_contenedor
+                      )}/listaUsuarios`}
+                      style={{ marginRight: "5px" }}
+                    >
+                      <button className="btn btnn-primary">
+                        {t("Lista_usuarios")}
+                      </button>
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <EditModal
+                      pk={element.PK_evento_contenedor}
+                      nombre={element.nombre}
+                      descripcion={element.descripcion}
+                      lugar={element.lugar}
+                      dia_inicio={element.dia_inicio}
+                      dia_final={element.dia_final}
+                    />
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Estadisticas />
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <AsistenciaActividades pk={element.PK_evento_contenedor} />
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <button
+                      //on click cambiar el estado de activo
+                      onClick={() => {
+                        handleEstadoActivo(
+                          element.PK_evento_contenedor,
+                          element.activo
+                        );
+                      }}
+                      className="btn btnn-primary"
+                      style={{ margin: "3px" }}
+                    >
+                      {element.activo ? t("Ocultar") : t("Mostrar")}
+                    </button>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </>
           )}
           {suscripcion !== null && (
