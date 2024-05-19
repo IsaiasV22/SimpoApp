@@ -3,6 +3,9 @@ console.log("Service worker loaded");
 //cache name
 const cache = "simpoapp_cache_v2_stale_while_revalidate";
 
+// paths to network first
+const pathsToNetworkFirst = ['solicitudesAyuda/all'];
+
 //intercept any push notification and show it
 self.addEventListener("push", function (event) {
   console.log("Push notification intercepted by sw -> ", event);
@@ -35,6 +38,26 @@ self.addEventListener("activate", function (event) {
 
 //intercept any fetch request and console log the url
 self.addEventListener("fetch", function (event) {
+  // network first
+  /*
+  This strategy is ideal for assets that are updated frequently, such as API endpoints.
+  */
+  if (pathsToNetworkFirst.some((path) => event.request.url.includes(path))) {
+    console.log("Network first -> ", event.request.url);
+    event.respondWith(
+      fetch(event.request).then(function (response) {
+        //update cache
+        caches.open(cache).then(function (cache) {
+          cache.put(event.request, response.clone());
+        });
+        return response;
+      }).catch(function () {
+        return caches.match(event.request);
+      })
+    );
+    return;
+  }
+
   //stale while revalidate
   /*
   This strategy returns cached data while asynchronously revalidating it in the background.
