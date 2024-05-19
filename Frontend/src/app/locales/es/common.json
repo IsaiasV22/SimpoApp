@@ -161,5 +161,10 @@
   "Only administrators can access this page": "Solo los administradores pueden acceder a esta página",
   "Error deleting subscription": "Error al eliminar la suscripción",
   "English": "Inglés",
-  "Spanish": "Español"
+  "Spanish": "Español",
+  "Go to UCR website": "Ir al sitio web de la UCR",
+  "Go to CIMPA website": "Ir al sitio web de CIMPA",
+  "La app lo va a redirigir a ": "La app lo va a redirigir a ",
+  " ¿Desea continuar?": " ¿Desea continuar?",
+  "announcements: ": "Avisos: "
 }

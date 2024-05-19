@@ -129,60 +129,66 @@ export default function Actividad({ actividadId }) {
                       : ""
                   }`}
                 >
-                  <div className="card-body">
-                    <h5 className="card-title">{t("Detalles")}</h5>
-                    <p className="card-text">
-                      {t("Date: ")+ actividad.dia_evento.slice(0, 10)}
-                    </p>
-                    <p className="card-text">
-                      {t(" Start time: ") + actividad.hora_inicio}
-                    </p>
-                    <p className="card-text">
-                      {t(" End time: ") + actividad.hora_final}
-                    </p>
-                    <p className="card-text">
-                      {t("Ubicación: ") + actividad.ubicacion}
-                    </p>
-                    <p className="card-text">
-                      {t("Estatus: ") + actividad.estatus}
-                    </p>
-                    <h5 className="card-title">{t("Author")}</h5>
-                    {ponente ? (
-                      <>
-                        <p className="card-text">
-                          {ponente.nombre + " " + ponente.apellidos}
-                        </p>
-                        <Link href={`${urlPonente}/${actividadId}`}>
-                          <button className="btn btnn-primary">
-                            {t("Ver Información del Autor")}
-                          </button>
-                        </Link>
-                      </>
-                    ) : (
-                      <p className="card-text">{t("Cargando autor...")}</p>
-                    )}
-                    {coautores.length > 0 && (
-                      <div style={{ "margin-top": "10px" }}>
-                        <h5 className="card-title">{t("Coautores")}</h5>
-                        <ul>
-                          {coautores.map((coautor) => (
-                            <li key={coautor[0].PK_nombre_usuario}>
-                              {coautor[0].nombre + " " + coautor[0].apellidos}
-                              <Link href={`${urlCoautor}/${coautor[0].cedula}`}>
-                                <button
-                                  className="btn btnn-primary"
-                                  style={{ margin: "10px" }}
+                  <div className="card-body d-flex ">
+                    <div>
+                      <h5 className="card-title">{t("Detalles")}</h5>
+                      <p className="card-text">
+                        {t("Date: ") + actividad.dia_evento.slice(0, 10)}
+                      </p>
+                      <p className="card-text">
+                        {t(" Start time: ") + actividad.hora_inicio}
+                      </p>
+                      <p className="card-text">
+                        {t(" End time: ") + actividad.hora_final}
+                      </p>
+                      <p className="card-text">
+                        {t("Ubicación: ") + actividad.ubicacion}
+                      </p>
+                      <p className="card-text">
+                        {t("Estatus: ") + actividad.estatus}
+                      </p>
+                      <h5 className="card-title">{t("Author")}</h5>
+                      {ponente ? (
+                        <>
+                          <p className="card-text">
+                            {ponente.nombre + " " + ponente.apellidos}
+                          </p>
+                          <Link href={`${urlPonente}/${actividadId}`}>
+                            <button className="btn btnn-primary">
+                              {t("Ver Información del Autor")}
+                            </button>
+                          </Link>
+                        </>
+                      ) : (
+                        <p className="card-text">{t("Cargando autor...")}</p>
+                      )}
+                      {coautores.length > 0 && (
+                        <div style={{ "margin-top": "10px" }}>
+                          <h5 className="card-title">{t("Coautores")}</h5>
+                          <ul>
+                            {coautores.map((coautor) => (
+                              <li key={coautor[0].PK_nombre_usuario}>
+                                {coautor[0].nombre + " " + coautor[0].apellidos}
+                                <Link
+                                  href={`${urlCoautor}/${coautor[0].cedula}`}
                                 >
-                                  {t("Ver Información del coautor")}
-                                </button>
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                    <QrCode activityId={actividadId} />
-                    <SeccionRecordatorios activityId={actividadId}/>
+                                  <button
+                                    className="btn btnn-primary"
+                                    style={{ margin: "10px" }}
+                                  >
+                                    {t("Ver Información del coautor")}
+                                  </button>
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                    <div className='d-block'>
+                      <SeccionRecordatorios activityId={actividadId} />
+                      <QrCode activityId={actividadId} />
+                    </div>
                   </div>
                 </div>
               </div>
