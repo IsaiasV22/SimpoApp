@@ -7,12 +7,15 @@ import { ToastContainer, toast } from "react-toastify";
 //router from next/navigation
 import { useRouter } from "next/navigation";
 import EditCroquis from "./editCroquis/EditCroquis";
+//i18n
+import { useTranslation } from "react-i18next";
 
 function CardInfo({ element }) {
   const [imageUrl, setImageUrl] = useState("");
   const user = useGlobalState((state) => state.user);
   const rol = useGlobalState((state) => state.rol);
   const high_contrast = useGlobalState((state) => state.high_contrast);
+  const {t} = useTranslation(["common"]);
   //router to change the url
   const router = useRouter();
 
@@ -56,7 +59,7 @@ function CardInfo({ element }) {
       //push the url address
       router.push(address);
     } else {
-      toast.error("You are not subscribed to this event");
+      toast.error(t("You_are_not_subscribed_to_this_event"));
     }
 
     console.log("handleUrlPush");
@@ -138,7 +141,7 @@ function CardInfo({ element }) {
                   )
                 }
               >
-                Location
+                {t("Location")}
               </button>
             </div>
           </div>
@@ -156,7 +159,7 @@ function CardInfo({ element }) {
                 )
               }
             >
-              Location
+              {t("Location")}
             </button>
           </div>
         )}

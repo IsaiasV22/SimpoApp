@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 import "./Actividad.css"; // Asegúrate de que la ruta al archivo CSS sea correcta
 //import Link
 import Link from "next/link";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { urlServer } from "@/app/Utiles.jsx";
 import { usePathname } from "next/navigation";
-import QrCode from '../qrCode/QrCode';
+import QrCode from "../qrCode/QrCode";
 import useGlobalState from "../globalState/GlobalState";
+import SeccionRecordatorios from "../recordatorio/seccionRecordatorios";
+import { useTranslation } from "react-i18next";
 
 export default function Actividad({ actividadId }) {
   const pathname = usePathname();
@@ -19,7 +21,9 @@ export default function Actividad({ actividadId }) {
   const [ponente, setPonente] = useState(null); //state exponente
   const [coautores, setCoautores] = useState([]); //state coautores
   const high_contrast = useGlobalState((state) => state.high_contrast);
-  useEffect(() => { //useEffect
+  const { t } = useTranslation("actividades");
+  useEffect(() => {
+    //useEffect
     handleActividad();
     handlePonente();
     handleCoautores();
@@ -37,7 +41,7 @@ export default function Actividad({ actividadId }) {
       //console.log("actividad por id: ", data[0]);
       setActividad(data[0]);
     } catch (error) {
-      toast.error("Error fetching activity: ", error.message);
+      toast.error(t("Error fetching activity: "), error.message);
       //alert(error.message);
     }
   }
@@ -54,7 +58,7 @@ export default function Actividad({ actividadId }) {
       //console.log("exponente por id: ", data[0]);
       setPonente(data[0]);
     } catch (error) {
-      toast.error("Error fetching author (Ponente) :", error.message);
+      toast.error(t("Error fetching author (Ponente) :"), error.message);
       //alert(error.message);
     }
   }
@@ -76,7 +80,7 @@ export default function Actividad({ actividadId }) {
       console.log("coautores : ", data);
       setCoautores(data);
     } catch (error) {
-      toast.error("Error fetching coauthors: ", error.message);
+      toast.error(t("Error fetching coauthors: "), error.message);
       //alert(error.message);
     }
   }
@@ -90,21 +94,23 @@ export default function Actividad({ actividadId }) {
     });
     const fechaActual = new Date().toISOString().split("T")[0]; // Obtiene la fecha actual en formato 'YYYY-MM-DD'
 
-    console.log('ahora', ahora);
-    console.log('dia_evento', dia_evento.split("T")[0]);
-    console.log('fechaActual', fechaActual);
+    console.log("ahora", ahora);
+    console.log("dia_evento", dia_evento.split("T")[0]);
+    console.log("fechaActual", fechaActual);
     // Compara las fechas y las horas de inicio y finalización con la fecha y hora actual
     const output =
-      dia_evento.split("T")[0] === fechaActual && horaInicio <= ahora && horaFinal >= ahora;
-    
-    console.log("Esta en curso:", output); 
+      dia_evento.split("T")[0] === fechaActual &&
+      horaInicio <= ahora &&
+      horaFinal >= ahora;
+
+    console.log("Esta en curso:", output);
 
     return output;
   }
   //fetch actividad por id
 
   return (
-    <div className={`main-content ${high_contrast?"high-contrast":""}`}>
+    <div className={`main-content ${high_contrast ? "high-contrast" : ""}`}>
       <div className="container my-5">
         {actividad ? ( // Verifica si actividad tiene datos
           <>
@@ -124,23 +130,23 @@ export default function Actividad({ actividadId }) {
                   }`}
                 >
                   <div className="card-body">
-                    <h5 className="card-title">Detalles</h5>
+                    <h5 className="card-title">{t("Detalles")}</h5>
                     <p className="card-text">
-                      {"Fecha: " + actividad.dia_evento.slice(0, 10)}
+                      {t("Date: ")+ actividad.dia_evento.slice(0, 10)}
                     </p>
                     <p className="card-text">
-                      {"Hora Inicio: " + actividad.hora_inicio}
+                      {t(" Start time: ") + actividad.hora_inicio}
                     </p>
                     <p className="card-text">
-                      {"Hora Final: " + actividad.hora_final}
+                      {t(" End time: ") + actividad.hora_final}
                     </p>
                     <p className="card-text">
-                      {"Ubicación: " + actividad.ubicacion}
+                      {t("Ubicación: ") + actividad.ubicacion}
                     </p>
                     <p className="card-text">
-                      {"Estatus: " + actividad.estatus}
+                      {t("Estatus: ") + actividad.estatus}
                     </p>
-                    <h5 className="card-title">Ponente</h5>
+                    <h5 className="card-title">{t("Author")}</h5>
                     {ponente ? (
                       <>
                         <p className="card-text">
@@ -148,23 +154,26 @@ export default function Actividad({ actividadId }) {
                         </p>
                         <Link href={`${urlPonente}/${actividadId}`}>
                           <button className="btn btnn-primary">
-                            Ver Información del ponente
+                            {t("Ver Información del Autor")}
                           </button>
                         </Link>
                       </>
                     ) : (
-                      <p className="card-text">Cargando ponente...</p>
+                      <p className="card-text">{t("Cargando autor...")}</p>
                     )}
                     {coautores.length > 0 && (
                       <div style={{ "margin-top": "10px" }}>
-                        <h5 className="card-title">Coautores</h5>
+                        <h5 className="card-title">{t("Coautores")}</h5>
                         <ul>
                           {coautores.map((coautor) => (
                             <li key={coautor[0].PK_nombre_usuario}>
                               {coautor[0].nombre + " " + coautor[0].apellidos}
                               <Link href={`${urlCoautor}/${coautor[0].cedula}`}>
-                                <button className="btn btnn-primary" style={{'margin': '10px'}}>
-                                  Ver Información del coautor
+                                <button
+                                  className="btn btnn-primary"
+                                  style={{ margin: "10px" }}
+                                >
+                                  {t("Ver Información del coautor")}
                                 </button>
                               </Link>
                             </li>
@@ -172,17 +181,17 @@ export default function Actividad({ actividadId }) {
                         </ul>
                       </div>
                     )}
-                    <QrCode activityId={actividadId}/>
+                    <QrCode activityId={actividadId} />
+                    <SeccionRecordatorios activityId={actividadId}/>
                   </div>
                 </div>
               </div>
             </div>
           </>
         ) : (
-          <div>Cargando actividad...</div> // Puedes mostrar un mensaje de carga o lo que prefieras
+          <div>{t("Cargando actividad...")}</div> // Puedes mostrar un mensaje de carga o lo que prefieras
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 }

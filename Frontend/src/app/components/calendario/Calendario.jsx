@@ -3,18 +3,23 @@ import { useState, useEffect } from "react";
 import Scheduler from "@/app/components/SchedulerAll/Scheduler";
 import { urlServer } from "@/app/Utiles";
 import styles from "@/app/App.css";
+//global state
+import useGlobalState from "@/app/components/globalState/GlobalState";
 
 function App() {
   const [actividades, setActividades] = useState([]);
 
+  const i18nState = useGlobalState((state) => state.i18nState);
+
   const convertTo12HourFormat = (time24) => {
     const [hours, minutes] = time24.split(":");
     const hourNumber = parseInt(hours, 10);
-  
+
     if (hourNumber === 0) return `12:${minutes}`;
-    if (hourNumber < 12) return `${hourNumber.toString().padStart(2, "0")}:${minutes}`;
+    if (hourNumber < 12)
+      return `${hourNumber.toString().padStart(2, "0")}:${minutes}`;
     return `${hourNumber}:${minutes}`;
-  };  
+  };
 
   const handlerEvents = async () => {
     try {
@@ -96,7 +101,7 @@ function App() {
     <div className="m-3 ">
       <h1>Calendario</h1>
       <Scheduler
-        locale="en"
+        locale={i18nState?i18nState:"en"}
         events={actividades}
         legacyStyle={false}
         options={state?.options}

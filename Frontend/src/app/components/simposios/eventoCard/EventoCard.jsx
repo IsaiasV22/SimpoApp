@@ -11,6 +11,8 @@ import { ToastContainer, toast } from "react-toastify";
 //router from next/navigation
 import { useRouter } from "next/navigation";
 import "@/app/App.css";
+//translation hook
+import { useTranslation } from "react-i18next";
 
 function EventoCard({
   element,
@@ -23,6 +25,7 @@ function EventoCard({
   const [imageUrl, setImageUrl] = useState("");
   //router to change the url
   const router = useRouter();
+  const { t } = useTranslation(["common"]);
 
   const formatDate = (dateString, idioma) => {
     const date = parseISO(dateString);
@@ -99,7 +102,7 @@ function EventoCard({
       //push the url address
       router.push(address);
     } else {
-      toast.error("You are not subscribed to this event");
+      toast.error(t("You_are_not_subscribed_to_this_event"));
     }
 
     console.log("handleUrlPush");
@@ -157,11 +160,11 @@ function EventoCard({
             </p>
             <p className="card-text">
               <i className="bi bi-calendar-event icon"> </i>
-              Start day: {formatDate(element.dia_inicio, "es")}
+              {t("Start day:")} {formatDate(element.dia_inicio, "es")}
             </p>
             <p className="card-text">
               <i className="bi bi-calendar-event icon"> </i>
-              Final day: {formatDate(element.dia_final, "es")}
+              {t("Final day:")} {formatDate(element.dia_final, "es")}
             </p>
             <p className="card-text">
               <i className="bi bi-map icon"> </i>
@@ -190,7 +193,7 @@ function EventoCard({
                   : !suscripcion || !suscripcion[element.PK_evento_contenedor]
               }
             >
-              see more
+              {t("See_more")}
             </button>
           </Link>
           {user && rol === 1 && (
@@ -202,7 +205,7 @@ function EventoCard({
                   )}/listaUsuarios`}
                   style={{ marginRight: "5px" }}
                 >
-                  <button className="btn btnn-primary">Lista de usuarios</button>
+                  <button className="btn btnn-primary">{t("Lista_usuarios")}</button>
                 </Link>
               }
               <EditModal
@@ -228,7 +231,7 @@ function EventoCard({
                 className="btn btnn-primary"
                 style={{ margin: "3px" }}
               >
-                {element.activo ? "Ocultar" : "Mostrar"}
+                {element.activo ? t("Ocultar") : t("Mostrar")}
               </button>
             </>
           )}
@@ -243,8 +246,8 @@ function EventoCard({
                 disabled
               >
                 {suscripcion[element.PK_evento_contenedor]
-                  ? "Subscribed"
-                  : "Not subscribed"}
+                  ? t("Subscribed")
+                  : t("Not_subscribed")}
               </button>
             </div>
           )}

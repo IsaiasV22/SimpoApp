@@ -4,22 +4,58 @@ import "@/app/css/Heart.css";
 import "@/app/App.css";
 import { urlServer } from "@/app/Utiles.jsx";
 import Floater from "react-floater";
+// translate hook
+import { useTranslation } from "react-i18next";
+//toast
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Heart(actividad) {
   //estatus state hook
   const [isChecked, setIsChecked] = useState(false);
-
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { t } = useTranslation("actividades");
   //useEffect for checkbox
   useEffect(() => {
     handleCheckbox(actividad);
   }, []);
 
+  //handleMeInteresa
+  async function handleMeInteresa(PK_actividad) {
+    //console.log("Actividad seleccionada para hacer peticion : ", PK_actividad);
+    //event.stopPropagation();
+    if (isProcessing) return; // Salir de la función si ya se está procesando
 
+    setIsProcessing(true); // Establecer isProcessing como true antes de iniciar el procesamiento
 
-  const handleCheckboxClick =(event) => {
-    event.stopPropagation(); // Evitar que el evento se propague hacia arriba
-  };
+    try {
+      const response = await fetch(
+        `${urlServer}actividades/cambiaEstadoActividad`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ actividad: PK_actividad }),
+          credentials: "include",
+        }
+      );
 
+      if (!response.ok) {
+        console.log("response: ", response);
+        throw new Error(response.statusText);
+      }
+
+      const data = await response.json();
+      //console.log("data -> ",data);
+      //toast with -1 for permanent display
+      //console.log("data.success -> ", data.success);
+      toast.success(t(data.success))
+      setIsChecked(!isChecked); // Cambiar el estado del checkbox al contrario del estado actual
+    } catch (error) {
+      console.log("error -> ", error);
+      toast.error(error.message);
+    } finally {
+      setIsProcessing(false); // Restablecer isProcessing a false después de completar el procesamiento
+    }
+  }
 
   //handleIsChecked
   async function handleCheckbox(PK_actividad) {
@@ -41,7 +77,7 @@ export default function Heart(actividad) {
       }
 
       const data = await response.json();
-      //console.log("data -> ", data);
+      console.log("data -> ", data.estatus);
       setIsChecked(data.estatus);
       //return data.estatus;
       //toast.success(data.success);
@@ -51,36 +87,22 @@ export default function Heart(actividad) {
     }
     //console.log("Heart checking state");
   }
-  const handleCheckboxChange = (event) => {
-    // Esta función se ejecutará cuando el estado del checkbox cambie
-    // Cambiar el estado del checkbox al contrario del estado actual
-   /* event.stopPropagation(); // Evitar que el evento se propague hacia arriba*/
-    setIsChecked(event.target.checked);
-    //console.log("Heart changed");
-  };
+
   return (
-    <div id="main-content">
-      
-      <div>
-        <input
-          type="checkbox"
-          id="checkbox" 
-          onClick={handleCheckboxClick}
-          onChange={handleCheckboxChange}
-          checked={isChecked}
-        />
-        <label htmlFor="checkbox">
-          <Floater
-           title='Add to my calendar' 
-           event='hover'
-           placement='top'
-           eventDelay={2}
-           hideArrow={false}  
-           >
-          <button className="btn btnn-primary">Me interesa</button>
-          </Floater>
-        </label>
+    <>
+      <div id="main-content">
+        <div>
+          <button
+            className={`btn ${isChecked ? "btn-danger" : "btn-success"}`}
+            onClick={() => handleMeInteresa(actividad.actividad)}
+          >
+            {isChecked
+              ? t("Quitar del calendario")
+              : t("Agregar a mi calendario")}
+          </button>
+        </div>
+        <Toaster/>
       </div>
-    </div>
+    </>
   );
 }
