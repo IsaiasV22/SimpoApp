@@ -211,6 +211,16 @@ function EventoCard({
 
                 <Dropdown.Menu>
                   <Dropdown.Item>
+                    <EditModal
+                      pk={element.PK_evento_contenedor}
+                      nombre={element.nombre}
+                      descripcion={element.descripcion}
+                      lugar={element.lugar}
+                      dia_inicio={element.dia_inicio}
+                      dia_final={element.dia_final}
+                    />
+                  </Dropdown.Item>
+                  <Dropdown.Item>
                     <Link
                       href={`${urlSimposio}/${JSON.stringify(
                         element.PK_evento_contenedor
@@ -223,22 +233,6 @@ function EventoCard({
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <EditModal
-                      pk={element.PK_evento_contenedor}
-                      nombre={element.nombre}
-                      descripcion={element.descripcion}
-                      lugar={element.lugar}
-                      dia_inicio={element.dia_inicio}
-                      dia_final={element.dia_final}
-                    />
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Estadisticas />
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <AsistenciaActividades pk={element.PK_evento_contenedor} />
-                  </Dropdown.Item>
-                  <Dropdown.Item>
                     <button
                       //on click cambiar el estado de activo
                       onClick={() => {
@@ -248,10 +242,15 @@ function EventoCard({
                         );
                       }}
                       className="btn btnn-primary"
-                      style={{ margin: "3px" }}
                     >
                       {element.activo ? t("Ocultar") : t("Mostrar")}
                     </button>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Estadisticas />
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <AsistenciaActividades pk={element.PK_evento_contenedor} />
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
