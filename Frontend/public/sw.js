@@ -8,6 +8,7 @@ const pathsToNetworkFirst = [
   "solicitudesAyuda/all",
   "eventos/ocultarEvento",
   "eventos/mostrarEvento",
+  "estadisticas/AllSimposiosAllDetails"
 ];
 
 //intercept any push notification and show it

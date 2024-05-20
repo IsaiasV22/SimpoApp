@@ -69,7 +69,7 @@ function Estadisticas() {
         style={{ margin: "0.5%" }}
         onClick={fetchData}
       >
-        {t("Cargar_Información_Estadistica")}
+        {t("Descargar_Información_Estadistica")}
       </button>
       <ToastContainer/>
     </>
