@@ -174,7 +174,10 @@ function EventoCard({
           </div>
         </section>
 
-        <div className="card-footer d-flex footer-simposio">
+        <div
+          className="card-footer d-flex footer-simposio"
+          style={{ gap: "3px" }}
+        >
           <Link
             href={
               (suscripcion && suscripcion[element.PK_evento_contenedor]) ||
@@ -184,7 +187,6 @@ function EventoCard({
                   )}`
                 : "#"
             }
-            style={{ marginRight: "5px" }}
           >
             <button
               className="btn btnn-primary"
