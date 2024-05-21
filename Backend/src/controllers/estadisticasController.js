@@ -148,7 +148,7 @@ const AttendanceInfo = async (idEventoContenedor) => {
     );
 
     let results = await dbQuery(
-      `SELECT
+          `SELECT
           a.descripcion AS 'Actividad',
           u.nombre AS 'Nombre',
           u.apellidos AS 'Apellidos',
@@ -160,7 +160,8 @@ const AttendanceInfo = async (idEventoContenedor) => {
           actividad a 
       LEFT JOIN calendario_u aae ON aae.F_actividad = a.PK_actividad
       INNER JOIN evento_contenedor ec ON a.FK_evento_contenedor = ec.PK_evento_contenedor
-      LEFT JOIN usuario u ON aae.FK_usuario = u.PK_nombre_usuario
+      LEFT JOIN asistencia_actividad_evento asist ON a.PK_actividad = asist.FK_actividad_a
+      LEFT JOIN usuario u ON asist.FK_usuario_a = u.PK_nombre_usuario
       WHERE ec.PK_evento_contenedor = ?
       ORDER BY
           a.descripcion,
@@ -172,8 +173,8 @@ const AttendanceInfo = async (idEventoContenedor) => {
     let groupedResults = {};
 
     for (let result of results) {
-      let actividad = result['Actividad'];
-      delete result['Actividad'];
+      let actividad = result["Actividad"];
+      delete result["Actividad"];
 
       if (!groupedResults[actividad]) {
         groupedResults[actividad] = [result];
@@ -181,7 +182,7 @@ const AttendanceInfo = async (idEventoContenedor) => {
         groupedResults[actividad].push(result);
       }
     }
-    
+
     return { eventName, results: groupedResults };
   } catch (error) {
     console.error("Error al realizar la consulta:", error);
@@ -193,5 +194,5 @@ module.exports = {
   AllSimposiosAllDetails,
   SimposioDetails,
   ActividadDetails,
-  AttendanceInfo
+  AttendanceInfo,
 };
