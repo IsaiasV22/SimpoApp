@@ -11,15 +11,19 @@ function EventItem(props) {
     boxSx,
     elevation,
     isMonthMode,
-    onClick,
     onDragStart
   } = props;
+
+  const handleItemClick = () => {
+    let id = props.event.id.replace('event-', '');
+    window.location.href = `/actividad/${id}`;
+  };
   
   return (
     <Paper
-      sx={{ ...sx, overflow: 'hidden', height: sx.height }} // Forzar la altura
+      sx={{ ...sx, overflow: 'hidden', height: sx.height }}
       draggable
-      onClick={onClick}
+      onClick={handleItemClick} // Usar la función handleItemClick como manejador de clic
       onDragStart={onDragStart}
       elevation={elevation || 0}
       key={`item-d-${event?.id}-${rowId}`}

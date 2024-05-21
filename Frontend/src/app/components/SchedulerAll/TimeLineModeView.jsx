@@ -42,11 +42,22 @@ function TimeLineModeView(props) {
     event.preventDefault();
     event.stopPropagation();
     onTaskClick && onTaskClick(event, task);
+    
+    let id = task.id.replace('event-', '');
+    window.location.href = `/actividad/${id}`;
   };
 
   const getEventBorderColor = (task) => {
-    const eventStart = parse(task.date + ' ' + task.startHour, 'yyyy-MM-dd HH:mm', new Date());
-    const eventEnd = parse(task.date + ' ' + task.endHour, 'yyyy-MM-dd HH:mm', new Date());
+    const eventStart = parse(
+      task.date + " " + task.startHour,
+      "yyyy-MM-dd HH:mm",
+      new Date()
+    );
+    const eventEnd = parse(
+      task.date + " " + task.endHour,
+      "yyyy-MM-dd HH:mm",
+      new Date()
+    );
 
     if (isEventInProgress(eventStart, eventEnd)) {
       return "#00FF00";
@@ -60,7 +71,11 @@ function TimeLineModeView(props) {
   };
 
   const isEventInProgress = (eventStart, eventEnd) => {
-    return isSameDay(eventStart, currentDate) && isAfter(currentDate, eventStart) && isBefore(currentDate, eventEnd);
+    return (
+      isSameDay(eventStart, currentDate) &&
+      isAfter(currentDate, eventStart) &&
+      isBefore(currentDate, eventEnd)
+    );
   };
 
   const isEventPassed = (eventEnd) => {
@@ -71,10 +86,14 @@ function TimeLineModeView(props) {
     return isBefore(currentDate, eventStart);
   };
 
-  let filteredEvents = rows?.sort((a, b) => -b?.startHour?.localeCompare(a?.startHour));
+  let filteredEvents = rows?.sort(
+    (a, b) => -b?.startHour?.localeCompare(a?.startHour)
+  );
 
   if (searchResult) {
-    filteredEvents = filteredEvents?.filter((event) => event?.groupLabel === searchResult?.groupLabel);
+    filteredEvents = filteredEvents?.filter(
+      (event) => event?.groupLabel === searchResult?.groupLabel
+    );
   }
 
   return (
