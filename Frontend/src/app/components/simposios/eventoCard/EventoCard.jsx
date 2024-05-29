@@ -5,11 +5,15 @@ import { es, enUS } from "date-fns/locale";
 import { urlServer } from "@/app/Utiles.jsx";
 import Link from "next/link";
 import EditModal from "./editModal/EditModal";
+import Dropdown from "react-bootstrap/Dropdown";
 import Estadisticas from "../../estadisticas/Estadisticas";
 import AsistenciaActividades from "../../asistenciaActividades/asistenciaActividades";
 import { ToastContainer, toast } from "react-toastify";
 //router from next/navigation
 import { useRouter } from "next/navigation";
+import "@/app/App.css";
+//translation hook
+import { useTranslation } from "react-i18next";
 
 function EventoCard({
   element,
@@ -22,6 +26,7 @@ function EventoCard({
   const [imageUrl, setImageUrl] = useState("");
   //router to change the url
   const router = useRouter();
+  const { t } = useTranslation(["common"]);
 
   const formatDate = (dateString, idioma) => {
     const date = parseISO(dateString);
@@ -98,7 +103,7 @@ function EventoCard({
       //push the url address
       router.push(address);
     } else {
-      toast.error("You are not subscribed to this event");
+      toast.error(t("You_are_not_subscribed_to_this_event"));
     }
 
     console.log("handleUrlPush");
@@ -156,11 +161,11 @@ function EventoCard({
             </p>
             <p className="card-text">
               <i className="bi bi-calendar-event icon"> </i>
-              Start day: {formatDate(element.dia_inicio, "es")}
+              {t("Start day:")} {formatDate(element.dia_inicio, "es")}
             </p>
             <p className="card-text">
               <i className="bi bi-calendar-event icon"> </i>
-              Final day: {formatDate(element.dia_final, "es")}
+              {t("Final day:")} {formatDate(element.dia_final, "es")}
             </p>
             <p className="card-text">
               <i className="bi bi-map icon"> </i>
@@ -169,7 +174,10 @@ function EventoCard({
           </div>
         </section>
 
-        <div className="card-footer d-flex footer-simposio">
+        <div
+          className="card-footer d-flex footer-simposio"
+          style={{ gap: "3px" }}
+        >
           <Link
             href={
               (suscripcion && suscripcion[element.PK_evento_contenedor]) ||
@@ -179,56 +187,73 @@ function EventoCard({
                   )}`
                 : "#"
             }
-            style={{ marginRight: "5px" }}
           >
             <button
-              className="btn btn-primary"
+              className="btn btnn-primary"
               disabled={
                 rol === 1
                   ? false
                   : !suscripcion || !suscripcion[element.PK_evento_contenedor]
               }
             >
-              see more
+              {t("See_more")}
             </button>
           </Link>
           {user && rol === 1 && (
             <>
-              {
-                <Link
-                  href={`${urlSimposio}/${JSON.stringify(
-                    element.PK_evento_contenedor
-                  )}/listaUsuarios`}
-                  style={{ marginRight: "5px" }}
+              <Dropdown>
+                <Dropdown.Toggle
+                  style={{ backgroundColor: "#00c0f3", "border-width": "0px" }}
+                  id="dropdown-basic"
                 >
-                  <button className="btn btn-primary">Lista de usuarios</button>
-                </Link>
-              }
-              <EditModal
-                pk={element.PK_evento_contenedor}
-                nombre={element.nombre}
-                descripcion={element.descripcion}
-                lugar={element.lugar}
-                dia_inicio={element.dia_inicio}
-                dia_final={element.dia_final}
-              />
-              <Estadisticas />
+                  {t("Admin Options")}
+                </Dropdown.Toggle>
 
-              <AsistenciaActividades pk={element.PK_evento_contenedor}/>
-
-              <button
-                //on click cambiar el estado de activo
-                onClick={() => {
-                  handleEstadoActivo(
-                    element.PK_evento_contenedor,
-                    element.activo
-                  );
-                }}
-                className="btn btn-primary"
-                style={{ marginRight: "5px" }}
-              >
-                {element.activo ? "Ocultar" : "Mostrar"}
-              </button>
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <EditModal
+                      pk={element.PK_evento_contenedor}
+                      nombre={element.nombre}
+                      descripcion={element.descripcion}
+                      lugar={element.lugar}
+                      dia_inicio={element.dia_inicio}
+                      dia_final={element.dia_final}
+                    />
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link
+                      href={`${urlSimposio}/${JSON.stringify(
+                        element.PK_evento_contenedor
+                      )}/listaUsuarios`}
+                      style={{ marginRight: "5px" }}
+                    >
+                      <button className="btn btnn-primary">
+                        {t("Lista_usuarios")}
+                      </button>
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <button
+                      //on click cambiar el estado de activo
+                      onClick={() => {
+                        handleEstadoActivo(
+                          element.PK_evento_contenedor,
+                          element.activo
+                        );
+                      }}
+                      className="btn btnn-primary"
+                    >
+                      {element.activo ? t("Ocultar") : t("Mostrar")}
+                    </button>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Estadisticas />
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <AsistenciaActividades pk={element.PK_evento_contenedor} />
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </>
           )}
           {suscripcion !== null && (
@@ -242,8 +267,8 @@ function EventoCard({
                 disabled
               >
                 {suscripcion[element.PK_evento_contenedor]
-                  ? "Subscribed"
-                  : "Not subscribed"}
+                  ? t("Subscribed")
+                  : t("Not_subscribed")}
               </button>
             </div>
           )}

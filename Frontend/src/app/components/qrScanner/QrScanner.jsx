@@ -1,6 +1,8 @@
 "use client";
 import { urlServer } from "@/app/Utiles";
 import styles from "./QRScanner.module.css"; // Importa los estilos específicos para este componente
+import useGlobalState from "../globalState/GlobalState";
+import { useTranslation } from "react-i18next";
 
 // Importación de dependencias necesarias para el componente
 import React, { useEffect, useRef, useState } from "react";
@@ -13,11 +15,14 @@ const QRScanner = () => {
   // Referencias al video y al canvas HTML donde se mostrará la cámara y se dibujará el QR escaneado
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const { t } = useTranslation("qrScanner");
 
   // Estado para controlar si se está escaneando o no
   const [isScanning, setIsScanning] = useState(false);
 
   const streamActive = useRef(null); // Crea una referencia para el stream
+
+  const high_contrast = useGlobalState((state) => state.high_contrast);
 
   // Efecto que se ejecuta al montar el componente. Configura el acceso a la cámara.
   useEffect(() => {
@@ -55,9 +60,9 @@ const QRScanner = () => {
   const registerAttendace = (code) => {
     const { username, activityId } = code; // Extrae los datos necesarios del código QR
 
-    console.log(
+    /* console.log(
       `Registrando asistencia de ${username} al evento ${activityId}`
-    );
+    ); */
 
     // Hace una petición POST al servidor para registrar la asistencia
     fetch(`${urlServer}usuarios/asistirEvento`, {
@@ -74,14 +79,14 @@ const QRScanner = () => {
       .then((response) => {
         // Maneja la respuesta del servidor
         if (response.ok) {
-          toast.success("¡Asistencia registrada!"); // Notificación de éxito
+          toast.success(t("¡Asistencia registrada!")); // Notificación de éxito
         } else {
-          toast.error("Error al registrar asistencia"); // Notificación de error
+          toast.error(t("Error al registrar asistencia")); // Notificación de error
         }
       })
       .catch((error) => {
         // Captura y loguea errores en la petición
-        toast.error("Error al registrar asistencia: " + error.message);
+        toast.error(t("Error al registrar asistencia")+": " + error.message);
       });
   };
 
@@ -142,7 +147,7 @@ const QRScanner = () => {
 
   // Renderiza el componente UI
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${high_contrast?"high-contrast":""}`}>
       <Card className={`${styles.cardContainer}`}>
         <Card.Body>
           {/* Elementos ocultos de video y canvas para el escaneo */}
@@ -153,25 +158,23 @@ const QRScanner = () => {
           {/* Botones para controlar el escaneo */}
           {!isScanning ? (
             <Button
-              variant="primary"
               onClick={restartScanning}
-              className="w-100"
+              className="w-100 btnn-primary"
             >
-              Scan Again
+              {t("Scan Again")}
             </Button>
           ) : (
             <Button
-              variant="primary"
               disabled
-              className={`w-100 ${styles.loadingText}`}
+              className={`w-100 btnn-primary ${styles.loadingText}`}
             >
-              Scanning...
+              {t("Scanning...")}
             </Button>
           )}
 
           {!isScanning && (
             <Button className={styles.scanned} disabled>
-              Scanned data
+              {t("Scanned data")}
             </Button>
           )}
         </Card.Footer>

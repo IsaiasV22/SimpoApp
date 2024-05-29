@@ -2,8 +2,12 @@
 import React from "react";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../App.css";
+//translation hook
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  //translation hook
+  const { t } = useTranslation(["common"]);
   return (
     <footer className="bg-dark text-center text-white">
       <div className="container p-4 pb-0">
@@ -11,7 +15,7 @@ const Footer = () => {
           {/* Dirección */}
           <div className="col-md-3">
             <section className="mb-4">
-              <h5>Address</h5>
+              <h5>{t("Address")}</h5>
               <br />
               <p>
                 <a
@@ -37,7 +41,7 @@ const Footer = () => {
           {/* Servicios del CIMPA */}
           <div className="col-md-3">
             <section className="mb-4">
-              <h5>Activities</h5>
+              <h5>{t("Activities")}</h5>
               <br />
               <p>
                 <a
@@ -51,6 +55,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/emalca"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -60,6 +65,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/ifcs"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -69,38 +75,42 @@ const Footer = () => {
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/jornadas"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Jornadas de Álgebra
+                  {t("Jornadas_Algebra")}
                 </a>
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/seminarios-de-investigacion"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Seminarios de Investigación
+                  {t("Research_Seminars")}
                 </a>
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/cafes-matematicos"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Cafés Matemáticos
+                  {t("Mathematical_Cafes")}
                 </a>
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="https://www.cimpa.ucr.ac.cr/index.php/actividades/calendario-2"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Calendario
+                  {t("Calendar")}
                 </a>
               </p>
             </section>
@@ -109,33 +119,36 @@ const Footer = () => {
           {/* Enlaces de Interés */}
           <div className="col-md-3">
             <section className="mb-4">
-              <h5>Enlaces de Interés</h5>
+              <h5>{t("Links_of_interest")}</h5>
               <br />
               <p>
                 <a
+                  className="link-footer"
                   href="https://vinv.ucr.ac.cr/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Vicerrectoría de Investigación
+                  {t("Vicerrectoría_de_Investigación")}
                 </a>
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="http://www.emate.ucr.ac.cr/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Escuela de Matemática
+                  {t( "School_of_Mathematics")}
                 </a>
               </p>
               <p>
                 <a
+                  className="link-footer"
                   href="http://www.estadistica.ucr.ac.cr/index.php/es/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Escuela de Estadística
+                  {t("School_of_Statistics")}
                 </a>
               </p>
               {/* ... puedes continuar agregando más enlaces aquí */}
@@ -145,7 +158,7 @@ const Footer = () => {
           {/* Redes Sociales */}
           <div className="col-md-3">
             <section className="mb-4">
-              <h5>Redes sociales</h5>
+              <h5>{t("Social_networks")}</h5>
               <br />
               {/* ... (código de los íconos de redes sociales) */}
               <a

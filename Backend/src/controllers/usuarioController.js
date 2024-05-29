@@ -125,7 +125,7 @@ function login(userName, userPassword, callback) {
   } catch (error) {
     callback(error, null);
   }
-};
+}
 
 const obtenerActividadesCalendario = (username, callback) => {
   const sql = `SELECT * FROM actividad INNER JOIN calendario_u ON actividad.PK_actividad = calendario_u.F_actividad WHERE calendario_u.FK_usuario=?`;
@@ -216,7 +216,7 @@ const attendanceList = (activityId, username, callback) => {
   console.log("username:", username);
 
   // Primero, realizamos una consulta para verificar si el usuario ya ha sido registrado en la actividad
-  const checkSql = `SELECT * FROM asistencia_actividad_evento WHERE FK_actividad=? AND FK_usuario=?`;
+  const checkSql = `SELECT * FROM asistencia_actividad_evento WHERE FK_actividad_a=? AND FK_usuario_a=?`;
   db.query(checkSql, [activityId, username], (err, results) => {
     // Si hay un error en la consulta, lo registramos y devolvemos un mensaje de error
     if (err) {
@@ -226,11 +226,14 @@ const attendanceList = (activityId, username, callback) => {
     }
     // Si el usuario ya ha sido registrado en la actividad, devolvemos un mensaje indicando esto
     if (results.length > 0) {
-      callback("La asistencia del usuario ya fue registrada en esta actividad", null);
+      callback(
+        "La asistencia del usuario ya fue registrada en esta actividad",
+        null
+      );
       return;
     }
     // Si el usuario no ha sido registrado en la actividad, intentamos insertar el registro
-    const insertSql = `INSERT INTO asistencia_actividad_evento(FK_actividad, FK_usuario) VALUES (?, ?)`;
+    const insertSql = `INSERT INTO asistencia_actividad_evento(FK_actividad_a, FK_usuario_a) VALUES (?, ?)`;
     db.query(insertSql, [activityId, username], (err, results) => {
       // Si hay un error en la consulta, lo registramos y devolvemos un mensaje de error
       if (err) {
@@ -255,5 +258,5 @@ module.exports = {
   participacionExiste,
   participacionAdd,
   participacionDelete,
-  attendanceList
+  attendanceList,
 };

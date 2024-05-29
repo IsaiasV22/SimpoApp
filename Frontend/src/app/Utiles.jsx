@@ -1,8 +1,2 @@
-//export const urlServer="http://20.150.204.32:3001/"
-//export const urlServer="http://localhost:3001/";
-
-//EC2 BACKEND ADDRESS
-//export const urlServer="https://ec2-18-118-153-206.us-east-2.compute.amazonaws.com:3001/";
-
-//RENDER BACKEND ADDRESS
-export const urlServer="https://simpoapp-official-backend.onrender.com/";
+export const urlServer="http://localhost:3001/"
+//export const urlServer="https://simpo-app-official-backend-p7apldfbh-andres-projects-49880e0d.vercel.app/";

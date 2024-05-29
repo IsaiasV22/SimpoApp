@@ -1,25 +1,27 @@
-"use client";
+
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 
 import trEN from "./en/common.json"
-import trFR from "./fr/common.json"
-import trKO from "./ko/common.json"
-import trDE from "./de/common.json"
 import trES from "./es/common.json"
-import trAR from "./ar/common.json"
-import trJA from "./ja/common.json"
-import trZH from "./zh/common.json"
+
+function getI18nState() {
+  const i18nState = typeof window !== 'undefined' ? localStorage.getItem("i18nextLng") : null;
+  if (i18nState === 'en') {
+    console.log('Indeed, the language is English');
+    return 'en';
+  }
+  console.log('Indeed, the language is Spanish');
+  //caso en el que haya que setear el item en el local storage
+  if(!i18nState) {
+    typeof window !== 'undefined' && localStorage.setItem("i18nextLng", 'es');
+  }
+  return 'es';
+}
 
 const resources = {
   en: { common: trEN },
-  fr: { common: trFR },
-  ko: { common: trKO },
-  de: { common: trDE },
   es: { common: trES },
-  ar: { common: trAR },
-  ja: { common: trJA },
-  zh: { common: trZH }
 }
 
 i18n
@@ -29,12 +31,11 @@ i18n
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
     resources,
-    lng: typeof window !== 'undefined' && localStorage.getItem('i18nextLng'),
+    lng: getI18nState(),
     ns: ["common"],
     defaultNS: "common",
     fallbackNS: "common",
-    fallbackLng: ["en", "fr", "dev"],
-    debug: false,
+    debug: true,
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },

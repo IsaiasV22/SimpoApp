@@ -9,10 +9,21 @@ const useGlobalState = create((set) => {
   //manage if user is suscribed or not
   const suscribedState =
     typeof window !== "undefined" && localStorage.getItem("suscribed");
+
+  //manage if high contrast is enabled
+  const high_contrastState =
+    typeof window !== "undefined" && localStorage.getItem("high_contrast");
+
+  //manage languague i18n
+  const i18nState =
+    typeof window !== "undefined" && localStorage.getItem("i18nextLng");
+
   const initialState = {
     user: userState ? JSON.parse(userState) : false,
     rol: rolState ? JSON.parse(rolState) : 0,
     suscribed: suscribedState ? JSON.parse(suscribedState) : false,
+    high_contrast: high_contrastState ? JSON.parse(high_contrastState) : false,
+    i18nState: i18nState,
     setUser: (user) => {
       // Update the user state and store it in localStorage
       set({ user });
@@ -30,6 +41,19 @@ const useGlobalState = create((set) => {
       set({ suscribed });
       typeof window !== "undefined" &&
         localStorage.setItem("suscribed", JSON.stringify(suscribed));
+    },
+    setHighContrast: (high_contrast) => {
+      // Update the user state and store it in localStorage
+      set({ high_contrast });
+      typeof window !== "undefined" &&
+        localStorage.setItem("high_contrast", JSON.stringify(high_contrast));
+    },
+
+    setI18nState: (i18nState) => {
+      // Update the user state and store it in localStorage
+      set({ i18nState });
+      typeof window !== "undefined" &&
+        localStorage.setItem("i18nextLng",i18nState);
     },
   };
 

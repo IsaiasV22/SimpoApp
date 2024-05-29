@@ -21,13 +21,13 @@ app.use(
 );
 
 const corsOptions = {
- credentials: true,
-/*    origin: [
+  credentials: true,
+  /*   origin: [
     "http://localhost:3000",
     "https://b08d-177-93-10-187.ngrok-free.app",
     "https://65ca-177-93-10-187.ngrok-free.app"
-  ], // URL del cliente  */
-  origin:true
+  ], // URL del cliente */
+  origin: true,
 };
 
 // Configura CORS para permitir todas las solicitudes
@@ -60,12 +60,16 @@ app.use("/ponentes", ponenteRoutes);
 const estadisticasRoutes = require("./routes/estadisticasRouter.js");
 app.use("/estadisticas", estadisticasRoutes);
 
-const talleresRoutes = require("./routes/tallerRouter.js");
-app.use("/talleres", talleresRoutes);
+const solicitudesAyudaRoutes = require("./routes/solicitudAyudaRouter.js");
+app.use("/solicitudesAyuda", solicitudesAyudaRoutes);
 
 //pwa route
 const pwaRoutes = require("./routes/pwaRouter.js");
 app.use("/pwa", pwaRoutes);
+
+//recordatorios route
+const recordatoriosRoutes = require("./routes/recordatoriosRouter.js");
+app.use("/recordatorios", recordatoriosRoutes);
 
 //configurar puerto
 const PORT = process.env.PORT || 3000;

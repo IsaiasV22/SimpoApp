@@ -13,6 +13,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import moment from "moment";
+import "@/app/App.css";
+import { useTranslation } from "react-i18next";
 
 function UpdateModal(element) {
   const [show, setShow] = useState(false);
@@ -28,10 +30,11 @@ function UpdateModal(element) {
     moment(element.hora_final, "HH:mm:ss").toDate()
   );
   const [ubicacion, setUbicacion] = useState(element.ubicacion);
-
   const [estatus, setEstatus] = useState(element.estatus);
   const isChecked = (value) => value == estatus;
   const onSelect = ({ target:{ value}}) => setEstatus(value);
+  const high_contrast = useGlobalState((state) => state.high_contrast);
+  const { t } = useTranslation("actividades");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -66,7 +69,7 @@ function UpdateModal(element) {
         throw new Error(response.statusText);
       }
 
-      toast.success("Editado correctamente");
+      toast.success(t("Editado_correctamente"));
       setTimeout(() => {
         handleClose();
         window.location.reload();
@@ -79,8 +82,8 @@ function UpdateModal(element) {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Editar
+      <Button className="btnn-primary" onClick={handleShow}>
+        {t("Edit")}
       </Button>
 
       <Modal
@@ -90,12 +93,12 @@ function UpdateModal(element) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Editar Actividad</Modal.Title>
+          <Modal.Title>{t("Editar_Actividad")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form id="editActividad" onSubmit={handleSubmit}>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="descripcion">Descripción</InputGroup.Text>
+              <InputGroup.Text id="descripcion">{t("Descripcion")}</InputGroup.Text>
               <Form.Control
                 placeholder=""
                 aria-label=""
@@ -106,7 +109,7 @@ function UpdateModal(element) {
             </InputGroup>
             <InputGroup className="mb-3">
               <InputGroup.Text id="descripcion_d">
-                Descripción detallada
+                {t("Descripción_detallada")}
               </InputGroup.Text>
               <Form.Control
                 as="textarea"
@@ -116,7 +119,7 @@ function UpdateModal(element) {
               />
             </InputGroup>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="ubicacion">Ubicación</InputGroup.Text>
+              <InputGroup.Text id="ubicacion">{t("Location")}</InputGroup.Text>
               <Form.Control
                 placeholder=""
                 aria-label=""
@@ -133,7 +136,7 @@ function UpdateModal(element) {
                 checked={isChecked(1)}
                 onChange={onSelect}
               />
-              <InputGroup.Text id="mostrar">Mostrar</InputGroup.Text>
+              <InputGroup.Text id="mostrar">{t("Mostrar")}</InputGroup.Text>
 
               <InputGroup.Radio
                 name="estatus"
@@ -142,11 +145,11 @@ function UpdateModal(element) {
                 checked={isChecked(0)}
                 onChange={onSelect}
               />
-              <InputGroup.Text id="ocultar">Ocultar</InputGroup.Text>
+              <InputGroup.Text id="ocultar">{t("Ocultar")}</InputGroup.Text>
             </InputGroup>
 
             <InputGroup className="mb-3">
-              <InputGroup.Text id="dia_evento">Dia evento</InputGroup.Text>
+              <InputGroup.Text id="dia_evento">{t("Dia_evento")}</InputGroup.Text>
             </InputGroup>
             <div>
               <DatePicker
@@ -158,7 +161,7 @@ function UpdateModal(element) {
               />
             </div>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="hora_inicio">Hora inicio</InputGroup.Text>
+              <InputGroup.Text id="hora_inicio">{t("Hora_inicio")}</InputGroup.Text>
             </InputGroup>
             <div>
               <DatePicker
@@ -184,7 +187,7 @@ function UpdateModal(element) {
               />
             </div>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="hora_final">Hora final</InputGroup.Text>
+              <InputGroup.Text id="hora_final">{t("Hora_final")}</InputGroup.Text>
             </InputGroup>
             <div>
               <DatePicker
@@ -208,11 +211,13 @@ function UpdateModal(element) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            {t("Close")}
           </Button>
-          <Button form="editActividad" type="submit" variant="primary">
-            Editar
-          </Button>
+          <div className={high_contrast?"high-contrast":""}>
+            <Button form="editActividad" type="submit" className="btnn-primary">
+              {t("Edit")}
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </>

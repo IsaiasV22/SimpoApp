@@ -1,5 +1,8 @@
 const db = require("../../config/database.js");
 const { use } = require("../routes/usuarioRouter.js");
+const { promisify } = require("util");
+//pomisify will convert db.query into a promise
+const dbQuery = promisify(db.query).bind(db);
 
 const actividadesAll = (callback) => {
   db.query(
@@ -221,6 +224,18 @@ const obtenerUsuariosActividad = (PK_actividad, callback) => {
   );
 };
 
+// get actividades that start in the next 30 minutes
+const obtenerActividadesProximas = async () => {
+  const results = await dbQuery(
+    `SELECT PK_ACTIVIDAD FROM actividad WHERE dia_evento = CURDATE() AND hora_inicio BETWEEN CURTIME() AND ADDTIME(CURTIME(), '00:30:00')`
+  );
+  if (results.length == 0)
+    throw new Error("No se encontraron actividades próximas");
+  // Mapear los resultados para obtener solo los valores de los IDs
+  const idsArray = results.map((result) => result.PK_ACTIVIDAD);
+  return idsArray;
+};
+
 module.exports = {
   actividadesAll,
   obtenerActividadesPorEvento,
@@ -233,4 +248,5 @@ module.exports = {
   mostrarActividad,
   ocultarActividad,
   obtenerUsuariosActividad,
+  obtenerActividadesProximas
 };
