@@ -1,4 +1,4 @@
-```
+
 # SIMPOAPP
 ![Arquitectura](Diagrams/Arquitectura - Arquitectura.png)
 
