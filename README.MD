@@ -1,6 +1,6 @@
 
 # SIMPOAPP
-![Arquitectura](Diagrams/Arquitectura - Arquitectura.png)
+![Arquitectura](https://github.com/Andres21sb/SimpoApp-Official/blob/master/Diagrams/Arquitectura%20-%20Arquitectura.png)
 
 # Guía de Instalación del Sistema
 
